@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "c86eb48b-6cd5-4957-be37-73dca0898f30",
+		"name": "Companies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23690394"
+	},
+	"item": [
+		{
+			"name": "Add Companies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/companies?company_name=sdf&slug=sadfasf&website=sadfasf&industry_id=1&organization_size=2&organization_type=2&logo=sdfsdaf&cover_image=sadfadsf&tagline=sadf&created_by=1&is_active=1&description=sdfasdf&phone_no=32424&specialties=sadsdf&year_founded=232",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "company_name",
+							"value": "sdf"
+						},
+						{
+							"key": "slug",
+							"value": "sadfasf"
+						},
+						{
+							"key": "website",
+							"value": "sadfasf"
+						},
+						{
+							"key": "industry_id",
+							"value": "1"
+						},
+						{
+							"key": "organization_size",
+							"value": "2"
+						},
+						{
+							"key": "organization_type",
+							"value": "2"
+						},
+						{
+							"key": "logo",
+							"value": "sdfsdaf"
+						},
+						{
+							"key": "cover_image",
+							"value": "sadfadsf"
+						},
+						{
+							"key": "tagline",
+							"value": "sadf"
+						},
+						{
+							"key": "created_by",
+							"value": "1"
+						},
+						{
+							"key": "is_active",
+							"value": "1"
+						},
+						{
+							"key": "description",
+							"value": "sdfasdf"
+						},
+						{
+							"key": "phone_no",
+							"value": "32424"
+						},
+						{
+							"key": "specialties",
+							"value": "sadsdf"
+						},
+						{
+							"key": "year_founded",
+							"value": "232"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Companies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/companies?id=3&company_name=zzzasdfads&slug=sadfasf&website=sadfasf&industry_id=1&organization_size=2&organization_type=2&logo=sdfsdaf&cover_image=sadfadsf&tagline=sadf&created_by=1&is_active=1&description=sdfasdf&phone_no=32424&specialties=sadsdf&year_founded=232",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						},
+						{
+							"key": "company_name",
+							"value": "zzzasdfads"
+						},
+						{
+							"key": "slug",
+							"value": "sadfasf"
+						},
+						{
+							"key": "website",
+							"value": "sadfasf"
+						},
+						{
+							"key": "industry_id",
+							"value": "1"
+						},
+						{
+							"key": "organization_size",
+							"value": "2"
+						},
+						{
+							"key": "organization_type",
+							"value": "2"
+						},
+						{
+							"key": "logo",
+							"value": "sdfsdaf"
+						},
+						{
+							"key": "cover_image",
+							"value": "sadfadsf"
+						},
+						{
+							"key": "tagline",
+							"value": "sadf"
+						},
+						{
+							"key": "created_by",
+							"value": "1"
+						},
+						{
+							"key": "is_active",
+							"value": "1"
+						},
+						{
+							"key": "description",
+							"value": "sdfasdf"
+						},
+						{
+							"key": "phone_no",
+							"value": "32424"
+						},
+						{
+							"key": "specialties",
+							"value": "sadsdf"
+						},
+						{
+							"key": "year_founded",
+							"value": "232"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrive Companies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/companies/all",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"companies",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Soft Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/companies/3",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"companies",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrive Company by Industries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/companies/industries/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"companies",
+						"industries",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
