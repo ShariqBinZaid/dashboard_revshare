@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_group_size', function (Blueprint $table) {
+        Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('adults');
-            $table->string('seniors');
-            $table->string('childrens');
-            $table->string('infant');
+            $table->string('title');
+            $table->string('image');
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_group_size');
+        Schema::dropIfExists('product_variations');
     }
 };

@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_product_bookings', function (Blueprint $table) {
+        Schema::create('group_size', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('date_time');
-            $table->string('descrriptions');
+            $table->string('adults');
+            $table->string('seniors');
+            $table->string('childrens');
+            $table->string('infant');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_product_bookings');
+        Schema::dropIfExists('group_size');
     }
 };
