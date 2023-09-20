@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('card_name');
-            $table->string('card_number');
+            $table->string('card_name')->nullable();
+            $table->string('card_number')->nullable();
             $table->timestamps();
         });
     }

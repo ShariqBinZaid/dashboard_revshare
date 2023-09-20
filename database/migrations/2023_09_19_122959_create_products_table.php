@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title');
-            $table->string('image');
-            $table->string('rent_amount');
-            $table->string('duration');
-            $table->string('descriptions');
+            $table->string('title')->nullable();
+            $table->string('image')->nullable();
+            $table->string('rent_amount')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('descriptions')->nullable();
             $table->timestamps();
         });
     }

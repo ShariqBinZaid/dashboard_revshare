@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('adults');
-            $table->string('seniors');
-            $table->string('childrens');
-            $table->string('infant');
+            $table->string('adults')->nullable();
+            $table->string('seniors')->nullable();
+            $table->string('childrens')->nullable();
+            $table->string('infant')->nullable();
             $table->timestamps();
         });
     }

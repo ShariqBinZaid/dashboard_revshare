@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('display_picture')->nullable();
-            $table->string('user_name');
-            $table->string('first_name');
+            $table->string('user_name')->nullable();
+            $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('email')->unique()->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('dob')->nullable();
             $table->string('phone')->nullable();
             $table->enum('status', ['paid', 'unpaid'])->nullable();
-            $table->tinyInteger('is_active')->default(0);
+            $table->tinyInteger('is_active')->default(1);
             $table->enum('user_type', ['user', 'admin'])->nullable();
             $table->integer('created_by')->nullable();
             $table->rememberToken();
