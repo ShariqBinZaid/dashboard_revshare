@@ -17,6 +17,7 @@ use App\Http\Controllers\ApiController;
 */
 
 Route::post('register', [ApiController::class, 'register']);
+Route::post('updateregister', [ApiController::class, 'updateregister']);
 Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);

@@ -16,13 +16,17 @@ class ApiController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
+            'display_picture' => 'required',
+            'user_name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
+            'gender' => 'required',
             'email' => 'required',
-            'designation' => 'required',
-            'user_type' => 'required',
+            'dob' => 'required',
             'phone' => 'required',
-            'password' => 'required'
+            'status' => 'required',
+            'is_active' => 'required',
+            'user_type' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -40,12 +44,43 @@ class ApiController extends Controller
         }
         // return $input;
         $input['password'] = bcrypt($input['password']);
-        $input += ['otp' => rand(100000, 999999)];
+        // $input += ['otp' => rand(100000, 999999)];
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['user'] =  $user;
 
         return $this->sendResponse($success, 'User Registered Successfully.');
+    }
+
+    public function updateregister(Request $req)
+    {
+        $input = $req->all();
+        $validator = Validator::make($input, [
+            'display_picture' => 'required',
+            'user_name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'email' => 'required',
+            'dob' => 'required',
+            'phone' => 'required',
+            'status' => 'required',
+            'is_active' => 'required',
+            'user_type' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()]);
+        }
+        unset($input['_token']);
+
+        if (@$input['id']) {
+            $userupdate = User::where("id", $input['id'])->update($input);
+            return response()->json(['success' => true, 'msg' => 'User Registered Updated Successfully.']);
+        } else {
+            $userupdate = User::create($input);
+            return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
+        }
     }
 
     public function login(Request $request)
@@ -61,6 +96,7 @@ class ApiController extends Controller
             // return $this->sendError('Unauthorised.', ['error' => 'Incorrect ID Password']);
         }
     }
+
     public function userupdate(Request $req)
     {
         $input = $req->all();
@@ -85,6 +121,7 @@ class ApiController extends Controller
             return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
         }
     }
+
     public function phoneotp(Request $req)
     {
         $otp = User::where('id', $req->user_id)->where('otp', $req->otp)->first();
