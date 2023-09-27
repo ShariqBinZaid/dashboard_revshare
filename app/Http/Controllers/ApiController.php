@@ -32,16 +32,20 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+        
         $users  = User::where('email', $request['email'])->get();
+
         if ($users->count() > 0) {
             return response()->json(['success' => false, 'msg' => 'Email Already Exist']);
             die;
         }
+
         if ($request->file('display_picture')) {
 
             unset($input['display_picture']);
             $input += ['display_picture' => $this->updateprofile($request, 'display_picture', 'profileimage')];
         }
+
         // return $input;
         $input['password'] = bcrypt($input['password']);
         // $input += ['otp' => rand(100000, 999999)];
