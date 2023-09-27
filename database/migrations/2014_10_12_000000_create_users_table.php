@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->enum('status', ['paid', 'unpaid'])->nullable();
             $table->tinyInteger('is_active')->default(1);
-            $table->enum('user_type', ['user', 'admin'])->nullable();
+            $table->enum('user_type', ['user', 'vendor'])->nullable();
             $table->integer('created_by')->nullable();
             $table->rememberToken();
             $table->softDeletes();
