@@ -27,6 +27,7 @@ class ApiController extends Controller
             'phone' => 'required',
             'status' => 'required',
             'user_type' => 'required',
+            // 'user_type' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -46,7 +47,6 @@ class ApiController extends Controller
             $input += ['display_picture' => $this->updateprofile($request, 'display_picture', 'profileimage')];
         }
 
-        // return $input;
         // return $input;
         $input += ['is_active' => '1'];
         $input['password'] = bcrypt($input['password']);
