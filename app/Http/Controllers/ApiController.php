@@ -15,7 +15,7 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         $input = $request->all();
-        dd($input);
+        // dd($input);
         $validator = Validator::make($request->all(), [
             'display_picture' => 'required',
             'user_name' => 'required',
