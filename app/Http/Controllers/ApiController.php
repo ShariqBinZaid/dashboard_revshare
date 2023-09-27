@@ -15,25 +15,26 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         $input = $request->all();
-        $validator = Validator::make($request->all(), [
-            'display_picture' => 'required',
-            'user_name' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'dob' => 'required',
-            'phone' => 'required',
-            'status' => 'required',
-            'is_active' => 'required',
-            'user_type' => 'required',
-        ]);
+        // dd($input);
+        // $validator = Validator::make($request->all(), [
+        //     'display_picture' => 'required',
+        //     'user_name' => 'required',
+        //     'first_name' => 'required',
+        //     'last_name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required',
+        //     'dob' => 'required',
+        //     'phone' => 'required',
+        //     'status' => 'required',
+        //     'user_type' => 'required',
+        // ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors());
+        // }
 
         $users  = User::where('email', $request['email'])->get();
+        // dd($users);
 
         if ($users->count() > 0) {
             return response()->json(['success' => false, 'msg' => 'Email Already Exist']);
@@ -46,6 +47,7 @@ class ApiController extends Controller
         }
 
         // return $input;
+        $input += ['is_active' => '1'];
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
