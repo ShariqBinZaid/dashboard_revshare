@@ -18,7 +18,6 @@ class ApiController extends Controller
         // dd($input);
         $validator = Validator::make($request->all(), [
             'display_picture' => 'required',
-            'user_name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'gender' => 'required',
