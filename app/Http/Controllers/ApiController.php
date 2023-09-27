@@ -36,7 +36,7 @@ class ApiController extends Controller
         // dd($users);
 
         if ($users->count() > 0) {
-            return response()->json(['success' => false, 'msg' => 'Email Already Exist']);
+            return response()->json(['success' => false, 'message' => 'Email Already Exist']);
             die;
         }
 
