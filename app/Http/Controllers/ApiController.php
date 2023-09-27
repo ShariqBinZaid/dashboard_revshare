@@ -15,23 +15,23 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         $input = $request->all();
-        // dd($input);
-        // $validator = Validator::make($request->all(), [
-        //     'display_picture' => 'required',
-        //     'user_name' => 'required',
-        //     'first_name' => 'required',
-        //     'last_name' => 'required',
-        //     'gender' => 'required',
-        //     'email' => 'required',
-        //     'dob' => 'required',
-        //     'phone' => 'required',
-        //     'status' => 'required',
-        //     'user_type' => 'required',
-        // ]);
+        dd($input);
+        $validator = Validator::make($request->all(), [
+            'display_picture' => 'required',
+            'user_name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'email' => 'required',
+            'dob' => 'required',
+            'phone' => 'required',
+            'status' => 'required',
+            'user_type' => 'required',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return $this->sendError('Validation Error.', $validator->errors());
-        // }
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
 
         $users  = User::where('email', $request['email'])->get();
         // dd($users);
