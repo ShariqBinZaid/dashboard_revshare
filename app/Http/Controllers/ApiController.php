@@ -27,6 +27,7 @@ class ApiController extends Controller
             'phone' => 'required',
             'status' => 'required',
             'user_type' => 'required',
+            'user_type' => 'required',
         ]);
 
         if ($validator->fails()) {
