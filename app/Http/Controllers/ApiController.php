@@ -47,6 +47,7 @@ class ApiController extends Controller
         }
 
         // return $input;
+        // return $input;
         $input += ['is_active' => '1'];
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
