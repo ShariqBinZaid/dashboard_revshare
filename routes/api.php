@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
-
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\RentalsController;
+use App\Http\Controllers\ToursController;
+use App\Http\Controllers\UserCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +25,51 @@ Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 
+
 Route::middleware('auth:api')->group(function () {
+    Route::controller(ToursController::class)->group(function () {
+        Route::post('tours', 'tours')->name('tours.tours');
+        Route::get('gettours', 'gettours')->name('tours.gettours');
+        Route::post('toursimages', 'toursimages')->name('tours.toursimages');
+        Route::get('gettoursimages', 'gettoursimages')->name('tours.gettoursimages');
+        Route::post('toursreviews', 'toursreviews')->name('tours.toursreviews');
+        Route::get('gettoursreviews', 'gettoursreviews')->name('tours.gettoursreviews');
+        Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
+        Route::get('gettoursbooking', 'gettoursbooking')->name('tours.gettoursbooking');
+        Route::post('categories', 'categories')->name('tours.categories');
+        Route::post('bookings', 'bookings')->name('tours.bookings');
+        Route::get('getbookings', 'getbookings')->name('tours.getbookings');
+        Route::post('bookingsgroups', 'bookingsgroups')->name('tours.bookingsgroups');
+        Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
+        Route::post('rentalbookings', 'rentalbookings')->name('tours.rentalbookings');
+        Route::get('getrentalbookings', 'getrentalbookings')->name('tours.getrentalbookings');
+        Route::post('dispute', 'dispute')->name('tours.dispute');
+        Route::get('getcategories', 'getcategories')->name('categories.getcategories');
+    });
+
+    Route::controller(RentalsController::class)->group(function () {
+        Route::post('rentals', 'rentals')->name('rentals.rentals');
+        Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
+        Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
+        Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
+        Route::get('getrentalreviews', 'getrentalreviews')->name('rentals.getrentalreviews');
+        Route::post('rentalimages', 'rentalimages')->name('rentals.rentalimages');
+        Route::get('getrentalimages', 'getrentalimages')->name('rentals.getrentalimages');
+    });
+
+    Route::controller(UserCategoriesController::class)->group(function () {
+        Route::post('categories', 'categories')->name('user.categories');
+        Route::get('getcategories', 'getcategories')->name('user.getcategories');
+        Route::post('usercategories', 'usercategories')->name('user.usercategories');
+        Route::get('getusercategories', 'getusercategories')->name('categories.getusercategories');
+    });
+
+    Route::controller(PaymentsController::class)->group(function () {
+        Route::post('payments', 'payments')->name('payments.payments');
+        Route::get('getpayments', 'getpayments')->name('payments.getpayments');
+        Route::post('bank', 'bank')->name('payments.bank');
+        Route::get('getbank', 'getbank')->name('payments.getbank');
+        Route::post('card', 'card')->name('payments.card');
+        Route::get('getcard', 'getcard')->name('payments.getcard');
+    });
 });

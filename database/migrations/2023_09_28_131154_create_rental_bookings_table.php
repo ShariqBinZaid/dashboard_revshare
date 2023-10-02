@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('rental_bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable();
-            $table->string('name')->nullable();
+            $table->bigInteger('booking_id')->unsigned();
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
+            $table->bigInteger('rental_id')->unsigned();
+            $table->foreign('rental_id')->references('id')->on('rentals')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('rental_bookings');
     }
 };

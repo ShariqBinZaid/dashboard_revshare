@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_variations', function (Blueprint $table) {
+        Schema::create('tours_bookings', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('title')->nullable();
-            $table->string('image')->nullable();
-            $table->string('value')->nullable();
+            $table->bigInteger('booking_id')->unsigned();
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
+            $table->bigInteger('tour_id')->unsigned();
+            $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_variations');
+        Schema::dropIfExists('tours_bookings');
     }
 };

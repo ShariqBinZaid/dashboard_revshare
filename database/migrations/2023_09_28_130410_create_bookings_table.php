@@ -13,14 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_bookings', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('date_time')->nullable();
-            $table->string('descriptions')->nullable();
+            $table->string('comments')->nullable();
+            $table->string('reviews')->nullable();
+            $table->string('datetime')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('insurance_amount')->nullable();
+            $table->enum('status', ['past', 'upcoming'])->nullable();
+            $table->enum('booking_type', ['rentals', 'tours'])->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_bookings');
+        Schema::dropIfExists('bookings');
     }
 };
