@@ -38,8 +38,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
         Route::get('gettoursbooking', 'gettoursbooking')->name('tours.gettoursbooking');
         Route::post('categories', 'categories')->name('tours.categories');
-        // Route::post('bookings', 'bookings')->name('tours.bookings');
-        // Route::get('getbookings', 'getbookings')->name('tours.getbookings');
         Route::post('bookingsgroups', 'bookingsgroups')->name('tours.bookingsgroups');
         Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
         Route::post('rentalbookings', 'rentalbookings')->name('tours.rentalbookings');
@@ -47,6 +45,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('dispute', 'dispute')->name('tours.dispute');
         Route::get('getcategories', 'getcategories')->name('categories.getcategories');
     });
+
 
     Route::controller(RentalsController::class)->group(function () {
         Route::post('rentals', 'store')->name('rentals.rentals');
@@ -58,12 +57,14 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getrentalimages', 'getrentalimages')->name('rentals.getrentalimages');
     });
 
+
     Route::controller(UserCategoriesController::class)->group(function () {
         Route::post('categories', 'categories')->name('user.categories');
         Route::get('getcategories', 'getcategories')->name('user.getcategories');
         Route::post('usercategories', 'usercategories')->name('user.usercategories');
         Route::get('getusercategories', 'getusercategories')->name('categories.getusercategories');
     });
+
 
     Route::controller(PaymentsController::class)->group(function () {
         Route::post('payments', 'payments')->name('payments.payments');
@@ -73,6 +74,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('card', 'card')->name('payments.card');
         Route::get('getcard', 'getcard')->name('payments.getcard');
     });
+
 
     Route::controller(BookingsController::class)->group(function () {
         Route::post('bookings', 'bookings')->name('tours.bookings');
