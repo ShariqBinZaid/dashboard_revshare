@@ -2,18 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Rentals;
 use App\Models\RentalAddons;
 use App\Models\RentalImages;
-use App\Models\RentalReviews;
-use App\Models\Rentals;
 use Illuminate\Http\Request;
+use App\Models\RentalReviews;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\RentalsResource;
 use Illuminate\Support\Facades\Validator;
 
 class RentalsController extends Controller
 {
 
-    public function rentals(Request $req)
+    public function index()
+    {
+        $data['rentals'] = Rentals::get();
+        $data['users'] = User::all();
+        $data['rentaladdons'] = RentalAddons::all();
+        return view('rentals.index')->with($data);
+    }
+
+    public function list(Request $req)
+    {
+        $req = $req->input();
+        $rentals = Rentals::get();
+        return new RentalsResource($rentals);
+    }
+
+    public function show($id)
+    {
+        if ($id ==  "all") {
+            $rentals = Rentals::all();
+            return new RentalsResource($rentals);
+        } else {
+            $rentals = Rentals::where('id', $id)->first();
+            return response()->json(['success' => true, 'data' => $rentals]);
+        }
+    }
+
+    public function destroy(Request $req, $id)
+    {
+        Rentals::where('id', $id)->forcedelete();
+        echo json_encode(['success' => true, 'msg' => 'Rentals Deleted']);
+    }
+
+    public function store(Request $req)
     {
         $input = $req->all();
         $validator = Validator::make($input, [
@@ -21,7 +55,7 @@ class RentalsController extends Controller
             'title' => 'required',
             'price' => 'required',
             'price_type' => 'required',
-            'location' => 'required',
+            'locations' => 'required',
             'desc' => 'required',
             'comments' => 'required',
             'datetime' => 'required',
@@ -41,10 +75,10 @@ class RentalsController extends Controller
         $input += ['user_id' => Auth::user()->id];
 
         if (@$input['id']) {
-            $tours = Rentals::where("id", $input['id'])->update($input);
+            $rentals = Rentals::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rentals Updated Successfully.']);
         } else {
-            $tours = Rentals::create($input);
+            $rentals = Rentals::create($input);
             return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully']);
         }
     }

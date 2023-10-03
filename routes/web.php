@@ -12,10 +12,11 @@ use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Modules\ModulesController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\RolePermission\AttachController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
-
+use App\Models\Rentals;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +85,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::DELETE('role/destory/{id?}', 'destory')->name('role.destory');
     });
 
+
     // ************************ Modules  ************************ //
     Route::resource('module', ModulesController::class);
     Route::get('user/module/lists', [ModulesController::class, 'list'])->name('module.list');
     Route::post('storePermission',  [AttachController::class, 'storePermission'])->name('storePermission');
+
+
+    // ************************ Rentals  ************************ //
+    Route::resource('rentals', RentalsController::class);
+    Route::controller(RentalsController::class)->group(function () {
+        Route::get('user/rentals/lists', 'list')->name('rentals.list');
+    });
 });

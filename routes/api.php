@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\ToursController;
@@ -37,8 +38,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
         Route::get('gettoursbooking', 'gettoursbooking')->name('tours.gettoursbooking');
         Route::post('categories', 'categories')->name('tours.categories');
-        Route::post('bookings', 'bookings')->name('tours.bookings');
-        Route::get('getbookings', 'getbookings')->name('tours.getbookings');
+        // Route::post('bookings', 'bookings')->name('tours.bookings');
+        // Route::get('getbookings', 'getbookings')->name('tours.getbookings');
         Route::post('bookingsgroups', 'bookingsgroups')->name('tours.bookingsgroups');
         Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
         Route::post('rentalbookings', 'rentalbookings')->name('tours.rentalbookings');
@@ -48,7 +49,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::controller(RentalsController::class)->group(function () {
-        Route::post('rentals', 'rentals')->name('rentals.rentals');
+        Route::post('rentals', 'store')->name('rentals.rentals');
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
         Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
         Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
@@ -71,5 +72,12 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getbank', 'getbank')->name('payments.getbank');
         Route::post('card', 'card')->name('payments.card');
         Route::get('getcard', 'getcard')->name('payments.getcard');
+    });
+
+    Route::controller(BookingsController::class)->group(function () {
+        Route::post('bookings', 'bookings')->name('tours.bookings');
+        Route::get('getbookings', 'getbookings')->name('tours.getbookings');
+        Route::get('upcomingbookings', 'upcomingbookings')->name('booking.upcomingbookings');
+        Route::get('pastbookings', 'pastbookings')->name('booking.pastbookings');
     });
 });
