@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RentalImagesResource;
 use App\Models\RentalImages;
+use App\Models\Rentals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,6 +13,7 @@ class RentalImagesController extends Controller
     public function index()
     {
         $data['rentalimage'] = RentalImages::all();
+        $data['rentals'] = Rentals::all();
         return view('rentalimages.index')->with($data);
     }
 
@@ -26,13 +28,17 @@ class RentalImagesController extends Controller
     {
         $input = $req->all();
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'price' => 'required',
+            'image' => 'required',
         ]);
 
         // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
+        }
+
+        if ($req->file('image')) {
+            unset($input['image']);
+            $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
         }
 
         unset($input['_token']);

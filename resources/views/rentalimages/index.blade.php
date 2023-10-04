@@ -58,7 +58,7 @@
                                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
                                             fill="currentColor" />
                                     </svg>
-                                </span>Add Rentals
+                                </span>Add Rentals Images
                             </button>
                             {{-- @endif --}}
 
@@ -169,128 +169,63 @@
 
                             <input type="hidden" name="id">
 
+                            <div class="fv-row mb-7">
+
+
+                                <label class="d-block fw-semibold fs-6 mb-5">Display Image</label>
+                                <style>
+                                    .image-input-placeholder {
+                                        background-image: url('{{ asset('assets/media/svg/files/blank-image.svg') }}');
+                                    }
+
+                                    [data-theme="dark"] .image-input-placeholder {
+                                        background-image: url('{{ asset('assets/media/svg/files/blank-image-dark.svg') }}');
+                                    }
+                                </style>
+                                <div class="image-input image-input-outline image-input-placeholder"
+                                    data-kt-image-input="true">
+                                    <div class="image-input-wrapper w-125px h-125px dispalyImage">
+
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        title="Change avatar">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" id="imgInp" name="image"
+                                            accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" name="image" />
+                                    </label>
+                                    <span
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                        title="Cancel avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <span
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                        title="Remove avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-10">
-                                        <label for="rental_addons_id" class="form-label">Rental Addons</label>
+                                        <label for="rental_id" class="form-label">Rentals</label>
                                         <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="rental_addons_id">
-                                            <option selected disabled>Rental Addons</option>
-                                            @foreach ($rentaladdons as $rentaladdon)
-                                                <option value="{{ $rentaladdon->id }}">{{ $rentaladdon->name }}</option>
+                                            aria-label="Floating label select example" name="rental_id">
+                                            <option selected disabled>Rentals</option>
+                                            @foreach ($rentals as $rental)
+                                                <option value="{{ $rental->id }}">{{ $rental->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="title" class="form-label">Title</label>
-                                            <input class="form-control removeclass" placeholder="Title" name="title"
-                                                type="text" id="title" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input class="form-control removeclass" placeholder="Price" name="price"
-                                                type="text" id="price" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price_type" class="form-label">Price Type</label>
-                                            <input class="form-control removeclass" placeholder="Price Type"
-                                                name="price_type" type="text" id="price_type" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="locations" class="form-label">Location</label>
-                                            <input class="form-control removeclass" placeholder="Location"
-                                                name="locations" type="text" id="locations" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="datetime" class="form-label">Date</label>
-                                            <input class="form-control removeclass" placeholder="Date" name="datetime"
-                                                type="text" id="datetime" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="capacity" class="form-label">Capacity</label>
-                                            <input class="form-control removeclass" placeholder="Capacity"
-                                                name="capacity" type="text" id="capacity" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="skills" class="form-label">Skills</label>
-                                            <input class="form-control removeclass" placeholder="Skills" name="skills"
-                                                type="text" id="skills" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Cancel Days</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Days"
-                                                name="cancel_days" type="text" id="cancel_days" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_percent" class="form-label">Cancel Percent</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Percent"
-                                                name="cancel_percent" type="text" id="cancel_percent" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Descriptions</label>
-                                            <textarea class="form-control removeclass" name="desc" id="desc" cols="30" rows="10">Descriptions</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="comments" class="form-label">Comments</label>
-                                            <textarea class="form-control removeclass" name="comments" id="comments" cols="30" rows="10">Comments</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="description" class="form-label">Clients</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="client_id">
-                                            <option selected disabled>Clients</option>
-                                            @foreach ($clients as $client)
-                                                <option value="{{ $clients[0]->id }}">{{ $clients[0]->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
                             </div>
 
                             {{-- <div class="col-md-6">
@@ -374,9 +309,9 @@
         $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit Rentals')
+            $('.drawertitle').html('Edit Rentals Images')
             showloader('block')
-            $.get('{{ route('rentals.show', '') }}/' + id, {
+            $.get('{{ route('rentalimages.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
@@ -429,7 +364,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('rentals.store', '') }}",
+                url: "{{ route('rentalimages.store', '') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -456,7 +391,7 @@
             let id = $(this).attr('data-id');
 
             Swal.fire({
-                html: `Are you sure you want to delete this Rentals`,
+                html: `Are you sure you want to delete this Rentals Images`,
                 icon: "info",
                 buttonsStyling: false,
                 showCancelButton: true,
@@ -471,7 +406,7 @@
                 if (data.isConfirmed == true) {
                     showloader('block')
                     $.ajax({
-                        url: '{{ route('rentals.destroy', '') }}/' + id,
+                        url: '{{ route('rentalimages.destroy', '') }}/' + id,
                         type: 'DELETE',
                         dataType: 'json',
                         data: {

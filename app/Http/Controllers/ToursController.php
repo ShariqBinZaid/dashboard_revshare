@@ -55,7 +55,7 @@ class ToursController extends Controller
             return response()->json(['success' => true, 'msg' => 'Tours Updated Successfully.']);
         } else {
             $tours = Tours::create($input);
-            return response()->json(['success' => true, 'msg' => 'Tours Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Tours Created Successfully', 'data' => $tours]);
         }
     }
 

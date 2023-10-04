@@ -64,8 +64,8 @@ class RentalImagesResource extends JsonResource
                 $status = $rental->is_active == 1 ? '<div class="badge badge-light-success fw-bold">Active</div>' : '<div class="badge badge-light-danger fw-bold">Disabled</div>';
                 $creator = '';
                 $rentals[] = [
-                    'rental_id' => $rental->RentalAddons->name,
-                    'image' => $rental->image,
+                    'rental_id' => $rental->Rental->name,
+                    'image' => $userAvatar,
                     'actions' => $actions
                 ];
             }
