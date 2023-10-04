@@ -87,7 +87,7 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'user_type' => 'vendor'])) {
             $user = Auth::user();
             $success['token'] =  $user->createToken('MyApp')->accessToken;
             // $success['email'] =  $user->email;

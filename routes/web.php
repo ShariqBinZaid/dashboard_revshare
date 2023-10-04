@@ -12,6 +12,7 @@ use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Modules\ModulesController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\RentalImagesController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\RolePermission\AttachController;
@@ -96,5 +97,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('rentals', RentalsController::class);
     Route::controller(RentalsController::class)->group(function () {
         Route::get('user/rentals/lists', 'list')->name('rentals.list');
+    });
+
+    // ************************ Rentals Images  ************************ //
+    Route::resource('rentalimages', RentalImagesController::class);
+    Route::controller(RentalImagesController::class)->group(function () {
+        Route::get('user/rentalimages/lists', 'list')->name('rentalimages.list');
     });
 });

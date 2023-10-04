@@ -94,6 +94,136 @@
                 data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <!--begin:Menu link-->
+                    <span class="menu-link">
+                        <span class="menu-icon {{ request()->is('user') ? 'active' : '' }}">
+                            <i class="fa-solid fa-truck-moving fa-beat-fade"></i>
+                        </span>
+
+                        <span class="menu-title">Rentals Menu</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <!--end:Menu link-->
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('rentals.index') }}">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Rental</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('rentalimages.index') }}">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Rental Images</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Rental Reviews</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Rental Addons</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    </div>
+                    <!--end:Menu sub-->
+                </div>
+            </div>
+
+            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
+                data-kt-menu="true" data-kt-menu-expand="false">
+
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <!--begin:Menu link-->
+                    <span class="menu-link">
+                        <span class="menu-icon {{ request()->is('user') ? 'active' : '' }}">
+                            <i class="fa-solid fa-plane fa-beat-fade"></i>
+                        </span>
+
+                        <span class="menu-title">Tours Menu</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <!--end:Menu link-->
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Tours</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Tours Images</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
+                                </span>
+                                <span class="menu-title">Tours Reviews</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+
+                    </div>
+                    <!--end:Menu sub-->
+                </div>
+            </div>
+
+            {{-- <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
+                data-kt-menu="true" data-kt-menu-expand="false">
+
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <a href="{{ route('rentals.index') }}">
                         <span class="menu-link">
                             <span class="menu-icon {{ request()->is('parent') ? 'active' : '' }}">
@@ -110,9 +240,9 @@
                     </a>
                 </div>
 
-            </div>
+            </div> --}}
 
-            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
+            {{-- <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
                 data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -133,7 +263,7 @@
                     </a>
                 </div>
 
-            </div>
+            </div> --}}
 
 
 
