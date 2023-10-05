@@ -65,7 +65,6 @@ class RentalsResource extends JsonResource
                 $creator = '';
                 $rentals[] = [
                     'user_id' => $rental->User->user_name,
-                    'rental_addons_id' => $rental->RentalAddons->name,
                     'title' => $rental->title,
                     'price' => $rental->price,
                     'price_type' => $rental->price_type,

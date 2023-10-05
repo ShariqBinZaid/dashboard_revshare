@@ -24,30 +24,81 @@ class RentalImagesController extends Controller
         return new RentalImagesResource($rentals);
     }
 
+    // public function store(Request $req)
+    // {
+    //     $input = $req->all();
+    //     // dd($input['image']);
+    //     $validator = Validator::make($input, [
+    //         'image' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
+
+    //     if ($req->file('image')) {
+    //         unset($input['image']);
+    //         $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
+    //     }
+
+    //     unset($input['_token']);
+
+    //     if (@$input['id']) {
+    //         $rentals = RentalImages::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
+    //     } else {
+    //         $rentalimages = [];
+    //         foreach ($input['image'] as $rentalimage) {
+    //             $rentalimages[] = [
+    //                 'rental_id' => $input['rental_id'],
+    //                 'image' => $rentalimage,
+    //             ];
+    //         }
+
+    //         $rentals = RentalImages::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully']);
+    //     }
+    // }
+
     public function store(Request $req)
     {
         $input = $req->all();
+
         $validator = Validator::make($input, [
-            'image' => 'required',
+            'image' => 'required|array',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
-        if ($req->file('image')) {
-            unset($input['image']);
-            $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
-        }
+        if ($req->hasFile('image')) {
+            $uploadedImages = [];
 
-        unset($input['_token']);
+            foreach ($input['image'] as $image) {
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('public/profileimage', $imageName);
+
+                $uploadedImages[] = $imageName;
+            }
+
+            $input['image'] = $uploadedImages;
+        }
 
         if (@$input['id']) {
             $rentals = RentalImages::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
         } else {
-            $rentals = RentalImages::create($input);
+            $rentalimages = [];
+            foreach ($input['image'] as $rentalimage) {
+                $rentalimages[] = [
+                    'rental_id' => $input['rental_id'],
+                    'image' => $rentalimage,
+                ];
+            }
+
+            RentalImages::insert($rentalimages);
             return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully']);
         }
     }

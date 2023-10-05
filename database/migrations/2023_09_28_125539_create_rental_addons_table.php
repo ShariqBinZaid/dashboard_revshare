@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('rental_addons', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('rental_id')->unsigned();
+            $table->foreign('rental_id')->references('id')->on('rentals')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->string('price')->nullable();
             $table->timestamps();

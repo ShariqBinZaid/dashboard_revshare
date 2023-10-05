@@ -192,9 +192,9 @@
                                         data-kt-image-input-action="change" data-bs-toggle="tooltip"
                                         title="Change avatar">
                                         <i class="bi bi-pencil-fill fs-7"></i>
-                                        <input type="file" multiple id="imgInp" name="image"
+                                        <input type="file" multiple id="imgInp" name="image[]"
                                             accept=".png, .jpg, .jpeg" />
-                                        <input type="hidden" multiple name="image" />
+                                        <input type="hidden" name="image" />
                                     </label>
                                     <span
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -309,34 +309,16 @@
         $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit Rentals Images')
+            $('.drawertitle').html('Edit Rental Images')
             showloader('block')
             $.get('{{ route('rentalimages.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
                 $('#kt_drawer_example_basic').find('input[name="id"]').val(d.data.id)
-                $('#kt_drawer_example_basic').find('select[name="user_id"]').val(d.data.user_id)
-                $('#kt_drawer_example_basic').find('select[name="rental_addons_id"]').val(d.data
-                    .rental_addons_id)
-                $('#kt_drawer_example_basic').find('input[name="title"]').val(d.data.title)
-                $('#kt_drawer_example_basic').find('input[name="price"]').val(d.data.price)
-                $('#kt_drawer_example_basic').find('input[name="price_type"]').val(d.data
-                    .price_type)
-                $('#kt_drawer_example_basic').find('input[name="loc"]').val(d.data.loc)
-                $('#kt_drawer_example_basic').find('input[name="desc"]').val(d.data.desc)
-                $('#kt_drawer_example_basic').find('input[name="comments"]').val(d.data
-                    .comments)
-                $('#kt_drawer_example_basic').find('input[name="datetime"]').val(d.data
-                    .datetime)
-                $('#kt_drawer_example_basic').find('input[name="capacity"]').val(d.data
-                    .capacity)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
-                $('#kt_drawer_example_basic').find('input[name="cancel_days"]').val(d.data
-                    .cancel_days)
-                $('#kt_drawer_example_basic').find('input[name="cancel_percent"]').val(d.data
-                    .cancel_percent)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
+                $('#kt_drawer_example_basic').find('select[name="rental_id"]').val(d.data
+                    .rental_id)
+                $('#kt_drawer_example_basic').find('file[name="image"]').val(d.data.image)
                 var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
                 if (d.data.icon != 'http://127.0.0.1:8000/storage') {
                     image = d.data.icon
@@ -391,7 +373,7 @@
             let id = $(this).attr('data-id');
 
             Swal.fire({
-                html: `Are you sure you want to delete this Rentals Images`,
+                html: `Are you sure you want to delete this Rental Images`,
                 icon: "info",
                 buttonsStyling: false,
                 showCancelButton: true,

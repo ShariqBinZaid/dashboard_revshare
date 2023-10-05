@@ -172,24 +172,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-10">
-                                        <label for="user_id" class="form-label">Users</label>
+                                        <label for="rental_id" class="form-label">Rental</label>
                                         <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="user_id">
-                                            <option selected disabled>Users</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->user_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="rental_addons_id" class="form-label">Rental Addons</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="rental_addons_id">
-                                            <option selected disabled>Rental Addons</option>
-                                            @foreach ($rentaladdons as $rentaladdon)
-                                                <option value="{{ $rentaladdon->id }}">{{ $rentaladdon->name }}</option>
+                                            aria-label="Floating label select example" name="rental_id">
+                                            <option selected disabled>Rental</option>
+                                            @foreach ($rentals as $rental)
+                                                <option value="{{ $rental->id }}">{{ $rental->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -198,9 +186,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-10">
-                                            <label for="title" class="form-label">Title</label>
-                                            <input class="form-control removeclass" placeholder="Title" name="title"
-                                                type="text" id="title" value="">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input class="form-control removeclass" placeholder="Name" name="name"
+                                                type="text" id="name" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -208,85 +196,6 @@
                                             <label for="price" class="form-label">Price</label>
                                             <input class="form-control removeclass" placeholder="Price" name="price"
                                                 type="text" id="price" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price_type" class="form-label">Price Type</label>
-                                            <input class="form-control removeclass" placeholder="Price Type"
-                                                name="price_type" type="text" id="price_type" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="locations" class="form-label">Location</label>
-                                            <input class="form-control removeclass" placeholder="Location"
-                                                name="locations" type="text" id="locations" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="datetime" class="form-label">Date</label>
-                                            <input class="form-control removeclass" placeholder="Date" name="datetime"
-                                                type="text" id="datetime" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="capacity" class="form-label">Capacity</label>
-                                            <input class="form-control removeclass" placeholder="Capacity"
-                                                name="capacity" type="text" id="capacity" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="skills" class="form-label">Skills</label>
-                                            <input class="form-control removeclass" placeholder="Skills" name="skills"
-                                                type="text" id="skills" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Cancel Days</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Days"
-                                                name="cancel_days" type="text" id="cancel_days" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_percent" class="form-label">Cancel Percent</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Percent"
-                                                name="cancel_percent" type="text" id="cancel_percent" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Descriptions</label>
-                                            <textarea class="form-control removeclass" name="desc" id="desc" cols="30" rows="10">Descriptions</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="comments" class="form-label">Comments</label>
-                                            <textarea class="form-control removeclass" name="comments" id="comments" cols="30" rows="10">Comments</textarea>
                                         </div>
                                     </div>
                                 </div>

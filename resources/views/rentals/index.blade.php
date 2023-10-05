@@ -144,7 +144,6 @@
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th>User</th>
-                                <th>Rental Addons</th>
                                 <th>Title</th>
                                 <th>Price</th>
                                 <th>Price Type</th>
@@ -384,9 +383,6 @@
             },
             columns: [{
                     data: 'user_id'
-                },
-                {
-                    data: 'rental_addons_id'
                 },
                 {
                     data: 'title'

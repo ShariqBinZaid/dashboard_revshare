@@ -20,7 +20,7 @@ class RentalImagesResource extends JsonResource
             foreach ($this->resource as $rental) {
                 // dd($btl->getCategorys);
                 // $noofChild = Card::where($card->id)->count();
-                $picture = $rental->image != null ? asset('storage/' . $rental->image) : '/assets/media/avatars/blank.png';
+                $picture = $rental->image != null ? asset('storage/profileimage/' . $rental->image) : '/assets/media/avatars/blank.png';
                 $userAvatar = '<div class="d-flex align-items-center">
                             <div class="symbol symbol-35px symbol-circle">
                                     <img alt="Pic" src="' . $picture . '"
@@ -64,7 +64,7 @@ class RentalImagesResource extends JsonResource
                 $status = $rental->is_active == 1 ? '<div class="badge badge-light-success fw-bold">Active</div>' : '<div class="badge badge-light-danger fw-bold">Disabled</div>';
                 $creator = '';
                 $rentals[] = [
-                    'rental_id' => $rental->Rental->name,
+                    'rental_id' => $rental->Rental->title,
                     'image' => $userAvatar,
                     'actions' => $actions
                 ];

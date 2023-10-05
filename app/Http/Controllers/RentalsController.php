@@ -51,7 +51,6 @@ class RentalsController extends Controller
     {
         $input = $req->all();
         $validator = Validator::make($input, [
-            'rental_addons_id' => 'required',
             'title' => 'required',
             'price' => 'required',
             'price_type' => 'required',

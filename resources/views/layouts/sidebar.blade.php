@@ -147,7 +147,7 @@
 
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('rentaladdons.index') }}">
                                 <span class="menu-bullet">
                                     <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
                                 </span>
