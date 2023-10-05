@@ -192,9 +192,9 @@
                                         data-kt-image-input-action="change" data-bs-toggle="tooltip"
                                         title="Change avatar">
                                         <i class="bi bi-pencil-fill fs-7"></i>
-                                        <input type="file" id="imgInp" name="image"
+                                        <input type="file" multiple id="imgInp" name="image"
                                             accept=".png, .jpg, .jpeg" />
-                                        <input type="hidden" name="image" />
+                                        <input type="hidden" multiple name="image" />
                                     </label>
                                     <span
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"

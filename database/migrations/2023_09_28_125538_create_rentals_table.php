@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('comments')->nullable();
             $table->string('datetime')->nullable();
             $table->string('capacity')->nullable();
-            $table->string('skills')->nullable();
+            $table->enum('skills', ['beginner', 'intermediate', 'advanced', 'pro'])->nullable();
             $table->string('cancel_days')->nullable();
             $table->string('cancel_percent')->nullable();
             $table->timestamps();
