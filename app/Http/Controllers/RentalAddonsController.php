@@ -13,7 +13,7 @@ class RentalAddonsController extends Controller
 {
     public function index()
     {
-        $data['rentaladdons'] = RentalAddons::all();
+        $data['rentaladdons'] = RentalAddons::get();
         $data['rentals'] = Rentals::all();
         return view('rentaladdons.index')->with($data);
     }

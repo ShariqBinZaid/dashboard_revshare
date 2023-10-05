@@ -101,9 +101,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // ************************ Rentals Addons  ************************ //
-    Route::resource('rentalsaddons', RentalAddonsController::class);
+    Route::resource('rentaladdons', RentalAddonsController::class);
     Route::controller(RentalAddonsController::class)->group(function () {
-        Route::get('user/rentalsaddons/lists', 'list')->name('rentalsaddons.list');
+        Route::get('user/rentaladdons/lists', 'list')->name('rentaladdons.list');
     });
 
     // ************************ Rentals Images  ************************ //

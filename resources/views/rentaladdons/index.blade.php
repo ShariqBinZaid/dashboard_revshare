@@ -58,7 +58,7 @@
                                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
                                             fill="currentColor" />
                                     </svg>
-                                </span>Add Rentals
+                                </span>Add Rental Addons
                             </button>
                             {{-- @endif --}}
 
@@ -187,14 +187,14 @@
                                     <div class="col-md-6">
                                         <div class="mb-10">
                                             <label for="name" class="form-label">Name</label>
-                                            <input class="form-control removeclass" placeholder="Name" name="name"
+                                            <input class="form-control removeclass" placeholder="Name" name="name[]"
                                                 type="text" id="name" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-10">
                                             <label for="price" class="form-label">Price</label>
-                                            <input class="form-control removeclass" placeholder="Price" name="price"
+                                            <input class="form-control removeclass" placeholder="Price" name="price[]"
                                                 type="text" id="price" value="">
                                         </div>
                                     </div>
@@ -278,46 +278,16 @@
             pageLength: 10,
             lengthChange: true,
             ajax: {
-                url: "{{ route('rentals.list') }}",
+                url: "{{ route('rentaladdons.list') }}",
             },
             columns: [{
-                    data: 'user_id'
+                    data: 'rental_id'
                 },
                 {
-                    data: 'rental_addons_id'
-                },
-                {
-                    data: 'title'
+                    data: 'name'
                 },
                 {
                     data: 'price'
-                },
-                {
-                    data: 'price_type'
-                },
-                {
-                    data: 'loc'
-                },
-                {
-                    data: 'desc'
-                },
-                {
-                    data: 'comments'
-                },
-                {
-                    data: 'datetime'
-                },
-                {
-                    data: 'capacity'
-                },
-                {
-                    data: 'skills'
-                },
-                {
-                    data: 'cancel_days'
-                },
-                {
-                    data: 'cancel_percent'
                 },
                 {
                     data: 'actions'
@@ -328,34 +298,17 @@
         $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit Rentals')
+            $('.drawertitle').html('Edit Rental Addons')
             showloader('block')
             $.get('{{ route('rentals.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
                 $('#kt_drawer_example_basic').find('input[name="id"]').val(d.data.id)
-                $('#kt_drawer_example_basic').find('select[name="user_id"]').val(d.data.user_id)
-                $('#kt_drawer_example_basic').find('select[name="rental_addons_id"]').val(d.data
-                    .rental_addons_id)
-                $('#kt_drawer_example_basic').find('input[name="title"]').val(d.data.title)
+                $('#kt_drawer_example_basic').find('select[name="rental_id"]').val(d.data
+                    .rental_id)
+                $('#kt_drawer_example_basic').find('input[name="name"]').val(d.data.name)
                 $('#kt_drawer_example_basic').find('input[name="price"]').val(d.data.price)
-                $('#kt_drawer_example_basic').find('input[name="price_type"]').val(d.data
-                    .price_type)
-                $('#kt_drawer_example_basic').find('input[name="loc"]').val(d.data.loc)
-                $('#kt_drawer_example_basic').find('input[name="desc"]').val(d.data.desc)
-                $('#kt_drawer_example_basic').find('input[name="comments"]').val(d.data
-                    .comments)
-                $('#kt_drawer_example_basic').find('input[name="datetime"]').val(d.data
-                    .datetime)
-                $('#kt_drawer_example_basic').find('input[name="capacity"]').val(d.data
-                    .capacity)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
-                $('#kt_drawer_example_basic').find('input[name="cancel_days"]').val(d.data
-                    .cancel_days)
-                $('#kt_drawer_example_basic').find('input[name="cancel_percent"]').val(d.data
-                    .cancel_percent)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
                 var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
                 if (d.data.icon != 'http://127.0.0.1:8000/storage') {
                     image = d.data.icon
@@ -383,7 +336,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('rentals.store', '') }}",
+                url: "{{ route('rentaladdons.store', '') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -425,7 +378,7 @@
                 if (data.isConfirmed == true) {
                     showloader('block')
                     $.ajax({
-                        url: '{{ route('rentals.destroy', '') }}/' + id,
+                        url: '{{ route('rentaladdons.destroy', '') }}/' + id,
                         type: 'DELETE',
                         dataType: 'json',
                         data: {
