@@ -9,4 +9,9 @@ class RentalAddons extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function Rental()
+    {
+        return $this->belongsTo(User::class, 'rental_id', 'id');
+    }
 }

@@ -143,6 +143,7 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="addons_table">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th>Rental</th>
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Actions</th>
@@ -184,7 +185,28 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <label for="add_on" class="form-label"></label>
+                                        <a href="#" id="add-addon"><i style="color: #0095E8"
+                                                class="fa-solid fa-plus"></i></a>
+                                    </div>
+                                    <div class="row" id="addons-container">
+                                        <div class="col-md-6">
+                                            <div class="mb-10">
+                                                <label for="name" class="form-label">Name</label>
+                                                <input class="form-control removeclass" placeholder="Name" name="name[]"
+                                                    type="text" id="name" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-10">
+                                                <label for="price" class="form-label">Price</label>
+                                                <input class="form-control removeclass" placeholder="Price"
+                                                    name="price[]" type="text" id="price" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-md-6">
                                         <div class="mb-10">
                                             <label for="name" class="form-label">Name</label>
                                             <input class="form-control removeclass" placeholder="Name" name="name[]"
@@ -197,7 +219,7 @@
                                             <input class="form-control removeclass" placeholder="Price" name="price[]"
                                                 type="text" id="price" value="">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 {{-- <div class="col-md-6">
@@ -262,6 +284,23 @@
 
 <script>
     $(document).ready(function() {
+        $("#add-addon").click(function(e) {
+            e.preventDefault();
+
+            // Clone the first row inside addons-container
+            var newRow = $("#addons-container:first").clone();
+
+            // Clear the input values in the new row
+            newRow.find("input").val("");
+
+            // Append the new row to the addons-container
+            $("#addons-container").append(newRow);
+        });
+    });
+
+
+
+    $(document).ready(function() {
         $("#datetime").daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
@@ -300,7 +339,7 @@
             let id = $(this).attr('data-id');
             $('.drawertitle').html('Edit Rental Addons')
             showloader('block')
-            $.get('{{ route('rentals.show', '') }}/' + id, {
+            $.get('{{ route('rentaladdons.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {

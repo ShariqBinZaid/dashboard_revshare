@@ -13,26 +13,26 @@ class RentalAddonsController extends Controller
 {
     public function index()
     {
-        $data['rentaladdons'] = RentalAddons::get();
-        $data['rentals'] = Rentals::all();
+        $data['rentals'] = Rentals::get();
+        $data['rentaladdons'] = RentalAddons::all();
         return view('rentaladdons.index')->with($data);
     }
 
     public function list(Request $req)
     {
         $req = $req->input();
-        $rentals = RentalAddons::get();
-        return new RentalAddonsResource($rentals);
+        $rentaladdons = RentalAddons::with('Rental')->get();
+        return new RentalAddonsResource($rentaladdons);
     }
 
     public function show($id)
     {
         if ($id ==  "all") {
-            $rentals = RentalAddons::all();
-            return new RentalAddonsResource($rentals);
+            $rentaladdons = RentalAddons::all();
+            return new RentalAddonsResource($rentaladdons);
         } else {
-            $rentals = RentalAddons::where('id', $id)->first();
-            return response()->json(['success' => true, 'data' => $rentals]);
+            $rentaladdons = RentalAddons::where('id', $id)->first();
+            return response()->json(['success' => true, 'data' => $rentaladdons]);
         }
     }
 
@@ -59,7 +59,7 @@ class RentalAddonsController extends Controller
         unset($input['_token']);
 
         if (@$input['id']) {
-            $rentals = RentalAddons::where("id", $input['id'])->update($input);
+            $rentaladdons = RentalAddons::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rentals Addons Updated Successfully.']);
         } else {
             $names = [];
@@ -74,7 +74,7 @@ class RentalAddonsController extends Controller
                     'price' => $price,
                 ];
             }
-            $rentals = RentalAddons::create($input);
+            $rentaladdons = RentalAddons::create($input);
             return response()->json(['success' => true, 'msg' => 'Rentals Addons Created Successfully']);
         }
     }
