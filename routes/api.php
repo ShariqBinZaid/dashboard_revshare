@@ -39,6 +39,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getusertours/{user_id}', 'gettours')->name('tours.gettours');
         Route::post('toursimages', 'toursimages')->name('tours.toursimages');
         Route::get('gettoursimages', 'gettoursimages')->name('tours.gettoursimages');
+        Route::get('getusertoursimages/{tour_id}', 'getusertoursimages')->name('tours.getusertoursimages');
         Route::post('toursreviews', 'toursreviews')->name('tours.toursreviews');
         Route::get('gettoursreviews', 'gettoursreviews')->name('tours.gettoursreviews');
         Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
@@ -88,6 +89,7 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(BookingsController::class)->group(function () {
         Route::post('bookings', 'bookings')->name('tours.bookings');
         Route::get('getbookings', 'getbookings')->name('tours.getbookings');
+        Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
         Route::post('bookingGroups', 'bookingGroups')->name('tours.bookingGroups');
         Route::get('getbookingGroups', 'getbookingGroups')->name('tours.getbookingGroups');
         Route::get('getuserbookingGroups/{booking_id}', 'getuserbookingGroups')->name('tours.getuserbookingGroups');

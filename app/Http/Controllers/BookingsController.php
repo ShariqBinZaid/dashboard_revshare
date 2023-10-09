@@ -49,6 +49,12 @@ class BookingsController extends Controller
         return response()->json(['success' => true, 'data' => $getbookings]);
     }
 
+    public function getuserbookings($user_id)
+    {
+        $getbookings = Bookings::with('User')->where('user_id', $user_id)->get();
+        return response()->json(['success' => true, 'data' => $getbookings]);
+    }
+
     public function bookingGroups(Request $req)
     {
         $input = $req->all();
