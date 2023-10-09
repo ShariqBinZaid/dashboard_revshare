@@ -144,6 +144,12 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $getrentalreviews]);
     }
 
+    public function userrentalreviews($rental_id)
+    {
+        $userrentalreviews = RentalReviews::with('User', 'Rental')->where('rental_id', $rental_id)->get();
+        return response()->json(['success' => true, 'data' => $userrentalreviews]);
+    }
+
     public function rentalimages(Request $req)
     {
         $input = $req->all();
@@ -177,5 +183,11 @@ class RentalsController extends Controller
     {
         $getrentalimages = RentalImages::with('Rental')->get();
         return response()->json(['success' => true, 'data' => $getrentalimages]);
+    }
+
+    public function userrentalimages($rental_id)
+    {
+        $userrentalimages = RentalImages::with('Rental')->where('rental_id', $rental_id)->get();
+        return response()->json(['success' => true, 'data' => $userrentalimages]);
     }
 }

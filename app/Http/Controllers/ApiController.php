@@ -47,6 +47,7 @@ class ApiController extends Controller
         // return $input;
         $input += ['is_active' => '1'];
         $input['password'] = bcrypt($input['password']);
+        $input += ['otp' => rand(100000, 999999)];
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['user'] =  $user;
@@ -131,5 +132,12 @@ class ApiController extends Controller
             return response()->json(['success' => true, 'msg' => 'Success']);
         }
         return response()->json(['success' => false, 'msg' => 'Please enter valid otp code']);
+    }
+
+    public function generateotp(Request $req)
+    {
+        $otp = rand(1000, 9999);
+        $user =  User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
+        return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
     }
 }
