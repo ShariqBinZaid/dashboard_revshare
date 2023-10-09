@@ -21,12 +21,12 @@ use App\Http\Controllers\UserCategoriesController;
 */
 
 Route::post('register', [ApiController::class, 'register']);
-Route::post('certificate', [ApiController::class, 'certificate']);
 Route::post('updateregister', [ApiController::class, 'updateregister']);
 Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 Route::post('generateotp', [ApiController::class, 'generateotp']);
+Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
 Route::post('certificates', [ApiController::class, 'certificates']);
 Route::get('getcertificates', [ApiController::class, 'getcertificates']);
 Route::post('categories', [UserCategoriesController::class, 'categories']);
@@ -48,7 +48,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
         Route::get('gettoursbooking', 'gettoursbooking')->name('tours.gettoursbooking');
         Route::get('getusertoursbooking/{booking_id}/{tour_id}', 'getusertoursbooking')->name('tours.getusertoursbooking');
-        Route::post('categories', 'categories')->name('tours.categories');
         Route::post('bookingsgroups', 'bookingsgroups')->name('tours.bookingsgroups');
         Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
         Route::post('rentalbookings', 'rentalbookings')->name('tours.rentalbookings');

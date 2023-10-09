@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Certificates;
 use App\Models\User;
+use App\Models\Bookings;
 use App\Models\Packages;
+use App\Models\Certificates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -181,5 +182,12 @@ class ApiController extends Controller
         $otp = rand(1000, 9999);
         $user = User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
         return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
+    }
+
+    public function vendordashboard()
+    {
+        $booking = Bookings::count();
+        $upcomingbookings = Bookings::where('datetime', '>', date('m/d/Y'))->count();
+        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings]);
     }
 }

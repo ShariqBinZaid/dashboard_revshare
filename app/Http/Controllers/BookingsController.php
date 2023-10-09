@@ -17,7 +17,7 @@ class BookingsController extends Controller
         $validator = Validator::make($input, [
             'comments' => 'required',
             'reviews' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
             'booking_type' => 'required',
             // 'datetime' => 'required',
             'duration' => 'required',
