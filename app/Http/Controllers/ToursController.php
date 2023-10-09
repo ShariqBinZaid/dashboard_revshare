@@ -255,6 +255,12 @@ class ToursController extends Controller
         return response()->json(['success' => true, 'data' => $rentalbookings]);
     }
 
+    public function getuserrentalbookings($booking_id, $rental_id)
+    {
+        $rentalbookings = RentalBookings::with('Booking', 'Rental')->where('booking_id', $booking_id)->where('rental_id', $rental_id)->get();
+        return response()->json(['success' => true, 'data' => $rentalbookings]);
+    }
+
     public function dispute(Request $req)
     {
         $input = $req->all();
@@ -308,9 +314,9 @@ class ToursController extends Controller
         }
     }
 
-    public function getbookingsgroups()
-    {
-        $getbookingsgroups = BookingGroups::with('Booking')->get();
-        return response()->json(['success' => true, 'data' => $getbookingsgroups]);
-    }
+    // public function getbookingsgroups()
+    // {
+    //     $getbookingsgroups = BookingGroups::with('Booking')->get();
+    //     return response()->json(['success' => true, 'data' => $getbookingsgroups]);
+    // }
 }

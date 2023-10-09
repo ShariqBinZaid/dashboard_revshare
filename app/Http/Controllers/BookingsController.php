@@ -83,7 +83,7 @@ class BookingsController extends Controller
 
     public function getbookingGroups()
     {
-        $getbookingGroups = BookingGroups::get();
+        $getbookingGroups = BookingGroups::with('Booking')->get();
         return response()->json(['success' => true, 'data' => $getbookingGroups]);
     }
 

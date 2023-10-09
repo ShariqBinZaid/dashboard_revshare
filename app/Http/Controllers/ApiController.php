@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificates;
 use App\Models\User;
 use App\Models\Packages;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use phpseclib3\File\ASN1\Maps\Certificate;
 
 class ApiController extends Controller
 {
@@ -84,6 +86,56 @@ class ApiController extends Controller
             $userupdate = User::create($input);
             return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
         }
+    }
+
+    public function certificates(Request $req)
+    {
+        $input = $req->all();
+        $validator = Validator::make($input, [
+            'image' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()]);
+        }
+
+        unset($input['_token']);
+
+        // $input += ['user_id' => Auth::user()->id];
+
+        if ($req->hasFile('image')) {
+            $uploadedImages = [];
+
+            foreach ($input['image'] as $image) {
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('public/profileimage', $imageName);
+
+                $uploadedImages[] = $imageName;
+            }
+
+            $input['image'] = $uploadedImages;
+        }
+
+        if (@$input['id']) {
+            $certificates = Certificates::where("id", $input['id'])->update($input);
+            return response()->json(['success' => true, 'msg' => 'Certificate Updated Successfully.']);
+        } else {
+            $images = [];
+            foreach ($input['image'] as $image) {
+                $images[] = [
+                    'user_id' => $input['user_id'],
+                    'image' => $image,
+                ];
+            }
+            $certificates = Certificates::create($input);
+            return response()->json(['success' => true, 'msg' => 'Certificate Created Successfully']);
+        }
+    }
+
+    public function getcertificates()
+    {
+        $getcertificate = Certificates::get();
+        return response()->json(['success' => true, 'data' => $getcertificate]);
     }
 
     public function login(Request $request)

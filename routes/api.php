@@ -21,11 +21,14 @@ use App\Http\Controllers\UserCategoriesController;
 */
 
 Route::post('register', [ApiController::class, 'register']);
+Route::post('certificate', [ApiController::class, 'certificate']);
 Route::post('updateregister', [ApiController::class, 'updateregister']);
 Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 Route::post('generateotp', [ApiController::class, 'generateotp']);
+Route::post('certificates', [ApiController::class, 'certificates']);
+Route::get('getcertificates', [ApiController::class, 'getcertificates']);
 Route::post('categories', [UserCategoriesController::class, 'categories']);
 Route::post('getcategories', [UserCategoriesController::class, 'getcategories']);
 
@@ -50,6 +53,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
         Route::post('rentalbookings', 'rentalbookings')->name('tours.rentalbookings');
         Route::get('getrentalbookings', 'getrentalbookings')->name('tours.getrentalbookings');
+        Route::get('getuserrentalbookings/{booking_id}/{rental_id}', 'getuserrentalbookings')->name('tours.getuserrentalbookings');
         Route::post('dispute', 'dispute')->name('tours.dispute');
         Route::get('getcategories', 'getcategories')->name('categories.getcategories');
     });
@@ -60,6 +64,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
         Route::get('getuserrentals/{user_id}', 'getuserrentals')->name('rentals.getuserrentals');
         Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
+        Route::get('getrentaladdons', 'getrentaladdons')->name('rentals.getrentaladdons');
+        Route::get('getuserrentaladdons/{rental_id}', 'getrentaladdons')->name('rentals.getrentaladdons');
         Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
         Route::get('getrentalreviews', 'getrentalreviews')->name('rentals.getrentalreviews');
         Route::get('userrentalreviews/{rental_id}', 'userrentalreviews')->name('rentals.userrentalreviews');

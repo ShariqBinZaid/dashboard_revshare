@@ -118,6 +118,12 @@ class RentalsController extends Controller
         }
     }
 
+    public function getrentaladdons()
+    {
+        $getrentaladdons = RentalAddons::get();
+        return response()->json(['success' => true, 'data' => $getrentaladdons]);
+    }
+
     public function rentalreviews(Request $req)
     {
         $input = $req->all();
