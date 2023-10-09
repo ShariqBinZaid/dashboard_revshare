@@ -144,6 +144,12 @@ class ToursController extends Controller
         return response()->json(['success' => true, 'data' => $gettoursreviews]);
     }
 
+    public function getusertoursreviews($user_id, $tour_id)
+    {
+        $gettoursreviews = TourReviews::with('User', 'Tour')->where('user_id', $user_id)->where('tour_id', $tour_id)->get();
+        return response()->json(['success' => true, 'data' => $gettoursreviews]);
+    }
+
     public function toursbooking(Request $req)
     {
         $input = $req->all();
@@ -172,6 +178,12 @@ class ToursController extends Controller
     {
         $gettoursbooking = ToursBookings::with('Booking', 'Tour')->get();
         return response()->json(['success' => true, 'data' => $gettoursbooking]);
+    }
+
+    public function getusertoursbooking($booking_id, $tour_id)
+    {
+        $getusertoursbooking = ToursBookings::with('Booking', 'Tour')->where('booking_id', $booking_id)->where('tour_id', $tour_id)->get();
+        return response()->json(['success' => true, 'data' => $getusertoursbooking]);
     }
 
 

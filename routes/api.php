@@ -8,7 +8,6 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserCategoriesController;
-use App\Models\Categories;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +41,10 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getusertoursimages/{tour_id}', 'getusertoursimages')->name('tours.getusertoursimages');
         Route::post('toursreviews', 'toursreviews')->name('tours.toursreviews');
         Route::get('gettoursreviews', 'gettoursreviews')->name('tours.gettoursreviews');
+        Route::get('getusertoursreviews/{user_id}/{tour_id}', 'getusertoursreviews')->name('tours.getusertoursreviews');
         Route::post('toursbooking', 'toursbooking')->name('tours.toursbooking');
         Route::get('gettoursbooking', 'gettoursbooking')->name('tours.gettoursbooking');
+        Route::get('getusertoursbooking/{booking_id}/{tour_id}', 'getusertoursbooking')->name('tours.getusertoursbooking');
         Route::post('categories', 'categories')->name('tours.categories');
         Route::post('bookingsgroups', 'bookingsgroups')->name('tours.bookingsgroups');
         Route::get('getbookingsgroups', 'getbookingsgroups')->name('tours.getbookingsgroups');
