@@ -8,6 +8,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserCategoriesController;
+use App\Models\Categories;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 Route::post('generateotp', [ApiController::class, 'generateotp']);
+Route::post('categories', [UserCategoriesController::class, 'categories']);
+Route::post('getcategories', [UserCategoriesController::class, 'getcategories']);
 
 
 
@@ -63,8 +66,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::controller(UserCategoriesController::class)->group(function () {
-        Route::post('categories', 'categories')->name('user.categories');
-        Route::get('getcategories', 'getcategories')->name('user.getcategories');
+        // Route::post('categories', 'categories')->name('user.categories');
+        // Route::get('getcategories', 'getcategories')->name('user.getcategories');
         Route::post('usercategories', 'usercategories')->name('user.usercategories');
         Route::get('getusercategories', 'getusercategories')->name('categories.getusercategories');
     });
