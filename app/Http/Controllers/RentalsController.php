@@ -88,6 +88,12 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $getrentals]);
     }
 
+    public function getuserrentals($user_id)
+    {
+        $getuserrentals = Rentals::with('User', 'RentalAddons')->where('user_id', $user_id)->get();
+        return response()->json(['success' => true, 'data' => $getuserrentals]);
+    }
+
     public function rentaladdons(Request $req)
     {
         $input = $req->all();

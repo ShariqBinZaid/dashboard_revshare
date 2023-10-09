@@ -36,6 +36,7 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(ToursController::class)->group(function () {
         Route::post('tours', 'tours')->name('tours.tours');
         Route::get('gettours', 'gettours')->name('tours.gettours');
+        Route::get('getusertours/{user_id}', 'gettours')->name('tours.gettours');
         Route::post('toursimages', 'toursimages')->name('tours.toursimages');
         Route::get('gettoursimages', 'gettoursimages')->name('tours.gettoursimages');
         Route::post('toursreviews', 'toursreviews')->name('tours.toursreviews');
@@ -55,6 +56,7 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(RentalsController::class)->group(function () {
         Route::post('rentals', 'store')->name('rentals.rentals');
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
+        Route::get('getuserrentals/{user_id}', 'getuserrentals')->name('rentals.getuserrentals');
         Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
         Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
         Route::get('getrentalreviews', 'getrentalreviews')->name('rentals.getrentalreviews');

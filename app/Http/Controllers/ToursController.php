@@ -65,6 +65,12 @@ class ToursController extends Controller
         return response()->json(['success' => true, 'data' => $gettours]);
     }
 
+    public function getusertours($user_id)
+    {
+        $getusertours = Tours::with('User')->where('user_id')->get();
+        return response()->json(['success' => true, 'data' => $getusertours]);
+    }
+
     public function toursimages(Request $req)
     {
         $input = $req->all();
