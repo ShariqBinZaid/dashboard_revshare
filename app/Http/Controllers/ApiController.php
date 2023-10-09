@@ -33,7 +33,7 @@ class ApiController extends Controller
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $users  = User::where('email', $request['email'])->get();
+        $users = User::where('email', $request['email'])->get();
         // dd($users);
 
         if ($users->count() > 0) {
@@ -51,8 +51,8 @@ class ApiController extends Controller
         $input['password'] = bcrypt($input['password']);
         $input += ['otp' => rand(100000, 999999)];
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['user'] =  $user;
+        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['user'] = $user;
 
         return $this->sendResponse($success, 'User Registered Successfully.');
     }
@@ -90,45 +90,35 @@ class ApiController extends Controller
 
     public function certificates(Request $req)
     {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'image' => 'required',
-        ]);
+        try {
+            $input = $req->all();
+            $validator = Validator::make($input, [
+                'image' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        unset($input['_token']);
-
-        // $input += ['user_id' => Auth::user()->id];
-
-        if ($req->hasFile('image')) {
-            $uploadedImages = [];
-
-            foreach ($input['image'] as $image) {
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/profileimage', $imageName);
-
-                $uploadedImages[] = $imageName;
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'error' => $validator->errors()]);
             }
 
-            $input['image'] = $uploadedImages;
-        }
+            unset($input['_token']);
 
-        if (@$input['id']) {
-            $certificates = Certificates::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Certificate Updated Successfully.']);
-        } else {
-            $images = [];
-            foreach ($input['image'] as $image) {
-                $images[] = [
-                    'user_id' => $input['user_id'],
-                    'image' => $image,
-                ];
+            // $input += ['user_id' => Auth::user()->id];
+
+            if ($req->hasFile('image')) {
+                foreach ($input['image'] as $image) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->storeAs('public/profileimage', $imageName);
+                    $data = [
+                        'user_id' => $req->user_id,
+                        'image' => $imageName,
+                    ];
+                    Certificates::create($data);
+                }
             }
-            $certificates = Certificates::create($input);
+
             return response()->json(['success' => true, 'msg' => 'Certificate Created Successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
         }
     }
 
@@ -142,9 +132,9 @@ class ApiController extends Controller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
+            $success['token'] = $user->createToken('MyApp')->accessToken;
             // $success['email'] =  $user->email;
-            $success['user'] =  $user;
+            $success['user'] = $user;
             return $this->sendResponse($success, 'User Login Successfully.');
         } else {
             return $this->sendResponse('Unauthorised.', ['error' => 'Email or Password Incorrect']);
@@ -189,7 +179,7 @@ class ApiController extends Controller
     public function generateotp(Request $req)
     {
         $otp = rand(1000, 9999);
-        $user =  User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
+        $user = User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
         return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
     }
 }
