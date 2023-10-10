@@ -66,7 +66,7 @@ class UserCategoriesController extends Controller
             return response()->json(['success' => true, 'msg' => 'User Categories Updated Successfully.']);
         } else {
             $usercategories = UserCategories::create($input);
-            return response()->json(['success' => true, 'msg' => 'User Categories Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'User Categories Created Successfully', 'data' => $usercategories]);
         }
     }
 
