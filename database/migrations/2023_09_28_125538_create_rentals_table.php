@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('price_type')->nullable();
             $table->string('locations')->nullable();
             $table->string('desc')->nullable();
-            $table->string('comments')->nullable();
-            $table->string('datetime')->nullable();
+            // $table->string('comments')->nullable();
+            // $table->string('datetime')->nullable();
             $table->string('capacity')->nullable();
             $table->enum('skills', ['beginner', 'intermediate', 'advanced', 'pro'])->nullable();
             $table->string('cancel_days')->nullable();
