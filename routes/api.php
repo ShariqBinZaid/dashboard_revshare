@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('tours', 'tours')->name('tours.tours');
         Route::get('gettours', 'gettours')->name('tours.gettours');
         Route::get('getusertours/{user_id}', 'gettours')->name('tours.gettours');
+        Route::get('getonetours/{id}', 'getonetours')->name('tours.getonetours');
         Route::post('toursimages', 'toursimages')->name('tours.toursimages');
         Route::get('gettoursimages', 'gettoursimages')->name('tours.gettoursimages');
         Route::get('getusertoursimages/{tour_id}', 'getusertoursimages')->name('tours.getusertoursimages');
@@ -62,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('rentals', 'store')->name('rentals.rentals');
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
         Route::get('getuserrentals/{user_id}', 'getuserrentals')->name('rentals.getuserrentals');
+        Route::get('getonerentals/{id}', 'getonerentals')->name('rentals.getonerentals');
         // Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
         // Route::get('getrentaladdons', 'getrentaladdons')->name('rentals.getrentaladdons');
         Route::get('getuserrentaladdons/{rental_id}', 'getrentaladdons')->name('rentals.getrentaladdons');
