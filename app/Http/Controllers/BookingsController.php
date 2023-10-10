@@ -93,17 +93,32 @@ class BookingsController extends Controller
         return response()->json(['success' => true, 'data' => $getbookingGroups]);
     }
 
-    public function upcomingbookings()
-    {
-        $upcomingbookings = Bookings::where('datetime', '=>', date('Y/m/d'))->get();
-        // dd($upcomingbookings);
-        return response()->json(['success' => true, 'data' => $upcomingbookings]);
-    }
+    // public function upcomingbookings()
+    // {
+    //     $upcomingbookings = Bookings::where('datetime', '=>', date('Y/m/d'))->get();
+    //     // dd($upcomingbookings);
+    //     return response()->json(['success' => true, 'data' => $upcomingbookings]);
+    // }
+
+    // public function pastbookings()
+    // {
+    //     $pastbookings = Bookings::where('datetime', '<', date('Y/m/d'))->get();
+    //     // dd($pastbookings);
+    //     return response()->json(['success' => true, 'data' => $pastbookings]);
+    // }
 
     public function pastbookings()
     {
-        $pastbookings = Bookings::where('datetime', '<', date('Y/m/d'))->get();
-        dd($pastbookings);
+        $currentDateTime = now(); // Get the current date and time
+        $pastbookings = Bookings::where('datetime', '<', $currentDateTime)->get();
+
+        return response()->json(['success' => true, 'data' => $pastbookings]);
+    }
+
+    public function upcomingbookings()
+    {
+        $currentDateTime = now(); // Get the current date and time
+        $pastbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
 
         return response()->json(['success' => true, 'data' => $pastbookings]);
     }
