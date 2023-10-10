@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->bigInteger('rental_addons_id')->unsigned();
-            // $table->foreign('rental_addons_id')->references('id')->on('rentals')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->string('price')->nullable();
             $table->string('price_type')->nullable();
