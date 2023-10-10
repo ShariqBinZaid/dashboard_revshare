@@ -218,7 +218,7 @@ class RentalsController extends Controller
         }
 
         if (@$input['id']) {
-            $rentals = RentalImages::where("id", $input['id'])->update($input);
+            $rentalimages = RentalImages::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
         } else {
             $rentalimages = [];
@@ -229,8 +229,8 @@ class RentalsController extends Controller
                 ];
             }
 
-            RentalImages::insert($rentalimages);
-            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully']);
+            $rentalimages = RentalImages::insert($rentalimages);
+            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully', 'data' => $rentalimages]);
         }
     }
 
