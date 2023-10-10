@@ -42,40 +42,84 @@ class RentalAddonsController extends Controller
         echo json_encode(['success' => true, 'msg' => 'Rentals Addons Deleted']);
     }
 
+    // public function store(Request $req)
+    // {
+    //     $input = $req->all();
+    //     // dd($input);
+    //     $validator = Validator::make($input, [
+    //         'name' => 'required',
+    //         'price' => 'required',
+    //     ]);
+
+    //     // dd($input);
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
+
+    //     unset($input['_token']);
+
+    //     if (@$input['id']) {
+    //         $rentaladdons = RentalAddons::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rentals Addons Updated Successfully.']);
+    //     } else {
+    //         $names = [];
+    //         $rental_id = $input['rental_id'];
+
+    //         foreach ($input['name'] as $key => $name) {
+    //             $price = $input['price'][$key];
+
+    //             $names[] = [
+    //                 'rental_id' => $rental_id,
+    //                 'name' => $name,
+    //                 'price' => $price,
+    //             ];
+    //         }
+    //         $rentaladdons = RentalAddons::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rentals Addons Created Successfully', 'data' => $rentaladdons]);
+    //     }
+    // }
+
     public function store(Request $req)
     {
         $input = $req->all();
-        dd($input);
+
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'price' => 'required',
+            'rental_id' => 'required',
+            'name.*' => 'required',
+            'price.*' => 'required',
         ]);
 
-        // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
+        // Remove the _token field
         unset($input['_token']);
 
-        if (@$input['id']) {
-            $rentaladdons = RentalAddons::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Rentals Addons Updated Successfully.']);
-        } else {
-            $names = [];
-            $rental_id = $input['rental_id'];
+        $rental_id = $input['rental_id'];
 
-            foreach ($input['name'] as $key => $name) {
-                $price = $input['price'][$key];
+        // Create an array to store the rental addons
+        $rentalAddons = [];
 
-                $names[] = [
-                    'rental_id' => $rental_id,
-                    'name' => $name,
-                    'price' => $price,
-                ];
-            }
-            $rentaladdons = RentalAddons::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rentals Addons Created Successfully']);
+        foreach ($input['name'] as $key => $name) {
+            $price = $input['price'][$key];
+
+            $rentalAddons[] = [
+                'rental_id' => $rental_id,
+                'name' => $name,
+                'price' => $price,
+            ];
         }
+
+        // Use the create method to store all rental addons
+        RentalAddons::insert($rentalAddons);
+
+        return response()->json(['success' => true, 'msg' => 'Rentals Addons Created Successfully', 'data' => $rentalAddons]);
+    }
+
+    public function getrentaladdons()
+    {
+        $getrentaladdons = RentalAddons::get();
+        return response()->json(['success' => true, 'data' => $getrentaladdons]);
     }
 }

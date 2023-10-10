@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\RentalAddonsController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserCategoriesController;
@@ -61,8 +62,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('rentals', 'store')->name('rentals.rentals');
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
         Route::get('getuserrentals/{user_id}', 'getuserrentals')->name('rentals.getuserrentals');
-        Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
-        Route::get('getrentaladdons', 'getrentaladdons')->name('rentals.getrentaladdons');
+        // Route::post('rentaladdons', 'rentaladdons')->name('rentals.rentaladdons');
+        // Route::get('getrentaladdons', 'getrentaladdons')->name('rentals.getrentaladdons');
         Route::get('getuserrentaladdons/{rental_id}', 'getrentaladdons')->name('rentals.getrentaladdons');
         Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
         Route::get('getrentalreviews', 'getrentalreviews')->name('rentals.getrentalreviews');
@@ -70,6 +71,12 @@ Route::middleware('auth:api')->group(function () {
         Route::post('rentalimages', 'rentalimages')->name('rentals.rentalimages');
         Route::get('getrentalimages', 'getrentalimages')->name('rentals.getrentalimages');
         Route::get('userrentalimages/{rental_id}', 'userrentalimages')->name('rentals.userrentalimages');
+    });
+
+
+    Route::controller(RentalAddonsController::class)->group(function () {
+        Route::post('rentaladdons', 'store')->name('rentals.rentaladdons');
+        Route::get('getrentaladdons', 'getrentaladdons')->name('rentals.getrentaladdons');
     });
 
 

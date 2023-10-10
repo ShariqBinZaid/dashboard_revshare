@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Bookings;
 use App\Models\Packages;
@@ -187,7 +188,8 @@ class ApiController extends Controller
     public function vendordashboard()
     {
         $booking = Bookings::count();
-        $upcomingbookings = Bookings::where('datetime', '>', date('Y/m/d'))->count();
+        $currentDateTime = Carbon::now();
+        $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->count();
         return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings]);
     }
 }

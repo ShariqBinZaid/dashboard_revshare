@@ -120,7 +120,7 @@ class BookingsController extends Controller
     {
         // $currentDateTime = now();
         $currentDateTime = Carbon::now();
-        $pastbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
-        return response()->json(['success' => true, 'data' => $pastbookings]);
+        $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
+        return response()->json(['success' => true, 'data' => $upcomingbookings]);
     }
 }

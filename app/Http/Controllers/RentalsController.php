@@ -94,35 +94,35 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $getuserrentals]);
     }
 
-    public function rentaladdons(Request $req)
-    {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'price' => 'required',
-        ]);
+    // public function rentaladdons(Request $req)
+    // {
+    //     $input = $req->all();
+    //     $validator = Validator::make($input, [
+    //         'name' => 'required',
+    //         'price' => 'required',
+    //     ]);
 
-        // dd($input);
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
+    //     // dd($input);
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
 
-        unset($input['_token']);
+    //     unset($input['_token']);
 
-        if (@$input['id']) {
-            $rentaladdons = RentalAddons::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Addons Updated Successfully.']);
-        } else {
-            $rentaladdons = RentalAddons::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Addons Created Successfully', 'data' => $rentaladdons]);
-        }
-    }
+    //     if (@$input['id']) {
+    //         $rentaladdons = RentalAddons::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rental Addons Updated Successfully.']);
+    //     } else {
+    //         $rentaladdons = RentalAddons::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rental Addons Created Successfully', 'data' => $rentaladdons]);
+    //     }
+    // }
 
-    public function getrentaladdons()
-    {
-        $getrentaladdons = RentalAddons::get();
-        return response()->json(['success' => true, 'data' => $getrentaladdons]);
-    }
+    // public function getrentaladdons()
+    // {
+    //     $getrentaladdons = RentalAddons::get();
+    //     return response()->json(['success' => true, 'data' => $getrentaladdons]);
+    // }
 
     public function rentalreviews(Request $req)
     {
