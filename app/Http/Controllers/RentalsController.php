@@ -57,7 +57,7 @@ class RentalsController extends Controller
             'locations' => 'required',
             'desc' => 'required',
             // 'comments' => 'required',
-            'datetime' => 'required',
+            // 'datetime' => 'required',
             'capacity' => 'required',
             'skills' => 'required',
             'cancel_days' => 'required',
