@@ -78,7 +78,7 @@ class RentalsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Rentals Updated Successfully.']);
         } else {
             $rentals = Rentals::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully', 'data' => $rentals]);
         }
     }
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BookingGroups;
+use Carbon\Carbon;
 use App\Models\Bookings;
 use Illuminate\Http\Request;
+use App\Models\BookingGroups;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\TextUI\XmlConfiguration\Group;
@@ -109,17 +110,17 @@ class BookingsController extends Controller
 
     public function pastbookings()
     {
-        $currentDateTime = now(); // Get the current date and time
+        // $currentDateTime = now();
+        $currentDateTime = Carbon::now();
         $pastbookings = Bookings::where('datetime', '<', $currentDateTime)->get();
-
         return response()->json(['success' => true, 'data' => $pastbookings]);
     }
 
     public function upcomingbookings()
     {
-        $currentDateTime = now(); // Get the current date and time
+        // $currentDateTime = now();
+        $currentDateTime = Carbon::now();
         $pastbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
-
         return response()->json(['success' => true, 'data' => $pastbookings]);
     }
 }
