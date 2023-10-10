@@ -40,7 +40,7 @@ class BookingsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Bookings Updated Successfully.']);
         } else {
             $bookings = Bookings::create($input);
-            return response()->json(['success' => true, 'msg' => 'Bookings Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Bookings Created Successfully', 'data' => $bookings]);
         }
     }
 
