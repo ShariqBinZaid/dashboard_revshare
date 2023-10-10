@@ -30,7 +30,7 @@ Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
 Route::post('certificates', [ApiController::class, 'certificates']);
 Route::get('getcertificates', [ApiController::class, 'getcertificates']);
 Route::post('categories', [UserCategoriesController::class, 'categories']);
-Route::post('getcategories', [UserCategoriesController::class, 'getcategories']);
+Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
 
 
 
@@ -54,7 +54,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getrentalbookings', 'getrentalbookings')->name('tours.getrentalbookings');
         Route::get('getuserrentalbookings/{booking_id}/{rental_id}', 'getuserrentalbookings')->name('tours.getuserrentalbookings');
         Route::post('dispute', 'dispute')->name('tours.dispute');
-        Route::get('getcategories', 'getcategories')->name('categories.getcategories');
     });
 
 
