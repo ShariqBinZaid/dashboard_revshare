@@ -111,14 +111,14 @@ class BookingsController extends Controller
     public function pastbookings()
     {
         $currentDateTime = Carbon::now();
-        $pastbookings = Bookings::where('datetime', '<', $currentDateTime)->get();
+        $pastbookings = Bookings::with('User')->where('datetime', '<', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $pastbookings]);
     }
 
     public function upcomingbookings()
     {
         $currentDateTime = Carbon::now();
-        $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
+        $upcomingbookings = Bookings::with('User')->where('datetime', '>', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $upcomingbookings]);
     }
 
@@ -132,7 +132,8 @@ class BookingsController extends Controller
     public function allpast()
     {
         // $allpast = Bookings::whereIn('booking_type', ['rentals', 'tours'])->get();
-        $allpast = Bookings::where('booking_type', ['rentals', 'tours'])->get();
+        $currentDateTime = Carbon::now();
+        $allpast = Bookings::where('booking_type', ['rentals', 'tours'])->where('datetime', '<', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $allpast]);
     }
 }
