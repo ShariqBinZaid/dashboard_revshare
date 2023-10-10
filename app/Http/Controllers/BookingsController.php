@@ -95,13 +95,16 @@ class BookingsController extends Controller
 
     public function upcomingbookings()
     {
-        $upcomingbookings = Bookings::where('datetime', '>', date('Y/m/d'))->get();
+        $upcomingbookings = Bookings::where('datetime', '=>', date('Y/m/d'))->get();
+        // dd($upcomingbookings);
         return response()->json(['success' => true, 'data' => $upcomingbookings]);
     }
 
     public function pastbookings()
     {
         $pastbookings = Bookings::where('datetime', '<', date('Y/m/d'))->get();
+        dd($pastbookings);
+
         return response()->json(['success' => true, 'data' => $pastbookings]);
     }
 }

@@ -56,7 +56,7 @@ class RentalsController extends Controller
             'price_type' => 'required',
             'locations' => 'required',
             'desc' => 'required',
-            'comments' => 'required',
+            // 'comments' => 'required',
             'datetime' => 'required',
             'capacity' => 'required',
             'skills' => 'required',

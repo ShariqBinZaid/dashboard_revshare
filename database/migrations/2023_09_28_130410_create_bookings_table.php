@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('comments')->nullable();
             $table->string('reviews')->nullable();
-            $table->string('datetime')->nullable();
+            $table->date('datetime')->nullable();
             $table->string('duration')->nullable();
             $table->string('insurance_amount')->nullable();
             // $table->enum('status', ['past', 'upcoming'])->nullable();
