@@ -110,7 +110,6 @@ class BookingsController extends Controller
 
     public function pastbookings()
     {
-        // $currentDateTime = now();
         $currentDateTime = Carbon::now();
         $pastbookings = Bookings::where('datetime', '<', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $pastbookings]);
@@ -118,9 +117,22 @@ class BookingsController extends Controller
 
     public function upcomingbookings()
     {
-        // $currentDateTime = now();
         $currentDateTime = Carbon::now();
         $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $upcomingbookings]);
+    }
+
+    public function allupcoming()
+    {
+        $currentDateTime = Carbon::now();
+        $allupcoming = Bookings::where('datetime', '>', $currentDateTime)->get();
+        return response()->json(['success' => true, 'data' => $allupcoming]);
+    }
+
+    public function allpast()
+    {
+        // $allpast = Bookings::whereIn('booking_type', ['rentals', 'tours'])->get();
+        $allpast = Bookings::where('booking_type', ['rentals', 'tours'])->get();
+        return response()->json(['success' => true, 'data' => $allpast]);
     }
 }
