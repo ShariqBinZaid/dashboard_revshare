@@ -93,7 +93,6 @@ class RentalAddonsController extends Controller
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
-        // Remove the _token field
         unset($input['_token']);
 
         $rental_id = $input['rental_id'];
@@ -111,9 +110,7 @@ class RentalAddonsController extends Controller
             ];
         }
 
-        // Use the create method to store all rental addons
         RentalAddons::insert($rentalAddons);
-
         return response()->json(['success' => true, 'msg' => 'Rentals Addons Created Successfully', 'data' => $rentalAddons]);
     }
 
