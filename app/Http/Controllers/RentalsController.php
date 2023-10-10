@@ -114,7 +114,7 @@ class RentalsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Rental Addons Updated Successfully.']);
         } else {
             $rentaladdons = RentalAddons::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Addons Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Rental Addons Created Successfully', 'data' => $rentaladdons]);
         }
     }
 
@@ -146,7 +146,7 @@ class RentalsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Rental Reviews Updated Successfully.']);
         } else {
             $rentalreviews = RentalReviews::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Reviews Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Rental Reviews Created Successfully', 'data' => $rentalreviews]);
         }
     }
 
@@ -162,32 +162,75 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $userrentalreviews]);
     }
 
+    // public function rentalimages(Request $req)
+    // {
+    //     $input = $req->all();
+    //     $validator = Validator::make($input, [
+    //         'rental_id' => 'required',
+    //         'image' => 'required',
+    //     ]);
+
+    //     // dd($input);
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
+
+    //     if ($req->file('image')) {
+    //         unset($input['image']);
+    //         $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
+    //     }
+
+    //     unset($input['_token']);
+
+    //     if (@$input['id']) {
+    //         $rentalreviews = RentalImages::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
+    //     } else {
+    //         $rentalreviews = RentalImages::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rental Images Created Successfully', 'data' => $rentalreviews]);
+    //     }
+    // }
+
     public function rentalimages(Request $req)
     {
         $input = $req->all();
+
         $validator = Validator::make($input, [
-            'rental_id' => 'required',
-            'image' => 'required',
+            'image' => 'required|array',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
-        if ($req->file('image')) {
-            unset($input['image']);
-            $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
+        if ($req->hasFile('image')) {
+            $uploadedImages = [];
+
+            foreach ($input['image'] as $image) {
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('public/profileimage', $imageName);
+
+                $uploadedImages[] = $imageName;
+            }
+
+            $input['image'] = $uploadedImages;
         }
 
-        unset($input['_token']);
-
         if (@$input['id']) {
-            $rentalreviews = RentalImages::where("id", $input['id'])->update($input);
+            $rentals = RentalImages::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
         } else {
-            $rentalreviews = RentalImages::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Images Created Successfully']);
+            $rentalimages = [];
+            foreach ($input['image'] as $rentalimage) {
+                $rentalimages[] = [
+                    'rental_id' => $input['rental_id'],
+                    'image' => $rentalimage,
+                ];
+            }
+
+            RentalImages::insert($rentalimages);
+            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully']);
         }
     }
 
