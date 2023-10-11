@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Bookings extends Model
 {
@@ -15,12 +16,17 @@ class Bookings extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function Tour()
+    public function Tourbooking()
     {
-        return $this->belongsTo(ToursBookings::class, 'booking_id', 'id');
+        return $this->belongsTo(ToursBookings::class, 'id', 'booking_id');
     }
+
     public function Rental()
     {
         return $this->belongsTo(RentalBookings::class, 'booking_id', 'id');
+    }
+
+    public function upComming() {
+        return $this->Tour()->whereDate('datetime','>', Carbon::today(1));
     }
 }

@@ -100,15 +100,13 @@ Route::middleware('auth:api')->group(function () {
         Route::post('bookings', 'bookings')->name('tours.bookings');
         Route::get('getbookings', 'getbookings')->name('tours.getbookings');
         Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
-        Route::post('bookingtours', 'bookingtours')->name('tours.bookingtours');
         Route::get('getbookingtours', 'getbookingtours')->name('tours.getbookingtours');
-        Route::get('getuserbookingtours/{booking_id}/{tour_id}', 'getuserbookingtours')->name('tours.getuserbookingtours');
-        Route::post('bookingrentals', 'bookingrentals')->name('tours.bookingrentals');
+        Route::get('getuserbookingtours/{user_id}', 'getuserbookingtours')->name('tours.getuserbookingtours');
         Route::get('getbookingrentals', 'getbookingrentals')->name('tours.getbookingrentals');
         Route::get('getuserbookingrentals/{booking_id}/{rental_id}', 'getbookingrentals')->name('tours.getbookingrentals');
         Route::post('bookingGroups', 'bookingGroups')->name('tours.bookingGroups');
         Route::get('getbookingGroups', 'getbookingGroups')->name('tours.getbookingGroups');
-        Route::get('getuserbookingGroups/{booking_id}', 'getuserbookingGroups')->name('tours.getuserbookingGroups');
+        // Route::get('getuserbookingGroups/{booking_id}', 'getuserbookingGroups')->name('tours.getuserbookingGroups');
         Route::get('upcomingbookings', 'upcomingbookings')->name('booking.upcomingbookings');
         Route::get('pastbookings', 'pastbookings')->name('booking.pastbookings');
     });

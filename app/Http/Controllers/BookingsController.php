@@ -9,6 +9,7 @@ use App\Models\BookingGroups;
 use App\Models\BookingRentals;
 use App\Models\BookingTours;
 use App\Models\RentalBookings;
+use App\Models\Tours;
 use App\Models\ToursBookings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -33,8 +34,8 @@ class BookingsController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
-
-        unset($input['_token']);
+        $tourRental = $input['tour_rental_id'];
+        unset($input['_token'], $input['tour_rental_id']);
 
         $input += ['user_id' => Auth::user()->id];
         $input += ['datetime' => date('Y-m-d')];
@@ -44,19 +45,43 @@ class BookingsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Bookings Updated Successfully.']);
         } else {
             $bookings = Bookings::create($input);
+            if ($input['booking_type'] == "tours") {
+                ToursBookings::create(['booking_id' => $bookings->id, 'tour_id' => $tourRental]);
+            }
+            if ($input['booking_type'] == "rentals") {
+                RentalBookings::create(['booking_id' => $bookings->id, 'rental_id' => $tourRental]);
+            }
             return response()->json(['success' => true, 'msg' => 'Bookings Created Successfully', 'data' => $bookings]);
         }
+    }
+
+    public function getuserbookings($user_id)
+    {
+
+        $UpCommingtours = Tours::with('User', 'getbooking.Tourbooking')->where('user_id', $user_id)->get();
+        $upComming = [];
+        if ($UpCommingtours->count() > 0) {
+            foreach ($UpCommingtours as $key => $value) {
+                foreach ($value  as $booking) {
+                    dd($value);
+                    if ($value->datetime > Carbon::today()) {
+                        $upComming[] = $value;
+                    }
+                }
+            }
+        }
+        // if($tours->count() > 0){
+        //     foreach ($tours as $key => $tours) {
+        //         # code...
+        //     }
+        // }
+        $getbookings = Bookings::with('User')->where('user_id', $user_id)->get();
+        return response()->json(['success' => true, 'data' => $upComming]);
     }
 
     public function getbookings(Request $req)
     {
         $getbookings = Bookings::with('User')->get();
-        return response()->json(['success' => true, 'data' => $getbookings]);
-    }
-
-    public function getuserbookings($user_id)
-    {
-        $getbookings = Bookings::with('User')->where('user_id', $user_id)->get();
         return response()->json(['success' => true, 'data' => $getbookings]);
     }
 
@@ -86,30 +111,6 @@ class BookingsController extends Controller
         }
     }
 
-    public function bookingtours(Request $req)
-    {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'booking_id' => 'required',
-            'tour_id' => 'required',
-        ]);
-
-        // dd($input);
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        unset($input['_token']);
-
-        if (@$input['id']) {
-            $bookingtours = ToursBookings::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Booking Tours Updated Successfully.']);
-        } else {
-            $bookingtours = ToursBookings::create($input);
-            return response()->json(['success' => true, 'msg' => 'Booking Tours Created Successfully']);
-        }
-    }
-
     public function getbookingtours()
     {
         $getbookingtours = ToursBookings::with('Booking', 'Tour')->get();
@@ -122,34 +123,10 @@ class BookingsController extends Controller
     //     return response()->json(['success' => true, 'data' => $getbookingtours]);
     // }
 
-    public function getuserbookingtours()
+    public function getuserbookingtours($user_id)
     {
-        $getbookingtours = Bookings::with('Tour')->get();
+        $getbookingtours = Bookings::with('Tour')->where('user_id', $user_id)->get();
         return response()->json(['success' => true, 'data' => $getbookingtours]);
-    }
-
-    public function bookingrentals(Request $req)
-    {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'booking_id' => 'required',
-            'rental_id' => 'required',
-        ]);
-
-        // dd($input);
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        unset($input['_token']);
-
-        if (@$input['id']) {
-            $bookingtours = RentalBookings::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Bookings Updated Successfully.']);
-        } else {
-            $bookingtours = RentalBookings::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Bookings Created Successfully']);
-        }
     }
 
     public function getbookingrentals()
@@ -170,24 +147,10 @@ class BookingsController extends Controller
         return response()->json(['success' => true, 'data' => $getbookingGroups]);
     }
 
-    public function getuserbookingGroups($booking_id)
-    {
-        $getbookingGroups = BookingGroups::where('booking_id', $booking_id)->get();
-        return response()->json(['success' => true, 'data' => $getbookingGroups]);
-    }
-
-    // public function upcomingbookings()
+    // public function getuserbookingGroups($booking_id)
     // {
-    //     $upcomingbookings = Bookings::where('datetime', '=>', date('Y/m/d'))->get();
-    //     // dd($upcomingbookings);
-    //     return response()->json(['success' => true, 'data' => $upcomingbookings]);
-    // }
-
-    // public function pastbookings()
-    // {
-    //     $pastbookings = Bookings::where('datetime', '<', date('Y/m/d'))->get();
-    //     // dd($pastbookings);
-    //     return response()->json(['success' => true, 'data' => $pastbookings]);
+    //     $getbookingGroups = BookingGroups::where('booking_id', $booking_id)->get();
+    //     return response()->json(['success' => true, 'data' => $getbookingGroups]);
     // }
 
     public function pastbookings()
