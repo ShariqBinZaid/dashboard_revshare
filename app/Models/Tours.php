@@ -19,7 +19,8 @@ class Tours extends Model
         return $this->hasMany(ToursImages::class, 'tour_id', 'id');
     }
 
-    public function getbooking(){
-        return $this->hasMany(ToursBookings::class,'tour_id','id');
+    public function getbooking()
+    {
+        return $this->hasMany(ToursBookings::class, 'tour_id', 'id');
     }
 }

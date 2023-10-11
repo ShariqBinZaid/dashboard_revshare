@@ -24,6 +24,7 @@ class Rentals extends Model
     {
         return $this->hasMany(RentalImages::class, 'rental_id', 'id');
     }
+    
     public function getbooking()
     {
         return $this->hasMany(RentalBookings::class, 'rental_id', 'id');

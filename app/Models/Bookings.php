@@ -26,7 +26,8 @@ class Bookings extends Model
         return $this->belongsTo(RentalBookings::class, 'booking_id', 'id');
     }
 
-    public function upComming() {
-        return $this->Tour()->whereDate('datetime','>', Carbon::today(1));
+    public function upComming()
+    {
+        return $this->Tour()->whereDate('datetime', '>', Carbon::today(1));
     }
 }
