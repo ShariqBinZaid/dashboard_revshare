@@ -109,7 +109,5 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getuserbookingGroups/{booking_id}', 'getuserbookingGroups')->name('tours.getuserbookingGroups');
         Route::get('upcomingbookings', 'upcomingbookings')->name('booking.upcomingbookings');
         Route::get('pastbookings', 'pastbookings')->name('booking.pastbookings');
-        Route::get('allpast', 'allpast')->name('booking.allpast');
-        Route::get('allupcoming', 'allupcoming')->name('booking.allupcoming');
     });
 });

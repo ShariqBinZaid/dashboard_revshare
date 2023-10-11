@@ -121,19 +121,4 @@ class BookingsController extends Controller
         $upcomingbookings = Bookings::with('User')->where('datetime', '>', $currentDateTime)->get();
         return response()->json(['success' => true, 'data' => $upcomingbookings]);
     }
-
-    public function allupcoming()
-    {
-        $currentDateTime = Carbon::now();
-        $allupcoming = Bookings::where('datetime', '>', $currentDateTime)->get();
-        return response()->json(['success' => true, 'data' => $allupcoming]);
-    }
-
-    public function allpast()
-    {
-        // $allpast = Bookings::whereIn('booking_type', ['rentals', 'tours'])->get();
-        $currentDateTime = Carbon::now();
-        $allpast = Bookings::where('booking_type', ['rentals', 'tours'])->where('datetime', '<', $currentDateTime)->get();
-        return response()->json(['success' => true, 'data' => $allpast]);
-    }
 }
