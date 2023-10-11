@@ -6,6 +6,10 @@ use Carbon\Carbon;
 use App\Models\Bookings;
 use Illuminate\Http\Request;
 use App\Models\BookingGroups;
+use App\Models\BookingRentals;
+use App\Models\BookingTours;
+use App\Models\RentalBookings;
+use App\Models\ToursBookings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\TextUI\XmlConfiguration\Group;
@@ -17,12 +21,12 @@ class BookingsController extends Controller
         $input = $req->all();
         $validator = Validator::make($input, [
             'comments' => 'required',
-            'reviews' => 'required',
+            // 'reviews' => 'required',
             // 'status' => 'required',
             'booking_type' => 'required',
             // 'datetime' => 'required',
-            'duration' => 'required',
-            'insurance_amount' => 'required',
+            // 'duration' => 'required',
+            // 'insurance_amount' => 'required',
         ]);
 
         // dd($input);
@@ -80,6 +84,84 @@ class BookingsController extends Controller
             $bookings = BookingGroups::create($input);
             return response()->json(['success' => true, 'msg' => 'Booking Groups Created Successfully']);
         }
+    }
+
+    public function bookingtours(Request $req)
+    {
+        $input = $req->all();
+        $validator = Validator::make($input, [
+            'booking_id' => 'required',
+            'tour_id' => 'required',
+        ]);
+
+        // dd($input);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()]);
+        }
+
+        unset($input['_token']);
+
+        if (@$input['id']) {
+            $bookingtours = ToursBookings::where("id", $input['id'])->update($input);
+            return response()->json(['success' => true, 'msg' => 'Booking Tours Updated Successfully.']);
+        } else {
+            $bookingtours = ToursBookings::create($input);
+            return response()->json(['success' => true, 'msg' => 'Booking Tours Created Successfully']);
+        }
+    }
+
+    public function getbookingtours()
+    {
+        $getbookingtours = ToursBookings::with('Booking', 'Tour')->get();
+        return response()->json(['success' => true, 'data' => $getbookingtours]);
+    }
+
+    // public function getuserbookingtours($booking_id, $tour_id)
+    // {
+    //     $getbookingtours = ToursBookings::with('Booking', 'Tour')->where('booking_id', $booking_id)->where('tour_id', $tour_id)->get();
+    //     return response()->json(['success' => true, 'data' => $getbookingtours]);
+    // }
+
+    public function getuserbookingtours()
+    {
+        $getbookingtours = Bookings::with('Tour')->get();
+        return response()->json(['success' => true, 'data' => $getbookingtours]);
+    }
+
+    public function bookingrentals(Request $req)
+    {
+        $input = $req->all();
+        $validator = Validator::make($input, [
+            'booking_id' => 'required',
+            'rental_id' => 'required',
+        ]);
+
+        // dd($input);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()]);
+        }
+
+        unset($input['_token']);
+
+        if (@$input['id']) {
+            $bookingtours = RentalBookings::where("id", $input['id'])->update($input);
+            return response()->json(['success' => true, 'msg' => 'Rental Bookings Updated Successfully.']);
+        } else {
+            $bookingtours = RentalBookings::create($input);
+            return response()->json(['success' => true, 'msg' => 'Rental Bookings Created Successfully']);
+        }
+    }
+
+    public function getbookingrentals()
+    {
+        $getbookingrentals = RentalBookings::with('Booking', 'Rental')->get();
+        return response()->json(['success' => true, 'data' => $getbookingrentals]);
+    }
+
+    public function getuserbookingrentals($booking_id, $rental_id)
+    {
+        $getbookingrentals = RentalBookings::with('Booking', 'Rental')->where('booking_id', $booking_id)->where('rental_id', $rental_id)->get();
+        return response()->json(['success' => true, 'data' => $getbookingrentals]);
     }
 
     public function getbookingGroups()

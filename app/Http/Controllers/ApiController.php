@@ -190,6 +190,18 @@ class ApiController extends Controller
         $booking = Bookings::count();
         $currentDateTime = Carbon::now();
         $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->count();
-        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings]);
+        $durations = Bookings::sum('duration');
+        $totalMinutes = 0;
+
+        foreach ($durations as $duration) {
+            $parts = explode(' ', $duration->duration);
+            $hours = (int)$parts[0];
+            $minutes = (int)$parts[2];
+            $totalMinutes += $hours * 60 + $minutes;
+        }
+
+        $totalHours = floor($totalMinutes / 60);
+        $totalMinutes = $totalMinutes % 60;
+        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $totalMinutes]);
     }
 }

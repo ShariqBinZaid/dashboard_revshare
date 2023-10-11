@@ -672,6 +672,7 @@ class ComposerStaticInita03f274ec08755f5b252f87f7381ed0c
         'App\\Models\\Bookings' => __DIR__ . '/../..' . '/app/Models/Bookings.php',
         'App\\Models\\CardDetails' => __DIR__ . '/../..' . '/app/Models/CardDetails.php',
         'App\\Models\\Categories' => __DIR__ . '/../..' . '/app/Models/Categories.php',
+        'App\\Models\\Certificates' => __DIR__ . '/../..' . '/app/Models/Certificates.php',
         'App\\Models\\Disputes' => __DIR__ . '/../..' . '/app/Models/Disputes.php',
         'App\\Models\\Modules' => __DIR__ . '/../..' . '/app/Models/Modules.php',
         'App\\Models\\Payments' => __DIR__ . '/../..' . '/app/Models/Payments.php',
