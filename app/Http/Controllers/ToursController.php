@@ -150,7 +150,7 @@ class ToursController extends Controller
             }
 
             $tourimage = ToursImages::insert($rentalimages);
-            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully', 'data' => $tourimage]);
+            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully']);
         }
     }
 
