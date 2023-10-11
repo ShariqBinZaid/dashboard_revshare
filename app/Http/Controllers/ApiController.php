@@ -125,23 +125,24 @@ class ApiController extends Controller
 
     public function changepassword(Request $request)
     {
-        // Validate the request
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|confirmed',
-        ]);
-
-        $user = auth()->user();
-
-        if (Hash::check($request->current_password, $user->password)) {
-            $user->update([
-                'password' => Hash::make($request->new_password),
+        try {
+            // Validate the request
+            $request->validate([
+                'password' => 'required|confirmed',
+                'password_confirmation' => 'required',
+                'current_password' => 'required'
             ]);
-
-            return back()->with("status", "Password Changed Successfully!");
+            $user = User::find(Auth::id());
+            if (Hash::check($request->current_password, $user->password)) {
+                $user->password = bcrypt($request->password);
+                $user->save();
+                return $this->sendResponse($user, 'Password changed successfully!');
+            } else {
+                return $this->sendError('Current password mismatch!');
+            }
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-
-        return back()->withErrors(['current_password' => 'The current password is incorrect.']);
     }
 
     public function certificates(Request $req)

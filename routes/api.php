@@ -24,7 +24,7 @@ use App\Http\Controllers\UserCategoriesController;
 Route::post('register', [ApiController::class, 'register']);
 Route::post('registerdelete/{id}', [ApiController::class, 'registerdelete']);
 Route::post('updateregister', [ApiController::class, 'updateregister']);
-Route::post('changepassword', [ApiController::class, 'changepassword']);
+
 Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
@@ -38,6 +38,7 @@ Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
 
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('changepassword', [ApiController::class, 'changepassword']);
     Route::controller(ToursController::class)->group(function () {
         Route::post('tours', 'tours')->name('tours.tours');
         Route::get('gettours', 'gettours')->name('tours.gettours');
