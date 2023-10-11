@@ -101,36 +101,48 @@ class ApiController extends Controller
             return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
         }
     }
-    // public function updateregister(Request $req)
+
+    // public function changepassword(Request $req)
     // {
-    //     $input = $req->all();
-    //     $validator = Validator::make($input, [
-    //         'display_picture' => 'required',
-    //         'user_name' => 'required',
-    //         'first_name' => 'required',
-    //         'last_name' => 'required',
-    //         'gender' => 'required',
-    //         'email' => 'required',
-    //         'dob' => 'required',
-    //         'phone' => 'required',
-    //         'status' => 'required',
-    //         'is_active' => 'required',
-    //         'user_type' => 'required',
+    //     $req->validate([
+    //         'password' => 'required',
+    //         'new_password' => 'required|confirmed',
+    //     ]);
+    //     return $req;
+
+
+    //     if (!Hash::check($req->password, auth()->user()->password)) {
+    //         return back()->with("error", "Old Password Doesn't Match!");
+    //     }
+
+    //     User::whereId(auth()->user()->id)->update([
+    //         'password' => Hash::make($req->new_password),
+    //         'new_password' => Hash::make($req->new_password),
     //     ]);
 
-    //     if ($validator->fails()) {
-    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
-    //     }
-    //     unset($input['_token']);
-
-    //     if (@$input['id']) {
-    //         $userupdate = User::where("id", $input['id'])->update($input);
-    //         return response()->json(['success' => true, 'msg' => 'User Registered Updated Successfully.']);
-    //     } else {
-    //         $userupdate = User::create($input);
-    //         return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
-    //     }
+    //     return back()->with("status", "Password Changed Successfully!");
     // }
+
+    public function changepassword(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+
+            return back()->with("status", "Password Changed Successfully!");
+        }
+
+        return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+    }
 
     public function certificates(Request $req)
     {
