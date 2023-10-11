@@ -71,31 +71,66 @@ class ApiController extends Controller
         $input = $req->all();
         $validator = Validator::make($input, [
             'display_picture' => 'required',
-            'user_name' => 'required',
+            // 'user_name' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'dob' => 'required',
+            // 'gender' => 'required',
+            // 'email' => 'required',
+            // 'dob' => 'required',
             'phone' => 'required',
-            'status' => 'required',
-            'is_active' => 'required',
-            'user_type' => 'required',
+            // 'status' => 'required',
+            // 'is_active' => 'required',
+            // 'user_type' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
-        unset($input['_token']);
 
+        if ($req->file('display_picture')) {
+            unset($input['display_picture']);
+            $input += ['display_picture' => $this->updateprofile($req, 'display_picture', 'profileimage')];
+        }
+
+        unset($input['_token']);
         if (@$input['id']) {
             $userupdate = User::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'User Registered Updated Successfully.']);
+            return response()->json(['success' => true, 'msg' => 'User Updated Successfully.', 'data' => User::where('id', $input['id'])->first()]);
         } else {
             $userupdate = User::create($input);
             return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
         }
     }
+    // public function updateregister(Request $req)
+    // {
+    //     $input = $req->all();
+    //     $validator = Validator::make($input, [
+    //         'display_picture' => 'required',
+    //         'user_name' => 'required',
+    //         'first_name' => 'required',
+    //         'last_name' => 'required',
+    //         'gender' => 'required',
+    //         'email' => 'required',
+    //         'dob' => 'required',
+    //         'phone' => 'required',
+    //         'status' => 'required',
+    //         'is_active' => 'required',
+    //         'user_type' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
+    //     unset($input['_token']);
+
+    //     if (@$input['id']) {
+    //         $userupdate = User::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'User Registered Updated Successfully.']);
+    //     } else {
+    //         $userupdate = User::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
+    //     }
+    // }
 
     public function certificates(Request $req)
     {
