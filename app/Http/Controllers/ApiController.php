@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Bookings;
 use App\Models\Packages;
+use Nette\Utils\DateTime;
 use App\Models\Certificates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,12 @@ class ApiController extends Controller
         $success['user'] = $user;
 
         return $this->sendResponse($success, 'User Registered Successfully.');
+    }
+
+    public function registerdelete(Request $req, $id)
+    {
+        User::where('id', $id)->forcedelete();
+        echo json_encode(['success' => true, 'msg' => 'User Registered Deleted']);
     }
 
     public function updateregister(Request $req)
@@ -190,18 +197,22 @@ class ApiController extends Controller
         $booking = Bookings::count();
         $currentDateTime = Carbon::now();
         $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->count();
-        $durations = Bookings::sum('duration');
-        $totalMinutes = 0;
-
-        foreach ($durations as $duration) {
-            $parts = explode(' ', $duration->duration);
-            $hours = (int)$parts[0];
-            $minutes = (int)$parts[2];
-            $totalMinutes += $hours * 60 + $minutes;
+        $pastBooking =  Bookings::where('datetime', '<', $currentDateTime)->get();
+        $pastTime = 0;
+        if ($pastBooking->count() > 0) {
+            foreach ($pastBooking as $key => $pb) {
+                $pastTime += $pb->duration;
+            }
         }
 
-        $totalHours = floor($totalMinutes / 60);
-        $totalMinutes = $totalMinutes % 60;
-        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $totalMinutes]);
+        $duration = $pastTime;
+        $hours    = (int)($duration / 60);
+        $minutes  = $duration - ($hours * 60);
+
+        date_default_timezone_set('UTC');
+        $date = new DateTime($hours . ":" . $minutes);
+        //  echo $date->format('H:i:s');
+        // dd($date->format('H:i:s'));
+        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $date->format('H:i:s')]);
     }
 }

@@ -22,6 +22,7 @@ use App\Http\Controllers\UserCategoriesController;
 */
 
 Route::post('register', [ApiController::class, 'register']);
+Route::post('registerdelete/{id}', [ApiController::class, 'registerdelete']);
 Route::post('updateregister', [ApiController::class, 'updateregister']);
 Route::post('login', [ApiController::class, 'login']);
 Route::post('userupdate', [ApiController::class, 'userupdate']);
@@ -99,11 +100,11 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(BookingsController::class)->group(function () {
         Route::post('bookings', 'bookings')->name('tours.bookings');
         Route::get('getbookings', 'getbookings')->name('tours.getbookings');
-        Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
+        // Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
         Route::get('getbookingtours', 'getbookingtours')->name('tours.getbookingtours');
         Route::get('getuserbookingtours/{user_id}', 'getuserbookingtours')->name('tours.getuserbookingtours');
         Route::get('getbookingrentals', 'getbookingrentals')->name('tours.getbookingrentals');
-        Route::get('getuserbookingrentals/{booking_id}/{rental_id}', 'getbookingrentals')->name('tours.getbookingrentals');
+        Route::get('getuserbookingrentals/{user_id}', 'getuserbookingrentals')->name('tours.getuserbookingrentals');
         Route::post('bookingGroups', 'bookingGroups')->name('tours.bookingGroups');
         Route::get('getbookingGroups', 'getbookingGroups')->name('tours.getbookingGroups');
         // Route::get('getuserbookingGroups/{booking_id}', 'getuserbookingGroups')->name('tours.getuserbookingGroups');

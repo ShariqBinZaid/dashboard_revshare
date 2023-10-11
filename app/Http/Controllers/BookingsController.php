@@ -9,6 +9,7 @@ use App\Models\BookingGroups;
 use App\Models\BookingRentals;
 use App\Models\BookingTours;
 use App\Models\RentalBookings;
+use App\Models\Rentals;
 use App\Models\Tours;
 use App\Models\ToursBookings;
 use Illuminate\Support\Facades\Auth;
@@ -55,28 +56,56 @@ class BookingsController extends Controller
         }
     }
 
-    public function getuserbookings($user_id)
+    public function getuserbookingtours($user_id)
     {
 
-        $UpCommingtours = Tours::with('User', 'getbooking.Tourbooking')->where('user_id', $user_id)->get();
+        $UpCommingtours = Tours::with('User', 'getbooking.bookingTour')->where('user_id', $user_id)->get();
         $upComming = [];
+        $past = [];
         if ($UpCommingtours->count() > 0) {
-            foreach ($UpCommingtours as $key => $value) {
-                foreach ($value  as $booking) {
-                    dd($value);
-                    if ($value->datetime > Carbon::today()) {
-                        $upComming[] = $value;
+            foreach ($UpCommingtours as $k =>  $value) {
+                foreach ($value['getbooking']  as $booking) {
+                    $datework = Carbon::parse($booking['bookingTour']['datetime']);
+                    $now = Carbon::now();
+                    $diff = $datework->diffInDays($now);
+                    $user = $value['User'];
+                    unset($value['User'], $value['getbooking']);
+                    if ($diff > 0) {
+                        $upComming[] = ['tour_booking' => $booking['bookingTour'], 'user' => $user, 'tour' => $value];
+                    } else {
+                        $past[] = ['tour_booking' => $booking['bookingTour'], 'user' => $user, 'tour' => $value];
                     }
                 }
             }
         }
-        // if($tours->count() > 0){
-        //     foreach ($tours as $key => $tours) {
-        //         # code...
-        //     }
-        // }
-        $getbookings = Bookings::with('User')->where('user_id', $user_id)->get();
-        return response()->json(['success' => true, 'data' => $upComming]);
+
+        return response()->json(['success' => true, 'upcomming' => $upComming, 'past' => $past]);
+    }
+
+    public function getuserbookingrentals($user_id)
+    {
+        $UpCommingtours = Rentals::with('User', 'getbooking.Rental')->where('user_id', $user_id)->get();
+        // dd($UpCommingtours);
+        $upComming = [];
+        $past = [];
+        if ($UpCommingtours->count() > 0) {
+            foreach ($UpCommingtours as $k =>  $value) {
+                foreach ($value['getbooking']  as $booking) {
+                    $datework = Carbon::parse($booking['Rental']['datetime']);
+                    $now = Carbon::now();
+                    $diff = $datework->diffInDays($now);
+                    $user = $value['User'];
+                    unset($value['User'], $value['getbooking']);
+                    if ($diff > 0) {
+                        $upComming[] = ['rental_booking' => $booking['Rental'], 'user' => $user, 'rental' => $value];
+                    } else {
+                        $past[] = ['rental_booking' => $booking['Rental'], 'user' => $user, 'rental' => $value];
+                    }
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'upcomming' => $upComming, 'past' => $past]);
     }
 
     public function getbookings(Request $req)
@@ -117,27 +146,10 @@ class BookingsController extends Controller
         return response()->json(['success' => true, 'data' => $getbookingtours]);
     }
 
-    // public function getuserbookingtours($booking_id, $tour_id)
-    // {
-    //     $getbookingtours = ToursBookings::with('Booking', 'Tour')->where('booking_id', $booking_id)->where('tour_id', $tour_id)->get();
-    //     return response()->json(['success' => true, 'data' => $getbookingtours]);
-    // }
-
-    public function getuserbookingtours($user_id)
-    {
-        $getbookingtours = Bookings::with('Tour')->where('user_id', $user_id)->get();
-        return response()->json(['success' => true, 'data' => $getbookingtours]);
-    }
 
     public function getbookingrentals()
     {
         $getbookingrentals = RentalBookings::with('Booking', 'Rental')->get();
-        return response()->json(['success' => true, 'data' => $getbookingrentals]);
-    }
-
-    public function getuserbookingrentals($booking_id, $rental_id)
-    {
-        $getbookingrentals = RentalBookings::with('Booking', 'Rental')->where('booking_id', $booking_id)->where('rental_id', $rental_id)->get();
         return response()->json(['success' => true, 'data' => $getbookingrentals]);
     }
 

@@ -17,6 +17,6 @@ class RentalBookings extends Model
 
     public function Rental()
     {
-        return $this->belongsTo(Rentals::class, 'rental_id', 'id');
+        return $this->belongsTo(Bookings::class, 'booking_id', 'id');
     }
 }
