@@ -39,7 +39,7 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(ToursController::class)->group(function () {
         Route::post('tours', 'tours')->name('tours.tours');
         Route::get('gettours', 'gettours')->name('tours.gettours');
-        Route::get('getusertours/{user_id}', 'gettours')->name('tours.gettours');
+        Route::get('getusertours/{user_id}', 'getusertours')->name('tours.getusertours');
         Route::get('getonetours/{id}', 'getonetours')->name('tours.getonetours');
         Route::post('toursimages', 'toursimages')->name('tours.toursimages');
         Route::get('gettoursimages', 'gettoursimages')->name('tours.gettoursimages');
