@@ -299,7 +299,16 @@ class ApiController extends Controller
 
         $rentalResults = Rentals::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
         $tourResults = Tours::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
-
+        $allImages = [];
+        foreach ($rentalResults as $getuserrental) {
+            $images = $getuserrental->images;
+            $allImages = array_merge($allImages, $images->toArray());
+        }
+        $allImages = [];
+        foreach ($tourResults as $getuserrental) {
+            $images = $getuserrental->images;
+            $allImages = array_merge($allImages, $images->toArray());
+        }
         $searchResults['rentals'] = $rentalResults;
         $searchResults['tours'] = $tourResults;
 
