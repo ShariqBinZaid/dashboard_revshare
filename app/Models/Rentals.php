@@ -17,7 +17,7 @@ class Rentals extends Model
 
     public function RentalAddons()
     {
-        return $this->belongsTo(RentalAddons::class, 'rental_id', 'id');
+        return $this->hasMany(RentalAddons::class, 'rental_id', 'id');
     }
 
     public function RentalImages()
