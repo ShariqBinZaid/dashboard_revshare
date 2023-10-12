@@ -62,8 +62,22 @@ class ApiController extends Controller
 
     public function registerdelete(Request $req, $id)
     {
-        User::where('id', $id)->forcedelete();
-        echo json_encode(['success' => true, 'msg' => 'User Registered Deleted']);
+        $email = $req->input('email');
+        $password = $req->input('password');
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'msg' => 'User not found'], 404);
+        }
+
+        if (password_verify($password, $user->password)) {
+            $user->delete();
+
+            return response()->json(['success' => true, 'msg' => 'User deleted']);
+        } else {
+            return response()->json(['success' => false, 'msg' => 'Password is incorrect'], 401);
+        }
     }
 
     public function updateregister(Request $req)
