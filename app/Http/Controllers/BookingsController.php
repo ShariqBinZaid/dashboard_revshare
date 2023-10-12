@@ -136,7 +136,7 @@ class BookingsController extends Controller
             return response()->json(['success' => true, 'msg' => 'Booking Groups Updated Successfully.']);
         } else {
             $bookings = BookingGroups::create($input);
-            return response()->json(['success' => true, 'msg' => 'Booking Groups Created Successfully']);
+            return response()->json(['success' => true, 'msg' => 'Booking Groups Created Successfully', 'data' => $bookings]);
         }
     }
 
