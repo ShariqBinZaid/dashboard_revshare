@@ -9,6 +9,7 @@ use App\Http\Controllers\RentalAddonsController;
 use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserCategoriesController;
+use GuzzleHttp\Promise\Create;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(ApiController::class)->group(function () {
         Route::post('changepassword', 'changepassword')->name('user.changepassword');
+        Route::post('search', 'search')->name('user.search');
     });
 
     Route::controller(ToursController::class)->group(function () {

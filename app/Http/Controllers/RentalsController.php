@@ -85,6 +85,11 @@ class RentalsController extends Controller
     public function getrentals()
     {
         $getrentals = Rentals::with('User', 'RentalAddons')->get();
+        $allImages = [];
+        foreach ($getrentals as $getrental) {
+            $images = $getrental->images;
+            $allImages = array_merge($allImages, $images->toArray());
+        }
         return response()->json(['success' => true, 'data' => $getrentals]);
     }
 
