@@ -74,9 +74,9 @@ class ApiController extends Controller
         if (password_verify($password, $user->password)) {
             $user->delete();
 
-            return response()->json(['success' => true, 'msg' => 'User deleted']);
+            return response()->json(['success' => true, 'msg' => 'User Deleted Successfully']);
         } else {
-            return response()->json(['success' => false, 'msg' => 'Password is incorrect'], 401);
+            return response()->json(['success' => false, 'msg' => 'Email or Password is Incorrect'], 401);
         }
     }
 
