@@ -17,14 +17,14 @@ class Rentals extends Model
 
     public function RentalAddons()
     {
-        return $this->belongsTo(RentalAddons::class, 'rental_addons_id', 'id');
+        return $this->belongsTo(RentalAddons::class, 'rental_id', 'id');
     }
 
     public function Images()
     {
         return $this->hasMany(RentalImages::class, 'rental_id', 'id');
     }
-    
+
     public function getbooking()
     {
         return $this->hasMany(RentalBookings::class, 'rental_id', 'id');

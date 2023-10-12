@@ -42,7 +42,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(ApiController::class)->group(function () {
         Route::post('changepassword', 'changepassword')->name('user.changepassword');
-        Route::get('search', 'search')->name('user.search');
+        Route::post('search', 'search')->name('user.search');
     });
 
     Route::controller(ToursController::class)->group(function () {

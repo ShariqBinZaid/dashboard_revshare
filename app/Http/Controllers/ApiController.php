@@ -13,6 +13,8 @@ use App\Models\Certificates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use phpseclib3\File\ASN1\Maps\Certificate;
@@ -280,23 +282,24 @@ class ApiController extends Controller
         return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $date->format('H:i:s')]);
     }
 
-    // public function search(Request $req)
-    // {
-    //     $search = User::where('first_name', 'LIKE', "%$req->serach%")->orWhere('last_name', 'LIKE', "%$req->serach%")->get();
-    //     return $search;
-    // }
+    public function searchUser(Request $req)
+    {
+        $input = $req->all();
+        $ser = $input['search'];
+        $search = User::where('first_name', 'LIKE', "%$ser%")->orWhere('last_name', 'LIKE', "%$ser%")->get();
+        // $search = DB::select("SELECT * FROM users WHERE first_name LIKE '" . $input['search'] . "%' OR last_name LIKE  '" . $input['search'] . "%' ");
+        // dd($search);
+        return $search;
+    }
 
     public function search(Request $req)
     {
-        $searchResults = [];
+        $input = $req->all();
+        $ser = $input['search'];
 
-        $rentalResults = Rentals::where('title', 'LIKE', "%$req->search%")
-            ->orWhere('desc', 'LIKE', "%$req->search%")
-            ->get();
+        $rentalResults = Rentals::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
 
-        $tourResults = Tours::where('title', 'LIKE', "%$req->search%")
-            ->orWhere('desc', 'LIKE', "%$req->search%")
-            ->get();
+        $tourResults = Tours::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
 
         $searchResults['rentals'] = $rentalResults;
         $searchResults['tours'] = $tourResults;
