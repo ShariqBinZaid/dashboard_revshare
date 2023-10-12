@@ -27,7 +27,7 @@ class Rentals extends Model
 
     public function Categories()
     {
-        return $this->hasMany(Categories::class, 'category_id', 'id');
+        return $this->hasMany(Categories::class, 'id', 'category_id');
     }
 
     public function getbooking()
