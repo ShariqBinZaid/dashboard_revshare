@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Tours;
+use App\Models\Rentals;
 use App\Models\Bookings;
 use App\Models\Packages;
 use Nette\Utils\DateTime;
@@ -278,9 +280,27 @@ class ApiController extends Controller
         return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $date->format('H:i:s')]);
     }
 
+    // public function search(Request $req)
+    // {
+    //     $search = User::where('first_name', 'LIKE', "%$req->serach%")->orWhere('last_name', 'LIKE', "%$req->serach%")->get();
+    //     return $search;
+    // }
+
     public function search(Request $req)
     {
-        $search = User::where('first_name', 'LIKE', "%$req->serach%")->orWhere('last_name', 'LIKE', "%$req->serach%")->get();
-        return $search;
+        $searchResults = [];
+
+        $rentalResults = Rentals::where('title', 'LIKE', "%$req->search%")
+            ->orWhere('desc', 'LIKE', "%$req->search%")
+            ->get();
+
+        $tourResults = Tours::where('title', 'LIKE', "%$req->search%")
+            ->orWhere('desc', 'LIKE', "%$req->search%")
+            ->get();
+
+        $searchResults['rentals'] = $rentalResults;
+        $searchResults['tours'] = $tourResults;
+
+        return $searchResults;
     }
 }
