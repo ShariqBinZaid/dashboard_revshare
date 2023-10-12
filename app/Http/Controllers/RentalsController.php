@@ -116,6 +116,17 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $getonerentals]);
     }
 
+    public function getcategoryrentals($category_id)
+    {
+        $getonerentals = Rentals::with('User', 'Categories')->where('category_id', $category_id)->get();
+        // $allImages = [];
+        // foreach ($getonerentals as $getuserrental) {
+        //     $images = $getuserrental->images;
+        //     $allImages = array_merge($allImages, $images->toArray());
+        // }
+        return response()->json(['success' => true, 'data' => $getonerentals]);
+    }
+
     // public function rentaladdons(Request $req)
     // {
     //     $input = $req->all();

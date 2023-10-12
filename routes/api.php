@@ -73,6 +73,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getrentals', 'getrentals')->name('rentals.getrentals');
         Route::get('getuserrentals/{user_id}', 'getuserrentals')->name('rentals.getuserrentals');
         Route::get('getonerentals/{id}', 'getonerentals')->name('rentals.getonerentals');
+        Route::get('getcategoryrentals/{category_id}', 'getcategoryrentals')->name('rentals.getcategoryrentals');
         Route::get('getuserrentaladdons/{rental_id}', 'getrentaladdons')->name('rentals.getrentaladdons');
         Route::post('rentalreviews', 'rentalreviews')->name('rentals.rentalreviews');
         Route::get('getrentalreviews', 'getrentalreviews')->name('rentals.getrentalreviews');

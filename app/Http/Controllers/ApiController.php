@@ -298,7 +298,6 @@ class ApiController extends Controller
         $ser = $input['search'];
 
         $rentalResults = Rentals::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
-
         $tourResults = Tours::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
 
         $searchResults['rentals'] = $rentalResults;
