@@ -58,7 +58,6 @@ class BookingsController extends Controller
 
     public function getuserbookingtours($user_id)
     {
-
         $UpCommingtours = Tours::with('User', 'getbooking.bookingTour')->where('user_id', $user_id)->get();
         $upComming = [];
         $past = [];
