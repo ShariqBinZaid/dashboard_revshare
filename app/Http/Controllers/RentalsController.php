@@ -119,11 +119,11 @@ class RentalsController extends Controller
     public function getcategoryrentals($category_id)
     {
         $getonerentals = Rentals::where('category_id', $category_id)->get();
-        // $allImages = [];
-        // foreach ($getonerentals as $getuserrental) {
-        //     $images = $getuserrental->images;
-        //     $allImages = array_merge($allImages, $images->toArray());
-        // }
+        $allImages = [];
+        foreach ($getonerentals as $getuserrental) {
+            $images = $getuserrental->images;
+            $allImages = array_merge($allImages, $images->toArray());
+        }
         return response()->json(['success' => true, 'data' => $getonerentals]);
     }
 
