@@ -91,11 +91,11 @@ class RentalsController extends Controller
     public function getuserrentals($user_id)
     {
         $getuserrentals = Rentals::with('User', 'RentalImages')->where('user_id', $user_id)->get();
-        $allImages = [];
-        foreach ($getuserrentals as $getuserrental) {
-            $images = $getuserrental->images;
-            $allImages = array_merge($allImages, $images->toArray());
-        }
+        // $allImages = [];
+        // foreach ($getuserrentals as $getuserrental) {
+        //     $images = $getuserrental->images;
+        //     $allImages = array_merge($allImages, $images->toArray());
+        // }
         return response()->json(['success' => true, 'data' => $getuserrentals]);
     }
 
