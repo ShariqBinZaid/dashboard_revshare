@@ -277,4 +277,10 @@ class ApiController extends Controller
         // dd($date->format('H:i:s'));
         return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $date->format('H:i:s')]);
     }
+
+    public function search(Request $req)
+    {
+        $search = User::where('first_name', 'LIKE', "%$req->serach%")->orWhere('last_name', 'LIKE', "%$req->serach%")->get();
+        return $search;
+    }
 }
