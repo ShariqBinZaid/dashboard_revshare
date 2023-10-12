@@ -20,7 +20,7 @@ class Rentals extends Model
         return $this->belongsTo(RentalAddons::class, 'rental_id', 'id');
     }
 
-    public function Images()
+    public function RentalImages()
     {
         return $this->hasMany(RentalImages::class, 'rental_id', 'id');
     }
