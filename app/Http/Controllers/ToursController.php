@@ -141,7 +141,8 @@ class ToursController extends Controller
                 $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->storeAs('public/profileimage', $imageName);
 
-                $uploadedImages[] = $imageName;
+                // $uploadedImages[] = $imageName;
+                $uploadedImages[] = 'profileimage/' . $imageName;
             }
 
             $input['image'] = $uploadedImages;

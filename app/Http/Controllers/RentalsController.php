@@ -220,44 +220,48 @@ class RentalsController extends Controller
 
     public function rentalimages(Request $req)
     {
-        $input = $req->all();
+        try {
+            $input = $req->all();
+            $validator = Validator::make($input, [
+                'image' => 'required|array',
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif',
+            ]);
 
-        $validator = Validator::make($input, [
-            'image' => 'required|array',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        if ($req->hasFile('image')) {
-            $uploadedImages = [];
-
-            foreach ($input['image'] as $image) {
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/profileimage', $imageName);
-
-                $uploadedImages[] = $imageName;
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'error' => $validator->errors()]);
             }
 
-            $input['image'] = $uploadedImages;
-        }
+            if ($req->hasFile('image')) {
+                $uploadedImages = [];
 
-        if (@$input['id']) {
-            $rentalimages = RentalImages::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
-        } else {
-            $rentalimages = [];
-            foreach ($input['image'] as $rentalimage) {
-                $rentalimages[] = [
-                    'rental_id' => $input['rental_id'],
-                    'image' => $rentalimage,
-                ];
+                foreach ($input['image'] as $image) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->storeAs('public/profileimage/', $imageName);
+
+                    // $uploadedImages[] = $imageName;
+                    $uploadedImages[] = 'profileimage/' . $imageName;
+                }
+
+                $input['image'] = $uploadedImages;
             }
 
-            $rentalimages = RentalImages::insert($rentalimages);
-            return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully', 'data' => $rentalimages]);
+            if (@$input['id']) {
+                $rentalimages = RentalImages::where("id", $input['id'])->update($input);
+                return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
+            } else {
+                $rentalimages = [];
+                foreach ($input['image'] as $rentalimage) {
+                    $rentalimages[] = [
+                        'rental_id' => $input['rental_id'],
+                        'image' => $rentalimage,
+                    ];
+                }
+
+                $rentalimages = RentalImages::insert($rentalimages);
+                return response()->json(['success' => true, 'msg' => 'Rentals Images Created Successfully', 'data' => $rentalimages]);
+            }
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
     }
 

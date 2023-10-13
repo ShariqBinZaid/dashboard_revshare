@@ -144,7 +144,6 @@ class ApiController extends Controller
     public function changepassword(Request $request)
     {
         try {
-            // Validate the request
             $request->validate([
                 'password' => 'required|confirmed',
                 'password_confirmation' => 'required',
