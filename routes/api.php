@@ -42,6 +42,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(ApiController::class)->group(function () {
         Route::post('changepassword', 'changepassword')->name('user.changepassword');
+        Route::post('searchUser', 'searchUser')->name('user.searchUser');
+        Route::post('searchLoc', 'searchLoc')->name('user.searchLoc');
         Route::post('search', 'search')->name('user.search');
     });
 

@@ -316,4 +316,19 @@ class ApiController extends Controller
 
         return $searchResults;
     }
+
+    public function searchLoc(Request $req)
+    {
+        $input = $req->all();
+        $ser = $input['search'];
+
+        $rentalResults = Rentals::where('locations', 'LIKE', "%$ser%")->get();
+        $tourResults = Tours::where('loc', 'LIKE', "%$ser%")->get();
+
+
+        $searchLoc['rentals'] = $rentalResults;
+        $searchLoc['tours'] = $tourResults;
+
+        return $searchLoc;
+    }
 }
