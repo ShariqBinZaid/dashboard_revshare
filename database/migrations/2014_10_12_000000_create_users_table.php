@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('dob')->nullable();
             $table->string('otp')->nullable();
+            $table->string('lati')->nullable();
+            $table->string('longi')->nullable();
             $table->string('license_number')->nullable();
             $table->string('license_file')->nullable();
             $table->enum('user_type', ['user', 'vendor'])->nullable();
