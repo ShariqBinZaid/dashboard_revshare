@@ -23,14 +23,14 @@ use GuzzleHttp\Promise\Create;
 */
 
 Route::post('register', [ApiController::class, 'register']);
-Route::post('registerdelete/{id}', [ApiController::class, 'registerdelete']);
-Route::post('updateregister', [ApiController::class, 'updateregister']);
+// Route::post('registerdelete/{id}', [ApiController::class, 'registerdelete']);
+// Route::post('updateregister', [ApiController::class, 'updateregister']);
 // Route::post('changepassword', [ApiController::class, 'changepassword']);
 Route::post('login', [ApiController::class, 'login']);
-Route::post('userupdate', [ApiController::class, 'userupdate']);
+// Route::post('userupdate', [ApiController::class, 'userupdate']);
 Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 Route::post('generateotp', [ApiController::class, 'generateotp']);
-Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
+// Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
 Route::post('certificates', [ApiController::class, 'certificates']);
 Route::get('getcertificates', [ApiController::class, 'getcertificates']);
 Route::post('categories', [UserCategoriesController::class, 'categories']);
@@ -41,10 +41,15 @@ Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
 Route::middleware('auth:api')->group(function () {
 
     Route::controller(ApiController::class)->group(function () {
+        Route::post('userupdate', 'userupdate')->name('user.userupdate');
         Route::post('changepassword', 'changepassword')->name('user.changepassword');
+        Route::post('updateregister', 'updateregister')->name('user.updateregister');
+        Route::post('registerdelete/{id}', 'registerdelete')->name('user.registerdelete');
+        Route::post('vendordashboard', 'vendordashboard')->name('user.vendordashboard');
         Route::post('searchUser', 'searchUser')->name('user.searchUser');
         Route::post('searchLoc', 'searchLoc')->name('user.searchLoc');
         Route::post('search', 'search')->name('user.search');
+        Route::post('searchTour', 'searchTour')->name('user.searchTour');
     });
 
     Route::controller(ToursController::class)->group(function () {

@@ -326,4 +326,14 @@ class ApiController extends Controller
 
         return $searchLoc;
     }
+
+    public function searchTour(Request $req)
+    {
+        $input = $req->all();
+        $ser = $input['search'];
+
+        $searchTour = Tours::with('Images')->where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
+
+        return response()->json(['success' => true, 'data' => $searchTour]);
+    }
 }
