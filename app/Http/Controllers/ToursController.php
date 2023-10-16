@@ -49,6 +49,7 @@ class ToursController extends Controller
         unset($input['_token']);
 
         $input += ['user_id' => Auth::user()->id];
+        $input += ['recommended' => '0'];
 
         if (@$input['id']) {
             $tours = Tours::where("id", $input['id'])->update($input);

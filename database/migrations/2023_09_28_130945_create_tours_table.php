@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('capacity')->nullable();
             $table->string('reviews')->nullable();
             $table->string('whats_include')->nullable();
+            $table->enum('recommended', ['0', '1'])->nullable();
             $table->timestamps();
         });
     }
