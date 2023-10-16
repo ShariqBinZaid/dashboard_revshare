@@ -296,25 +296,17 @@ class ApiController extends Controller
         $input = $req->all();
         $ser = $input['search'];
 
-        $rentalResults = Rentals::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
-        $tourResults = Tours::where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
+        $rentalResults = Rentals::with('Images')->where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
+        $tourResults = Tours::with('Images')->where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
 
-        $allImages = [];
-        foreach ($rentalResults as $getuserrental) {
-            $images = $getuserrental->images;
-            $allImages = array_merge($allImages, $images->toArray());
-        }
+        // $searchResults['rentals'] = $rentalResults;
+        // $searchResults['tours'] = $tourResults;
 
-        $allImages = [];
-        foreach ($tourResults as $getuserrental) {
-            $images = $getuserrental->images;
-            $allImages = array_merge($allImages, $images->toArray());
-        }
+        $searchResults = [
+            'search' => array_merge($rentalResults->toArray(), $tourResults->toArray()),
+        ];
 
-        $searchResults['rentals'] = $rentalResults;
-        $searchResults['tours'] = $tourResults;
-
-        return $searchResults;
+        return response()->json(['success' => true, 'data' => $searchResults]);
     }
 
     public function searchLoc(Request $req)
@@ -325,9 +317,12 @@ class ApiController extends Controller
         $rentalResults = Rentals::with('User')->where('locations', 'LIKE', "%$ser%")->get();
         $tourResults = Tours::where('loc', 'LIKE', "%$ser%")->get();
 
+        // $searchLoc['rentals'] = $rentalResults;
+        // $searchLoc['tours'] = $tourResults;
 
-        $searchLoc['rentals'] = $rentalResults;
-        $searchLoc['tours'] = $tourResults;
+        $searchLoc = [
+            'searchLoc' => array_merge($rentalResults->toArray(), $tourResults->toArray()),
+        ];
 
         return $searchLoc;
     }
