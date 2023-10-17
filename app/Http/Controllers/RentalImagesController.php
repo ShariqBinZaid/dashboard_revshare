@@ -86,6 +86,8 @@ class RentalImagesController extends Controller
             $input['image'] = $uploadedImages;
         }
 
+        unset($input['_token']);
+
         if (@$input['id']) {
             $rentals = RentalImages::where("id", $input['id'])->update($input);
             return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);

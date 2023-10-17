@@ -144,7 +144,7 @@
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                 <th>User</th>
-                                <th>Rental Category</th>
+                                <th>Category</th>
                                 <th>Title</th>
                                 <th>Price</th>
                                 <th>Price Type</th>
@@ -265,10 +265,14 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="mb-10">
+                                        <div class="mb-10 ">
                                             <label for="skills" class="form-label">Skills</label>
-                                            <input class="form-control removeclass" placeholder="Skills" name="skills"
-                                                type="text" id="skills" value="">
+                                            <select name="skills" id="skills" class="form-control">
+                                                <option value="advanced" selected>Advanced</option>
+                                                <option value="beginner">Beginner</option>
+                                                <option value="intermediate">Intermediate</option>
+                                                <option value="pro">Pro</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -328,16 +332,6 @@
                                     </div>
                                 </div> --}}
                             </div>
-
-                            {{-- <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="completed" selected>Completed</option>
-                                            <option value="in-progress">In-Progress</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
 
                             <div class="error-area"></div>
 

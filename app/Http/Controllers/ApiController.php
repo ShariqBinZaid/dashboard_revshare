@@ -315,4 +315,10 @@ class ApiController extends Controller
 
         return response()->json(['success' => true, 'data' => $searchTour]);
     }
+
+    public function popular()
+    {
+        $popular = Rentals::with('Images')->get();
+        return response()->json(['success' => true, 'data' => $popular]);
+    }
 }

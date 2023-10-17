@@ -55,6 +55,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('searchLoc', 'searchLoc')->name('user.searchLoc');
         Route::post('search', 'search')->name('user.search');
         Route::post('searchTour', 'searchTour')->name('user.searchTour');
+        Route::post('popular', 'popular')->name('user.popular');
     });
 
 
