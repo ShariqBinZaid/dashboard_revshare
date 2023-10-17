@@ -248,4 +248,10 @@ class RentalsController extends Controller
         $userrentalimages = RentalImages::with('Rental')->where('rental_id', $rental_id)->get();
         return response()->json(['success' => true, 'data' => $userrentalimages]);
     }
+
+    public function getuserrentaladdons($rental_id)
+    {
+        $getuserrentaladdons = RentalAddons::with('Rental')->where('rental_id', $rental_id)->get();
+        return response()->json(['success' => true, 'data' => $getuserrentaladdons]);
+    }
 }
