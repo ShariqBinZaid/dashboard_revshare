@@ -33,9 +33,14 @@ Route::post('generateotp', [ApiController::class, 'generateotp']);
 // Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
 Route::post('certificates', [ApiController::class, 'certificates']);
 Route::get('getcertificates', [ApiController::class, 'getcertificates']);
-Route::post('categories', [UserCategoriesController::class, 'categories']);
-Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
+// Route::post('categories', [UserCategoriesController::class, 'categories']);
+// Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
 
+
+Route::controller(UserCategoriesController::class)->group(function () {
+    Route::post('categories', 'categories')->name('user.categories');
+    Route::get('getcategories', 'getcategories')->name('user.getcategories');
+});
 
 
 Route::middleware('auth:api')->group(function () {
@@ -51,6 +56,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('search', 'search')->name('user.search');
         Route::post('searchTour', 'searchTour')->name('user.searchTour');
     });
+
 
     Route::controller(ToursController::class)->group(function () {
         Route::post('tours', 'tours')->name('tours.tours');

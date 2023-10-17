@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    Rentals List</h1>
+                    Categories List</h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">Home</a>
@@ -13,19 +13,18 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Rental Details</li>
+                    <li class="breadcrumb-item text-muted">Category Details</li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Rentals</li>
+                    <li class="breadcrumb-item text-muted">Categories</li>
             </div>
         </div>
     </div>
 
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        {{-- <div id="kt_app_content_container" class="app-container container-xxl"> --}}
-        <div id="kt_app_content_container" class="app-container">
+        <div id="kt_app_content_container" class="app-container container-xxl">
             <div class="card">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -41,7 +40,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-user-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Rentals"
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Categories"
                                 id="search_table" />
                         </div>
                     </div>
@@ -59,7 +58,7 @@
                                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
                                             fill="currentColor" />
                                     </svg>
-                                </span>Add Rentals
+                                </span>Add Categories
                             </button>
                             {{-- @endif --}}
 
@@ -140,22 +139,11 @@
                     </div>
                 </div>
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="rentals_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="categories_table">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                <th>User</th>
-                                <th>Rental Category</th>
+                                <th>Image</th>
                                 <th>Title</th>
-                                <th>Price</th>
-                                <th>Price Type</th>
-                                <th>Location</th>
-                                <th>Descriptions</th>
-                                {{-- <th>Comments</th>
-                                <th>Date</th> --}}
-                                <th>Capacity</th>
-                                <th>Skills</th>
-                                <th>Cancel Days</th>
-                                <th>Cancel Percent</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -175,169 +163,68 @@
                     </div>
                     <div class="card-body py-5">
 
-                        <form class="RentalsForm" enctype="multipart/form-data">
+                        <form class="CategoriesForm" enctype="multipart/form-data">
                             @csrf
 
                             <input type="hidden" name="id">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="user_id" class="form-label">Users</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="user_id">
-                                            <option selected disabled>Users</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->user_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="rental_addons_id" class="form-label">Rental Addons</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="rental_addons_id">
-                                            <option selected disabled>Rental Addons</option>
-                                            @foreach ($rentaladdons as $rentaladdon)
-                                                <option value="{{ $rentaladdon->id }}">{{ $rentaladdon->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                            <div class="fv-row mb-7">
 
+
+                                <label class="d-block fw-semibold fs-6 mb-5">Display Image</label>
+                                <style>
+                                    .image-input-placeholder {
+                                        background-image: url('{{ asset('assets/media/svg/files/blank-image.svg') }}');
+                                    }
+
+                                    [data-theme="dark"] .image-input-placeholder {
+                                        background-image: url('{{ asset('assets/media/svg/files/blank-image-dark.svg') }}');
+                                    }
+                                </style>
+                                <div class="image-input image-input-outline image-input-placeholder"
+                                    data-kt-image-input="true">
+                                    <div class="image-input-wrapper w-125px h-125px dispalyImage">
+
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        title="Change avatar">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" multiple id="imgInp" name="image"
+                                            accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" name="image" />
+                                    </label>
+                                    <span
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                        title="Cancel avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <span
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                        title="Remove avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+
+                            </div>
+
+                            <div class="row">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="mb-10">
                                             <label for="title" class="form-label">Title</label>
                                             <input class="form-control removeclass" placeholder="Title" name="title"
                                                 type="text" id="title" value="">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="category_id" class="form-label">Rental Categories</label>
-                                            <select class="form-select select2-example"
-                                                aria-label="Floating label select example" name="category_id">
-                                                <option selected disabled>Rental Categories</option>
-                                                @foreach ($categories as $categorie)
-                                                    <option value="{{ $categorie->id }}">{{ $categorie->title }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price_type" class="form-label">Price Type</label>
-                                            <input class="form-control removeclass" placeholder="Price Type"
-                                                name="price_type" type="text" id="price_type" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="locations" class="form-label">Location</label>
-                                            <input class="form-control removeclass" placeholder="Location"
-                                                name="locations" type="text" id="locations" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    {{-- <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="datetime" class="form-label">Date</label>
-                                            <input class="form-control removeclass" placeholder="Date" name="datetime"
-                                                type="text" id="datetime" value="">
-                                        </div>
-                                    </div> --}}
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="capacity" class="form-label">Capacity</label>
-                                            <input class="form-control removeclass" placeholder="Capacity"
-                                                name="capacity" type="text" id="capacity" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="skills" class="form-label">Skills</label>
-                                            <input class="form-control removeclass" placeholder="Skills" name="skills"
-                                                type="text" id="skills" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Cancel Days</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Days"
-                                                name="cancel_days" type="text" id="cancel_days" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="cancel_percent" class="form-label">Cancel Percent</label>
-                                            <input class="form-control removeclass" placeholder="Cancel Percent"
-                                                name="cancel_percent" type="text" id="cancel_percent" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input class="form-control removeclass" placeholder="Price" name="price"
-                                                type="text" id="price" value="">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="cancel_days" class="form-label">Descriptions</label>
-                                            <textarea class="form-control removeclass" name="desc" id="desc" cols="30" rows="10">Descriptions</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-10">
-                                            <label for="comments" class="form-label">Comments</label>
-                                            <textarea class="form-control removeclass" name="comments" id="comments" cols="30" rows="10">Comments</textarea>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="description" class="form-label">Clients</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="client_id">
-                                            <option selected disabled>Clients</option>
-                                            @foreach ($clients as $client)
-                                                <option value="{{ $clients[0]->id }}">{{ $clients[0]->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
                             </div>
 
-                            {{-- <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="completed" selected>Completed</option>
-                                            <option value="in-progress">In-Progress</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
 
                             <div class="error-area"></div>
 
@@ -386,47 +273,20 @@
             var years = moment().diff(start, "years");
             // alert("You are " + years + " years old!");
         });
-        let table = $('#rentals_table').DataTable({
+        let table = $('#categories_table').DataTable({
             responsive: true,
             // processing: true,
             // serverSide: true,
             pageLength: 10,
             lengthChange: true,
             ajax: {
-                url: "{{ route('rentals.list') }}",
+                url: "{{ route('categories.list') }}",
             },
             columns: [{
-                    data: 'user_id'
-                },
-                {
-                    data: 'category_id'
+                    data: 'image'
                 },
                 {
                     data: 'title'
-                },
-                {
-                    data: 'price'
-                },
-                {
-                    data: 'price_type'
-                },
-                {
-                    data: 'loc'
-                },
-                {
-                    data: 'desc'
-                },
-                {
-                    data: 'capacity'
-                },
-                {
-                    data: 'skills'
-                },
-                {
-                    data: 'cancel_days'
-                },
-                {
-                    data: 'cancel_percent'
                 },
                 {
                     data: 'actions'
@@ -437,32 +297,15 @@
         $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit Rentals')
-            showloader('block')
-            $.get('{{ route('rentals.show', '') }}/' + id, {
+            $('.drawertitle').html('Edit Categories')
+            showloader('none')
+            $.get('{{ route('categories.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
                 $('#kt_drawer_example_basic').find('input[name="id"]').val(d.data.id)
-                $('#kt_drawer_example_basic').find('select[name="user_id"]').val(d.data.user_id)
-                $('#kt_drawer_example_basic').find('select[name="category_id"]').val(d.data
-                    .category_id)
-                $('#kt_drawer_example_basic').find('select[name="rental_addons_id"]').val(d.data
-                    .rental_addons_id)
                 $('#kt_drawer_example_basic').find('input[name="title"]').val(d.data.title)
-                $('#kt_drawer_example_basic').find('input[name="price"]').val(d.data.price)
-                $('#kt_drawer_example_basic').find('input[name="price_type"]').val(d.data
-                    .price_type)
-                $('#kt_drawer_example_basic').find('input[name="loc"]').val(d.data.loc)
-                $('#kt_drawer_example_basic').find('input[name="desc"]').val(d.data.desc)
-                $('#kt_drawer_example_basic').find('input[name="capacity"]').val(d.data
-                    .capacity)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
-                $('#kt_drawer_example_basic').find('input[name="cancel_days"]').val(d.data
-                    .cancel_days)
-                $('#kt_drawer_example_basic').find('input[name="cancel_percent"]').val(d.data
-                    .cancel_percent)
-                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
+                $('#kt_drawer_example_basic').find('input[name="image"]').val(d.data.image)
                 var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
                 if (d.data.icon != 'http://127.0.0.1:8000/storage') {
                     image = d.data.icon
@@ -479,7 +322,7 @@
         });
 
 
-        $('body').on('submit', '.RentalsForm', function(e) {
+        $('body').on('submit', '.CategoriesForm', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             showloader('block')
@@ -490,7 +333,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('rentals.store', '') }}",
+                url: "{{ route('categories.store', '') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -517,7 +360,7 @@
             let id = $(this).attr('data-id');
 
             Swal.fire({
-                html: `Are you sure you want to delete this Rentals`,
+                html: `Are you sure you want to delete this Categories`,
                 icon: "info",
                 buttonsStyling: false,
                 showCancelButton: true,
@@ -532,7 +375,7 @@
                 if (data.isConfirmed == true) {
                     showloader('block')
                     $.ajax({
-                        url: '{{ route('rentals.destroy', '') }}/' + id,
+                        url: '{{ route('categories.destroy', '') }}/' + id,
                         type: 'DELETE',
                         dataType: 'json',
                         data: {

@@ -94,6 +94,29 @@
                 data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <a href="{{ route('categories.index') }}">
+                        <span class="menu-link">
+                            <span class="menu-icon {{ request()->is('user') ? 'active' : '' }}">
+                                <span class="svg-icon svg-icon-2">
+                                    <svg width="800px" height="800px" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.5 2A1.5 1.5 0 004 3.5V4h12v-.5A1.5 1.5 0 0014.5 2h-9zM2 7.5A1.5 1.5 0 013.5 6h13A1.5 1.5 0 0118 7.5V8H2v-.5zm-1 4A1.5 1.5 0 012.5 10h15a1.5 1.5 0 011.5 1.5v7a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 011 18.5v-7z"
+                                            fill="currentColor" />
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="menu-title">Categories</span>
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
+                data-kt-menu="true" data-kt-menu-expand="false">
+
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
                         <span class="menu-icon {{ request()->is('user') ? 'active' : '' }}">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\RentalReviews;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\RentalsResource;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Validator;
 
 class RentalsController extends Controller
@@ -19,6 +20,7 @@ class RentalsController extends Controller
     {
         $data['rentals'] = Rentals::get();
         $data['users'] = User::all();
+        $data['categories'] = Categories::all();
         $data['rentaladdons'] = RentalAddons::all();
         return view('rentals.index')->with($data);
     }
@@ -26,7 +28,7 @@ class RentalsController extends Controller
     public function list(Request $req)
     {
         $req = $req->input();
-        $rentals = Rentals::get();
+        $rentals = Rentals::with('Categories')->get();
         return new RentalsResource($rentals);
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Modules\ModulesController;
@@ -38,16 +39,19 @@ Route::get('/', function () {
 
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
-    echo "clear";
+    echo "Storage Linked Successfully";
 });
+
 
 Route::get('/migratedatabase', function () {
     Artisan::call('migrate:fresh --seed');
+    echo "Fresh Database Migrated Successfully";
 });
 
 Route::get('/clear/1', function () {
     Artisan::call('config:cache');
     Artisan::call('optimize:clear');
+    echo "Cache Cleared Successfully";
 });
 
 Auth::routes();
@@ -98,6 +102,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('rentals', RentalsController::class);
     Route::controller(RentalsController::class)->group(function () {
         Route::get('user/rentals/lists', 'list')->name('rentals.list');
+    });
+
+    // ************************ Categories  ************************ //
+    Route::resource('categories', CategoriesController::class);
+    Route::controller(CategoriesController::class)->group(function () {
+        Route::get('user/categories/lists', 'list')->name('categories.list');
     });
 
     // ************************ Rentals Addons  ************************ //

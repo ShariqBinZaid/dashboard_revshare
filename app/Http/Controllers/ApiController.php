@@ -120,27 +120,6 @@ class ApiController extends Controller
         }
     }
 
-    // public function changepassword(Request $req)
-    // {
-    //     $req->validate([
-    //         'password' => 'required',
-    //         'new_password' => 'required|confirmed',
-    //     ]);
-    //     return $req;
-
-
-    //     if (!Hash::check($req->password, auth()->user()->password)) {
-    //         return back()->with("error", "Old Password Doesn't Match!");
-    //     }
-
-    //     User::whereId(auth()->user()->id)->update([
-    //         'password' => Hash::make($req->new_password),
-    //         'new_password' => Hash::make($req->new_password),
-    //     ]);
-
-    //     return back()->with("status", "Password Changed Successfully!");
-    // }
-
     public function changepassword(Request $request)
     {
         try {
