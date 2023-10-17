@@ -191,35 +191,6 @@ class RentalsController extends Controller
         return response()->json(['success' => true, 'data' => $userrentalreviews]);
     }
 
-    // public function rentalimages(Request $req)
-    // {
-    //     $input = $req->all();
-    //     $validator = Validator::make($input, [
-    //         'rental_id' => 'required',
-    //         'image' => 'required',
-    //     ]);
-
-    //     // dd($input);
-    //     if ($validator->fails()) {
-    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
-    //     }
-
-    //     if ($req->file('image')) {
-    //         unset($input['image']);
-    //         $input += ['image' => $this->updateprofile($req, 'image', 'profileimage')];
-    //     }
-
-    //     unset($input['_token']);
-
-    //     if (@$input['id']) {
-    //         $rentalreviews = RentalImages::where("id", $input['id'])->update($input);
-    //         return response()->json(['success' => true, 'msg' => 'Rental Images Updated Successfully.']);
-    //     } else {
-    //         $rentalreviews = RentalImages::create($input);
-    //         return response()->json(['success' => true, 'msg' => 'Rental Images Created Successfully', 'data' => $rentalreviews]);
-    //     }
-    // }
-
     public function rentalimages(Request $req)
     {
         try {
@@ -239,7 +210,6 @@ class RentalsController extends Controller
                 foreach ($input['image'] as $image) {
                     $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->storeAs('public/profileimage/', $imageName);
-
                     // $uploadedImages[] = $imageName;
                     $uploadedImages[] = 'profileimage/' . $imageName;
                 }
