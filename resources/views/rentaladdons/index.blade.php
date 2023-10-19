@@ -81,12 +81,11 @@
                                             <span class="svg-icon svg-icon-1">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <rect opacity="0.5" x="6" y="17.3137" width="16"
-                                                        height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                                        rx="1" transform="rotate(-45 6 17.3137)"
                                                         fill="currentColor" />
-                                                    <rect x="7.41422" y="6" width="16" height="2"
-                                                        rx="1" transform="rotate(45 7.41422 6)"
-                                                        fill="currentColor" />
+                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
                                                 </svg>
                                             </span>
                                         </div>
@@ -206,45 +205,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input class="form-control removeclass" placeholder="Name" name="name[]"
-                                                type="text" id="name" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-10">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input class="form-control removeclass" placeholder="Price" name="price[]"
-                                                type="text" id="price" value="">
-                                        </div>
-                                    </div> --}}
                                 </div>
-
-                                {{-- <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="description" class="form-label">Clients</label>
-                                        <select class="form-select select2-example"
-                                            aria-label="Floating label select example" name="client_id">
-                                            <option selected disabled>Clients</option>
-                                            @foreach ($clients as $client)
-                                                <option value="{{ $clients[0]->id }}">{{ $clients[0]->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
                             </div>
-
-                            {{-- <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="completed" selected>Completed</option>
-                                            <option value="in-progress">In-Progress</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
 
                             <div class="error-area"></div>
 

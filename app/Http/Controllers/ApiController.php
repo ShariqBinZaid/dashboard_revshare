@@ -13,7 +13,6 @@ use App\Models\Certificates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -132,9 +131,9 @@ class ApiController extends Controller
             if (Hash::check($request->current_password, $user->password)) {
                 $user->password = bcrypt($request->password);
                 $user->save();
-                return $this->sendResponse($user, 'Password changed successfully!');
+                return $this->sendResponse($user, 'Password Changed Successfully!');
             } else {
-                return $this->sendError('Current password mismatch!');
+                return $this->sendError('Current Password Mismatch!');
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

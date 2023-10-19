@@ -22,6 +22,7 @@ class RentalAddonsController extends Controller
     {
         $req = $req->input();
         $rentaladdons = RentalAddons::with('Rental')->get();
+        // dd($rentaladdons[0]->price);
         return new RentalAddonsResource($rentaladdons);
     }
 

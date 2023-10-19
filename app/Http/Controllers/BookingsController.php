@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookingAddons;
 use Carbon\Carbon;
 use App\Models\Bookings;
 use Illuminate\Http\Request;
@@ -23,18 +24,14 @@ class BookingsController extends Controller
         $input = $req->all();
         $validator = Validator::make($input, [
             'comments' => 'required',
-            // 'reviews' => 'required',
-            // 'status' => 'required',
             'booking_type' => 'required',
-            // 'datetime' => 'required',
-            // 'duration' => 'required',
-            // 'insurance_amount' => 'required',
         ]);
 
         // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
+
         $tourRental = $input['tour_rental_id'];
         unset($input['_token'], $input['tour_rental_id']);
 
