@@ -64,6 +64,7 @@ return array(
     'App\\Http\\Resources\\Users\\UserAdminResource' => $baseDir . '/app/Http/Resources/Users/UserAdminResource.php',
     'App\\Http\\Resources\\Users\\UserClientResource' => $baseDir . '/app/Http/Resources/Users/UserClientResource.php',
     'App\\Models\\BankDetails' => $baseDir . '/app/Models/BankDetails.php',
+    'App\\Models\\BookingAddons' => $baseDir . '/app/Models/BookingAddons.php',
     'App\\Models\\BookingGroups' => $baseDir . '/app/Models/BookingGroups.php',
     'App\\Models\\Bookings' => $baseDir . '/app/Models/Bookings.php',
     'App\\Models\\CardDetails' => $baseDir . '/app/Models/CardDetails.php',

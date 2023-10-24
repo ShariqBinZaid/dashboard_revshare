@@ -4,19 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class RentalBookings extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function Booking()
+    public function Booking(): MorphOne
     {
-        return $this->belongsTo(Bookings::class, 'booking_id', 'id');
-    }
-
-    public function Rental()
-    {
-        return $this->belongsTo(Bookings::class, 'booking_id', 'id');
+        return $this->morphOne(Bookings::class, 'bookable_id', 'bookable_type');
     }
 }
