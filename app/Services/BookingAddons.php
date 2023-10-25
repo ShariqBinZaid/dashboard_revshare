@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\BookingAddons as BookingAddonsModel;
+use App\Models\BookingAddons as BookingAddonsModel;
 Class BookingAddons{
     public function store($data){
         try {
@@ -16,7 +16,12 @@ Class BookingAddons{
             $addons->save();
             return $addons;
         } catch (\Exception $e){
-            return $e->getMessage();
+            throw $e;
         }
+    }
+
+    public function get($id){
+        $addon = BookingAddonsModel::find($id);
+        return $addon;
     }
 }

@@ -118,7 +118,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::controller(BookingsController::class)->group(function () {
-        Route::post('bookings', 'bookings')->name('tours.bookings');
+        Route::post('booking/rental', 'booking_rental');
+        Route::post('rental/check/availability', 'checkAvailability');
         Route::get('getbookings', 'getbookings')->name('tours.getbookings');
         // Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
         Route::get('getbookingtours', 'getbookingtours')->name('tours.getbookingtours');

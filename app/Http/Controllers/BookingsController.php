@@ -57,8 +57,8 @@ class BookingsController extends Controller
     public function booking_rental(Request $request, Booking $booking){
         try{
             $request->validate([
-                'user_id' => 'required',
-                'bookable_id' => 'required'
+                'bookable_id' => 'required',
+                'rental_availability_id' => 'required'
             ]);
             $newBooking = $booking->storeRental($request);
             return $this->sendResponse($newBooking, 'Rental booked successfully!');
@@ -67,8 +67,22 @@ class BookingsController extends Controller
         }
     }
 
-    public function checkAvailability(){
-
+    public function checkAvailability(Request $request, Booking $booking){
+        try {
+            $request->validate([
+                'dates' => 'required',
+                'rental_id' => 'required',
+                'hour' => 'required'
+            ]);
+            $availableDate = $booking->rentalAvailability($request->rental_id, $request->dates, $request->hour);
+            if($availableDate){
+                return $this->sendResponse($availableDate, 'Date available!');
+            } else {
+                return $this->sendResponse([], 'Date not available!');
+            }
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
+        }
     }
     public function getuserbookingtours($user_id)
     {
