@@ -46,7 +46,6 @@ class BookingsController extends Controller
         }
     }
     public function checkAvailability(Request $request, Booking $booking){
-        Log::debug($request);
         try {
             $request->validate([
                 'dates' => 'required',
