@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\BookingAddons as BookingAddonsModel;
+use Illuminate\Support\Facades\Log;
+
 Class BookingAddons{
     public function store($data){
         try {
@@ -16,6 +18,7 @@ Class BookingAddons{
             $addons->save();
             return $addons;
         } catch (\Exception $e){
+            Log::error('Error from BookingAddons Service: '.$e);
             throw $e;
         }
     }

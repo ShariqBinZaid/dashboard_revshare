@@ -9,6 +9,7 @@ use App\Models\Rentals;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Booking
 {
@@ -50,6 +51,7 @@ class Booking
             DB::commit();
             return $booking;
         } catch (\Exception $e) {
+            Log::debug('Error from Rental Store: '.$e);
             DB::rollBack();
             throw $e;
         }
@@ -80,6 +82,7 @@ class Booking
             }
             return false;
         } catch (\Exception $e) {
+            Log::debug('Error from Rental Availability: '.$e);
             throw $e;
         }
     }
