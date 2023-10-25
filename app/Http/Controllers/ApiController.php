@@ -104,6 +104,9 @@ class ApiController extends Controller
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
+        $input['password'] = bcrypt($input['password']);
+        $input['confirm_password'] = bcrypt($input['confirm_password']);
+
         if ($req->file('display_picture')) {
             unset($input['display_picture']);
             $input += ['display_picture' => $this->updateprofile($req, 'display_picture', 'profileimage')];
