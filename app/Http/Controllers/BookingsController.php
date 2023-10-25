@@ -15,59 +15,38 @@ use App\Models\Rentals;
 use App\Models\Tours;
 use App\Models\ToursBookings;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class BookingsController extends Controller
 {
-//    public function bookings(Request $req)
-//    {
-//        $input = $req->all();
-//        $validator = Validator::make($input, [
-//            'comments' => 'required',
-//            'booking_type' => 'required',
-//        ]);
-//
-//        // dd($input);
-//        if ($validator->fails()) {
-//            return response()->json(['success' => false, 'error' => $validator->errors()]);
-//        }
-//
-//        $tourRental = $input['tour_rental_id'];
-//        unset($input['_token'], $input['tour_rental_id']);
-//
-//        $input += ['user_id' => Auth::user()->id];
-//        $input += ['datetime' => date('Y-m-d')];
-//
-//        if (@$input['id']) {
-//            $bookings = Bookings::where("id", $input['id'])->update($input);
-//            return response()->json(['success' => true, 'msg' => 'Bookings Updated Successfully.']);
-//        } else {
-//            $bookings = Bookings::create($input);
-//            if ($input['booking_type'] == "tours") {
-//                ToursBookings::create(['booking_id' => $bookings->id, 'tour_id' => $tourRental]);
-//            }
-//            if ($input['booking_type'] == "rentals") {
-//                RentalBookings::create(['booking_id' => $bookings->id, 'rental_id' => $tourRental]);
-//            }
-//            return response()->json(['success' => true, 'msg' => 'Bookings Created Successfully', 'data' => $bookings]);
-//        }
-//    }
-
     public function booking_rental(Request $request, Booking $booking){
         try{
             $request->validate([
                 'bookable_id' => 'required',
                 'rental_availability_id' => 'required'
             ]);
-            $newBooking = $booking->storeRental($request);
+            $newBooking = $booking->store($request, Rentals::class);
             return $this->sendResponse($newBooking, 'Rental booked successfully!');
         } catch (\Exception $e){
             return $this->sendError($e->getMessage());
         }
     }
-
+    public function booking_tour(Request $request, Booking $booking){
+        try{
+            $request->validate([
+                'bookable_id' => 'required',
+                'rental_availability_id' => 'required'
+            ]);
+            $newBooking = $booking->store($request, Tours::class);
+            return $this->sendResponse($newBooking, 'Rental booked successfully!');
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
+        }
+    }
     public function checkAvailability(Request $request, Booking $booking){
+        Log::debug($request);
         try {
             $request->validate([
                 'dates' => 'required',

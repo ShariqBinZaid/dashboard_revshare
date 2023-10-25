@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Booking
 {
-    public function storeRental($data)
+    public function store($data, $model)
     {
         DB::beginTransaction();
         try {
@@ -23,7 +23,7 @@ class Booking
             $booking->duration = $data->duration;
             $booking->comments = $data->comments;
             $booking->insurance_amount = $data->insurance_amount;
-            $booking->bookable_type = Rentals::class;
+            $booking->bookable_type = $model;
             $booking->bookable_id = $data->bookable_id;
             $booking->booking_status = 'Confirmed';
             $booking->adults = $data->adults;
