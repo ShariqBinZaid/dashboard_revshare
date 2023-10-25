@@ -53,7 +53,7 @@ class Booking
         } catch (\Exception $e) {
             Log::debug('Error from Rental Store: '.$e);
             DB::rollBack();
-            throw $e;
+            throw new \Error($e);
         }
     }
 
@@ -83,7 +83,16 @@ class Booking
             return false;
         } catch (\Exception $e) {
             Log::debug('Error from Rental Availability: '.$e);
-            throw $e;
+            throw new \Error($e);
+        }
+    }
+
+    public function search($data)
+    {
+        try{
+            return Bookings::where('user_id', Auth::id())->bookingType($data->get('booking_type'))->listType($data->get('list_type'))->with(['bookable', 'addons'])->get();
+        } catch (\Exception $e){
+            throw new \Error($e);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MyBookingsResource;
 use App\Models\BookingAddons;
 use App\Services\Booking;
 use Carbon\Carbon;
@@ -113,10 +114,11 @@ class BookingsController extends Controller
         return response()->json(['success' => true, 'upcomming' => $upComming, 'past' => $past]);
     }
 
-    public function getbookings(Request $req)
+    public function getbookings(Request $req, Booking $booking)
     {
-        $getbookings = Bookings::with('User')->get();
-        return response()->json(['success' => true, 'data' => $getbookings]);
+        $getbookings = $booking->search($req);
+        //dd($getbookings);
+        return MyBookingsResource::collection($getbookings);
     }
 
     public function bookingGroups(Request $req)

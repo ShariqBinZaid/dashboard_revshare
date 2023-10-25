@@ -121,7 +121,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('booking/rental', 'booking_rental');
         Route::post('booking/tour', 'booking_tour');
         Route::post('rental/check/availability', 'checkAvailability');
-        Route::get('getbookings', 'getbookings')->name('tours.getbookings');
+        Route::get('booking/search', 'getbookings')->name('tours.getbookings');
         // Route::get('getuserbookings/{user_id}', 'getuserbookings')->name('tours.getuserbookings');
         Route::get('getbookingtours', 'getbookingtours')->name('tours.getbookingtours');
         Route::get('getuserbookingtours/{user_id}', 'getuserbookingtours')->name('tours.getuserbookingtours');

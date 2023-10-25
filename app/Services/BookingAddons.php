@@ -19,12 +19,7 @@ Class BookingAddons{
             return $addons;
         } catch (\Exception $e){
             Log::error('Error from BookingAddons Service: '.$e);
-            throw $e;
+            throw new \Error($e);
         }
-    }
-
-    public function get($id){
-        $addon = BookingAddonsModel::find($id);
-        return $addon;
     }
 }
