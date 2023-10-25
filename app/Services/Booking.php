@@ -61,7 +61,7 @@ class Booking
     {
         try {
             if (!empty($dates)) {
-                $hourToTime = Carbon::createFromFormat('H', $hour)->format('H:i:s');
+                $hourToTime = Carbon::createFromFormat('H:i:s', $hour)->format('H:i:s');
                 $selectedDates = [];
                 foreach ($dates as $date) {
                     $parseDate = Carbon::parse($date);
