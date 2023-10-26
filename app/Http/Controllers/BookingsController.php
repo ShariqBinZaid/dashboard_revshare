@@ -117,7 +117,6 @@ class BookingsController extends Controller
     public function getbookings(Request $req, Booking $booking)
     {
         $getbookings = $booking->search($req);
-        //dd($getbookings);
         return MyBookingsResource::collection($getbookings);
     }
 
