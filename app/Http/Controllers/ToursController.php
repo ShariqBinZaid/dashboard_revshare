@@ -24,16 +24,12 @@ class ToursController extends Controller
         $validator = Validator::make($input, [
             'title' => 'required',
             'price' => 'required',
-            'price_type' => 'required',
             'desc' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
             'whats_include' => 'required',
             'age' => 'required',
-            'capacity' => 'required',
-            'reviews' => 'required',
+            'capacity' => 'required'
         ]);
 
         // dd($input);

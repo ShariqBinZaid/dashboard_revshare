@@ -20,8 +20,8 @@ class Booking
             $booking = new Bookings();
             $booking->user_id = Auth::id();
             $booking->booking_code = rand('1000000', '9999999');
-            $booking->datetime = Carbon::createFromFormat('Y-m-d H:i:s', $data->datetime)->format('Y-m-d H:i:s');
-            $booking->duration = $data->duration;
+            $booking->datetime = $data->datetime ? Carbon::createFromFormat('Y-m-d H:i:s', $data->datetime)->format('Y-m-d H:i:s') : null;
+            $booking->duration = $data->duration ? $data->duration : null;
             $booking->comments = $data->comments;
             $booking->insurance_amount = $data->insurance_amount;
             $booking->bookable_type = $model;
@@ -90,7 +90,7 @@ class Booking
     public function search($data)
     {
         try{
-            return Bookings::where('user_id', Auth::id())->bookingType($data->get('booking_type'))->listType($data->get('list_type'))->with(['bookable', 'addons'])->get();
+            return Bookings::where('user_id', Auth::id())->bookingType($data->get('booking_type'))->listType($data->get('list_type'), $data->get('booking_type'))->with(['bookable', 'addons'])->get();
         } catch (\Exception $e){
             throw new \Error($e);
         }
