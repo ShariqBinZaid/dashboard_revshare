@@ -10,4 +10,5 @@ class RentalAvailability extends Model
     use HasFactory;
 
     protected $table = 'rental_availability';
+    protected $guarded = [];
 }

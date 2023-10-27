@@ -11,6 +11,7 @@ use App\Models\RentalReviews;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\RentalsResource;
 use App\Models\Categories;
+use App\Models\RentalAvailability;
 use Illuminate\Support\Facades\Validator;
 
 class RentalsController extends Controller
@@ -64,23 +65,73 @@ class RentalsController extends Controller
             'cancel_percent' => 'required',
         ]);
 
-        // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
 
-        unset($input['_token']);
+        $user_id = Auth::user()->id;
 
-        $input += ['user_id' => Auth::user()->id];
+        // Create a new rental record
+        $rental = Rentals::create([
+            'user_id' => $user_id,
+            'title' => $input['title'],
+            'price' => $input['price'],
+            'price_type' => $input['price_type'],
+            'locations' => $input['locations'],
+            'desc' => $input['desc'],
+            'capacity' => $input['capacity'],
+            'skills' => $input['skills'],
+            'cancel_days' => $input['cancel_days'],
+            'cancel_percent' => $input['cancel_percent'],
+        ]);
 
-        if (@$input['id']) {
-            $rentals = Rentals::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'Rentals Updated Successfully.']);
-        } else {
-            $rentals = Rentals::create($input);
-            return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully', 'data' => $rentals]);
+        // Loop through the rental availability data and store it in the "rental_availability" table
+        foreach ($input['availability'] as $availability) {
+            RentalAvailability::create([
+                'rental_id' => $rental->id,
+                'day' => $availability['day'],
+                'from' => $availability['from'],
+                'to' => $availability['to'],
+            ]);
         }
+
+        return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully', 'data' => $rental]);
     }
+
+
+    // public function store(Request $req)
+    // {
+    //     $input = $req->all();
+    //     $validator = Validator::make($input, [
+    //         'title' => 'required',
+    //         'price' => 'required',
+    //         'price_type' => 'required',
+    //         'locations' => 'required',
+    //         'desc' => 'required',
+    //         'capacity' => 'required',
+    //         'skills' => 'required',
+    //         'cancel_days' => 'required',
+    //         'cancel_percent' => 'required',
+    //     ]);
+
+    //     // dd($input);
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()]);
+    //     }
+
+    //     unset($input['_token']);
+
+    //     $input += ['user_id' => Auth::user()->id];
+
+    //     if (@$input['id']) {
+    //         $rentals = Rentals::where("id", $input['id'])->update($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rentals Updated Successfully.']);
+    //     } else {
+    //         $rentals = RentalAvailability::create($input);
+    //         $rentals = Rentals::create($input);
+    //         return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully', 'data' => $rentals]);
+    //     }
+    // }
 
     public function getrentals()
     {

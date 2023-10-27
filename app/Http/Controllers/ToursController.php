@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TourResource;
 use App\Models\BookingGroups;
 use App\Models\Tours;
 use App\Models\Bookings;
@@ -12,13 +13,27 @@ use Illuminate\Http\Request;
 use App\Models\ToursBookings;
 use App\Models\RentalBookings;
 use App\Models\TourReviews;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ToursController extends Controller
 {
+    public function index()
+    {
+        $data['tours'] = Tours::all();
+        $data['users'] = User::all();
+        return view('tours.index')->with($data);
+    }
 
-    public function tours(Request $req)
+    public function list(Request $req)
+    {
+        $req = $req->input();
+        $tours = Tours::get();
+        return new TourResource($tours);
+    }
+
+    public function store(Request $req)
     {
         $input = $req->all();
         $validator = Validator::make($input, [

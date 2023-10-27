@@ -203,7 +203,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('tours.index') }}">
                                 <span class="menu-bullet">
                                     <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
                                 </span>
@@ -216,7 +216,7 @@
                         <!--begin:Menu item-->
                         <div class="menu-item">
                             <!--begin:Menu link-->
-                            <a class="menu-link" href="#">
+                            <a class="menu-link" href="{{ route('toursimages.index') }}">
                                 <span class="menu-bullet">
                                     <i class="fa-solid fa-arrow-right fa-beat-fade"></i>
                                 </span>

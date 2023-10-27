@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RentalsResource extends JsonResource
+class TourResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,22 +14,22 @@ class RentalsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $rentals = [];
+        $tours = [];
 
         if ($this->resource->count() > 0) {
-            foreach ($this->resource as $rental) {
+            foreach ($this->resource as $tour) {
                 // dd($btl->getCategorys);
                 // $noofChild = Card::where($card->id)->count();
-                $picture = $rental->image != null ? asset('storage/' . $rental->image) : '/assets/media/avatars/blank.png';
+                $picture = $tour->image != null ? asset('storage/' . $tour->image) : '/assets/media/avatars/blank.png';
                 $userAvatar = '<div class="d-flex align-items-center">
                             <div class="symbol symbol-35px symbol-circle">
                                     <img alt="Pic" src="' . $picture . '"
                                          style=" object-fit: cover;"/>
                             </div>
-                            <a href="' . route('user.admin.view', $rental->id) . '" target="_blank" >
+                            <a href="' . route('user.admin.view', $tour->id) . '" target="_blank" >
                                 <div class="text-gray-800 text-hover-primary mb-1 ms-5 cursor-pointer">
-                                    ' . $rental->first_name . ' ' . $rental->last_name . '
-                                    <div class="fw-semibold text-muted">' . $rental->email . '</div>
+                                    ' . $tour->first_name . ' ' . $tour->last_name . '
+                                    <div class="fw-semibold text-muted">' . $tour->email . '</div>
                                 </div>
                                 </a>
                             <!--end::Details-->
@@ -46,7 +46,7 @@ class RentalsResource extends JsonResource
                 //                     <a class="dropdown-item"  target="_blank" href="' . route('user.admin.view', $card->id) . '">View</a>
                 //                 </li>';
                 $actions .= '<li>
-                                    <a class="dropdown-item create_new_off_canvas_modal edit_blog"  data-id="' . $rental->id . '" href="javascript:void(0);" >Edit</a>
+                                    <a class="dropdown-item create_new_off_canvas_modal edit_blog"  data-id="' . $tour->id . '" href="javascript:void(0);" >Edit</a>
                                 </li>';
                 // $actions .= $btl->is_active == 1 ? '<li>
                 //                     <a   href="javascript:void(0);" class="dropdown-item userStatus" data-active=0  data-id="' . $btl->id . '"  >Deactive</a>
@@ -56,24 +56,27 @@ class RentalsResource extends JsonResource
                 // }
                 // if (Helper::permission('Users.delete')) {
                 $actions .= '<li>
-                                    <a class="dropdown-item delete_record" data-id="' . $rental->id . '" href="javascript:void(0);">Delete</a>
+                                    <a class="dropdown-item delete_record" data-id="' . $tour->id . '" href="javascript:void(0);">Delete</a>
                                 </li>';
                 // }
                 $actions .= '  </ul>
                             </div>';
-                $status = $rental->is_active == 1 ? '<div class="badge badge-light-success fw-bold">Active</div>' : '<div class="badge badge-light-danger fw-bold">Disabled</div>';
+                $status = $tour->is_active == 1 ? '<div class="badge badge-light-success fw-bold">Active</div>' : '<div class="badge badge-light-danger fw-bold">Disabled</div>';
                 $creator = '';
-                $rentals[] = [
-                    'user_id' => $rental->User->user_name,
-                    'category_id' => $rental->Categories[0]->title,
-                    'title' => $rental->title,
-                    'price' => $rental->price,
-                    'loc' => $rental->loc,
-                    'desc' => $rental->desc,
-                    'capacity' => $rental->capacity,
-                    'skills' => $rental->skills,
-                    'cancel_days' => $rental->cancel_days,
-                    'cancel_percent' => $rental->cancel_percent,
+                $tours[] = [
+                    // 'user_id' => $tour->User->user_name,
+                    'title' => $tour->title,
+                    'price' => $tour->price,
+                    'desc' => $tour->desc,
+                    'loc' => $tour->loc,
+                    'date' => $tour->start_date . ' - ' . $tour->end_date,
+                    // 'end_date' => $tour->end_date,
+                    'time' => $tour->start_time . ' - ' . $tour->end_time,
+                    // 'end_time' => $tour->end_time,
+                    'age' => $tour->age,
+                    'capacity' => $tour->capacity,
+                    'reviews' => $tour->reviews,
+                    'whats_include' => $tour->whats_include,
                     'actions' => $actions
                 ];
             }
@@ -81,9 +84,9 @@ class RentalsResource extends JsonResource
 
         return [
             'draw' => 1,
-            'recordsTotal' => count($rentals),
-            'recordsFiltered' => count($rentals),
-            'data' => $rentals
+            'recordsTotal' => count($tours),
+            'recordsFiltered' => count($tours),
+            'data' => $tours
         ];
     }
 }

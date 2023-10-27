@@ -19,6 +19,8 @@ use App\Http\Controllers\RentalsController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\RolePermission\AttachController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
+use App\Http\Controllers\ToursController;
+use App\Http\Controllers\ToursImagesController;
 use App\Models\Rentals;
 
 /*
@@ -98,17 +100,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('storePermission',  [AttachController::class, 'storePermission'])->name('storePermission');
 
 
+    // ************************ Categories  ************************ //
+    Route::resource('categories', CategoriesController::class);
+    Route::controller(CategoriesController::class)->group(function () {
+        Route::get('user/categories/lists', 'list')->name('categories.list');
+    });
+
+
     // ************************ Rentals  ************************ //
     Route::resource('rentals', RentalsController::class);
     Route::controller(RentalsController::class)->group(function () {
         Route::get('user/rentals/lists', 'list')->name('rentals.list');
     });
 
-    // ************************ Categories  ************************ //
-    Route::resource('categories', CategoriesController::class);
-    Route::controller(CategoriesController::class)->group(function () {
-        Route::get('user/categories/lists', 'list')->name('categories.list');
-    });
 
     // ************************ Rentals Addons  ************************ //
     Route::resource('rentaladdons', RentalAddonsController::class);
@@ -116,9 +120,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('user/rentaladdons/lists', 'list')->name('rentaladdons.list');
     });
 
+
     // ************************ Rentals Images  ************************ //
     Route::resource('rentalimages', RentalImagesController::class);
     Route::controller(RentalImagesController::class)->group(function () {
         Route::get('user/rentalimages/lists', 'list')->name('rentalimages.list');
+    });
+
+
+    // ************************ Tours  ************************ //
+    Route::resource('tours', ToursController::class);
+    Route::controller(ToursController::class)->group(function () {
+        Route::get('user/tours/lists', 'list')->name('tours.list');
+    });
+
+
+    // ************************ Tours Images ************************ //
+    Route::resource('toursimages', ToursImagesController::class);
+    Route::controller(ToursImagesController::class)->group(function () {
+        Route::get('user/toursimages/lists', 'list')->name('toursimages.list');
     });
 });

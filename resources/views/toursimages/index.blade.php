@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    Users List</h1>
+                    Tour Images List</h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">Home</a>
@@ -13,15 +13,14 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">User Management</li>
+                    <li class="breadcrumb-item text-muted">Tours Image Details</li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Users</li>
+                    <li class="breadcrumb-item text-muted">Tours Images</li>
             </div>
         </div>
     </div>
-
 
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -41,7 +40,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-user-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Search user"
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Tours Images"
                                 id="search_table" />
                         </div>
                     </div>
@@ -51,7 +50,6 @@
                             {{-- @if (Helper::permission('Users.create')) --}}
                             <button type="button" class="btn btn-primary create_new_off_canvas_modal create_user"
                                 data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-
                                 <span class="svg-icon svg-icon-2">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -60,9 +58,10 @@
                                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
                                             fill="currentColor" />
                                     </svg>
-                                </span>Add User
+                                </span>Add Tours Images
                             </button>
                             {{-- @endif --}}
+
                         </div>
                         <div class="d-flex justify-content-end align-items-center d-none"
                             data-kt-user-table-toolbar="selected">
@@ -82,12 +81,11 @@
                                             <span class="svg-icon svg-icon-1">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <rect opacity="0.5" x="6" y="17.3137" width="16"
-                                                        height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
+                                                        rx="1" transform="rotate(-45 6 17.3137)"
                                                         fill="currentColor" />
-                                                    <rect x="7.41422" y="6" width="16" height="2"
-                                                        rx="1" transform="rotate(45 7.41422 6)"
-                                                        fill="currentColor" />
+                                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                        transform="rotate(45 7.41422 6)" fill="currentColor" />
                                                 </svg>
                                             </span>
                                         </div>
@@ -138,24 +136,17 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="users_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="toursimages_table">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-
-                                <th>User</th>
-                                <th>User Name</th>
-                                <th>Phone</th>
-                                <th>Status</th>
-                                <th>Created By</th>
-                                {{-- <th>Roles</th> --}}
+                                <th>Images</th>
+                                <th>Tours</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-
                     </table>
                 </div>
             </div>
@@ -172,11 +163,9 @@
                     </div>
                     <div class="card-body py-5">
 
-                        <form method="POST" id="crud-form" action="" class="userFrom" role="form"
-                            enctype="multipart/form-data">
+                        <form class="ToursForm" enctype="multipart/form-data">
                             @csrf
-
-                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="id">
 
                             <div class="fv-row mb-7">
 
@@ -225,100 +214,33 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-10">
-                                        <label for="first_name" class="form-label">User Name</label>
-                                        <input class="form-control removeclass" placeholder="User Name" name="user_name"
-                                            type="text" id="user_name" value="">
+                                        <label for="tour_id" class="form-label">Tours</label>
+                                        <select class="form-select select2-example"
+                                            aria-label="Floating label select example" name="tour_id">
+                                            <option selected disabled>Tours</option>
+                                            @foreach ($tours as $tour)
+                                                <option value="{{ $tour->id }}">{{ $tour->title }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                     <div class="mb-10">
-                                        <label for="first_name" class="form-label">First Name</label>
-                                        <input class="form-control removeclass" placeholder="First Name"
-                                            name="first_name" type="text" id="first_name" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="last_name" class="form-label">Last Name</label>
-                                        <input class="form-control removeclass" placeholder="Last Name" name="last_name"
-                                            type="text" id="last_name" value="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-10">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input class="form-control removeclass" placeholder="Email" name="email"
-                                            type="text" id="email" value="">
-                                    </div>
-                                </div>
-
-                                <div class="col passwordDiv">
-                                    <div class="mb-10 ">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input class="form-control removeclass" placeholder="password" name="password"
-                                            type="password" autocomplete="new-password" value="" id="password">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="address" class="form-label">Address</label>
-                                        <input class="form-control" placeholder="Address" name="address" type="text"
-                                            value="" id="address">
+                                        <label for="description" class="form-label">Clients</label>
+                                        <select class="form-select select2-example"
+                                            aria-label="Floating label select example" name="client_id">
+                                            <option selected disabled>Clients</option>
+                                            @foreach ($clients as $client)
+                                                <option value="{{ $clients[0]->id }}">{{ $clients[0]->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12">
-                                    <div class="mb-10 ">
-                                        <label for="gender" class="form-label">Gender</label>
-                                        <select class="form-control" name="gender" id="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="phone" class="form-label">Contact Number</label>
-                                        <input class="form-control " placeholder="Contact No" name="phone"
-                                            type="text" value="" id="phone">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="phone" class="form-label">Is Active</label>
-                                        <select name="is_active" id="is_active" class="form-control">
-                                            <option value="1" selected>Active</option>
-                                            <option value="0">Disabled</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="phone" class="form-label">User Type</label>
-                                        <select name="user_type" id="user_type" class="form-control">
-                                            <option value="admin" selected>Admin</option>
-                                            <option value="parent">Parent</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
 
                             <div class="error-area"></div>
+
                             <div class="box-footer mt20">
                                 <button type="submit" class="btn btn-primary me-10" id="crud-form-submit-button">
                                     <span class="indicator-label">
@@ -330,33 +252,33 @@
                                     </span>
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 @endsection
+
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 @section('page_script')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/export-users.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/custom/apps/user-management/users/list/add.js') }}"></script> --}}
     <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('path/to/clockpicker.css') }}">
+    <script src="{{ asset('path/to/clockpicker.js') }}"></script>
 @endsection
 
 <script>
     $(document).ready(function() {
-        $("#join_on").daterangepicker({
+        $("#start_date").daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
             minYear: 1901,
@@ -365,63 +287,99 @@
             var years = moment().diff(start, "years");
             // alert("You are " + years + " years old!");
         });
-        let table = $('#users_table').DataTable({
+
+        $("#end_date").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format("YYYY"), 12)
+        }, function(start, end, label) {
+            var years = moment().diff(start, "years");
+            // alert("You are " + years + " years old!");
+        });
+        $('#timePicker').clockpicker({
+            autoclose: true
+        });
+
+        $('.clockpicker').clockpicker();
+
+        let table = $('#toursimages_table').DataTable({
             responsive: true,
             // processing: true,
             // serverSide: true,
             pageLength: 10,
             lengthChange: true,
             ajax: {
-                url: "{{ route('user.admin.list') }}",
+                url: "{{ route('toursimages.list') }}",
             },
             columns: [{
-                    data: 'user'
+                    data: 'title'
                 },
                 {
-                    data: 'user_name'
+                    data: 'price'
                 },
                 {
-                    data: 'phone'
+                    data: 'desc'
                 },
                 {
-                    data: 'status'
+                    data: 'loc'
                 },
                 {
-                    data: 'createdAt'
+                    data: 'date'
+                },
+                {
+                    data: 'time'
+                },
+                {
+                    data: 'age'
+                },
+                {
+                    data: 'capacity'
+                },
+                {
+                    data: 'reviews'
+                },
+                {
+                    data: 'whats_include'
                 },
                 {
                     data: 'actions'
-                },
+                }
             ],
         });
 
-        $('body').on('click', '.edit_record', function() {
+        $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit User')
+            $('.drawertitle').html('Edit Tours Images')
             showloader('block')
-            $.get('{{ route('user.show', '') }}/' + id, {
+            $.get('{{ route('tours.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
-                $('.roles').val(d.data.roles).change();
-                $('.skills').val(d.data.skill).change();
                 $('#kt_drawer_example_basic').find('input[name="id"]').val(d.data.id)
-                $('#kt_drawer_example_basic').find('input[name="user_name"]').val(d.data
-                    .user_name)
-                $('#kt_drawer_example_basic').find('input[name="first_name"]').val(d.data
-                    .first_name)
-                $('#kt_drawer_example_basic').find('input[name="last_name"]').val(d.data
-                    .last_name)
-                $('#kt_drawer_example_basic').find('input[name="email"]').val(d.data.email)
-                $('#kt_drawer_example_basic').find('input[name="address"]').val(d.data.email)
-                $('#kt_drawer_example_basic').find('input[name="phone"]').val(d.data
-                    .phone)
-                $('#kt_drawer_example_basic').find('select[name="user_type"]').val(d.data
-                    .user_type)
+                $('#kt_drawer_example_basic').find('select[name="user_id"]').val(d.data.user_id)
+                $('#kt_drawer_example_basic').find('select[name="category_id"]').val(d.data
+                    .category_id)
+                $('#kt_drawer_example_basic').find('select[name="rental_addons_id"]').val(d.data
+                    .rental_addons_id)
+                $('#kt_drawer_example_basic').find('input[name="title"]').val(d.data.title)
+                $('#kt_drawer_example_basic').find('input[name="price"]').val(d.data.price)
+                $('#kt_drawer_example_basic').find('input[name="price_type"]').val(d.data
+                    .price_type)
+                $('#kt_drawer_example_basic').find('input[name="loc"]').val(d.data.loc)
+                $('#kt_drawer_example_basic').find('input[name="desc"]').val(d.data.desc)
+                $('#kt_drawer_example_basic').find('input[name="capacity"]').val(d.data
+                    .capacity)
+                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
+                $('#kt_drawer_example_basic').find('input[name="cancel_days"]').val(d.data
+                    .cancel_days)
+                $('#kt_drawer_example_basic').find('input[name="cancel_percent"]').val(d.data
+                    .cancel_percent)
+                $('#kt_drawer_example_basic').find('input[name="skills"]').val(d.data.skills)
                 var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
-                if (d.data.display_picture != 'http://127.0.0.1:8000/storage') {
-                    image = d.data.display_picture
+                if (d.data.icon != 'http://127.0.0.1:8000/storage') {
+                    image = d.data.icon
                 }
                 $('#kt_drawer_example_basic').find('.dispalyImage').css('background-image',
                     'url(' + image + ')')
@@ -429,22 +387,13 @@
             }, 'json')
 
         });
+
         $('#search_table').on('keyup', function() {
             table.search($(this).val()).draw();
         });
-        $('body').on('click', '.create_user', function(e) {
 
-            $('.roles').val(0).change();
-            $('.passwordDiv').show();
-            $('.drawertitle').html('Add User');
 
-            var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
-            $('#kt_drawer_example_basic').find('input').val('')
-            $('#kt_drawer_example_basic').find('.dispalyImage').css('background-image', 'url(' + image +
-                ')')
-        })
-
-        $('body').on('submit', '.userFrom', function(e) {
+        $('body').on('submit', '.ToursForm', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             showloader('block')
@@ -455,7 +404,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('user.store', '') }}",
+                url: "{{ route('toursimages.store', '') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -471,22 +420,18 @@
                         toastr.success(d.msg);
                         table.ajax.reload()
                         KTDrawer.hideAll();
-
                     }
                     showloader('none')
                 },
-                error: function(data) {
-
-                }
+                error: function(data) {}
             });
-        })
-
+        });
 
         $('body').on('click', '.delete_record', function() {
             let id = $(this).attr('data-id');
 
             Swal.fire({
-                html: `Are you sure you want to delete this user`,
+                html: `Are you sure you want to delete this Tours Images`,
                 icon: "info",
                 buttonsStyling: false,
                 showCancelButton: true,
@@ -501,7 +446,7 @@
                 if (data.isConfirmed == true) {
                     showloader('block')
                     $.ajax({
-                        url: '{{ route('user.destroy', '') }}/' + id,
+                        url: '{{ route('toursimages.destroy', '') }}/' + id,
                         type: 'DELETE',
                         dataType: 'json',
                         data: {
@@ -516,11 +461,8 @@
                         }
                     })
                     showloader('none')
-
                 }
-
             });
         });
-
     })
 </script>

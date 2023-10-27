@@ -18,6 +18,7 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function register(Request $request)
     {
 
@@ -79,6 +80,7 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function login(Request $request)
     {
         $getUser  = User::where('email', $request->email)->where('user_type', '!=', 'user')->where('is_active', 1)->first();
@@ -97,6 +99,7 @@ class RegisterController extends Controller
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
+
     public function clientlogin(Request $request)
     {
         $getUser  = User::where('email', $request->email)->where('user_type', '=', 'user')->where('is_active', 1)->first();
@@ -115,6 +118,7 @@ class RegisterController extends Controller
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
+
     public function updateprofile(Request $request, $file)
     {
         $p = $request->input();
@@ -165,12 +169,12 @@ class RegisterController extends Controller
         return response()->json(['success' => true, 'data' => $data]);
     }
 
-
     public function clientview()
     {
         $user = User::with('role')->where('user_type', 'user')->get();
         return response()->json($user);
     }
+
     public function usercurrent()
     {
         try {

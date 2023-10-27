@@ -27,7 +27,6 @@ class UserController extends Controller
         return view('Users.user')->with($data);
     }
 
-
     public function list(Request $req)
     {
         $req = $req->input();

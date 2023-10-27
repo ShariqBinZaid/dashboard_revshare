@@ -41,21 +41,21 @@ class UserAdminResource extends JsonResource
                               </button>
                               <ul class="dropdown-menu" aria-labelledby="actionsMenu">';
 
-                if (Helper::permission('Users.update')) {
+                // if (Helper::permission('Users.update')) {
                     $actions .= ' <li>
                                     <a class="dropdown-item create_new_off_canvas_modal edit_record"  data-id="' . $user->id . '" href="javascript:void(0);" >Edit</a>
                                 </li>';
-                }
-                if (Helper::permission('Users.view')) {
+                // }
+                // if (Helper::permission('Users.view')) {
                     $actions .= '<li>
                                     <a class="dropdown-item"  target="_blank" href="' . route('user.admin.view', $user->id) . '">View</a>
                                 </li>';
-                }
-                if (Helper::permission('Users.delete')) {
+                // }
+                // if (Helper::permission('Users.delete')) {
                     $actions .= '<li>
                                     <a class="dropdown-item delete_record" data-id="' . $user->id . '" href="javascript:void(0);">Delete</a>
                                 </li>';
-                }
+                // }
                 $actions .= '  </ul>
                             </div>';
                 $status = $user->is_active == 1 ? '<div class="badge badge-light-success fw-bold">Active</div>' : '<div class="badge badge-light-danger fw-bold">Disabled</div>';
