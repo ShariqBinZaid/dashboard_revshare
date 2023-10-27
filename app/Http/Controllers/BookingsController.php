@@ -37,11 +37,10 @@ class BookingsController extends Controller
     public function booking_tour(Request $request, Booking $booking){
         try{
             $request->validate([
-                'bookable_id' => 'required',
-                'rental_availability_id' => 'required'
+                'bookable_id' => 'required'
             ]);
             $newBooking = $booking->store($request, Tours::class);
-            return $this->sendResponse($newBooking, 'Rental booked successfully!');
+            return $this->sendResponse($newBooking, 'Tours booked successfully!');
         } catch (\Exception $e){
             return $this->sendError($e->getMessage());
         }

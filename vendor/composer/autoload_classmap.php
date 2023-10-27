@@ -55,6 +55,7 @@ return array(
     'App\\Http\\Requests\\UpdateSkillsRequest' => $baseDir . '/app/Http/Requests/UpdateSkillsRequest.php',
     'App\\Http\\Resources\\CategoriesResource' => $baseDir . '/app/Http/Resources/CategoriesResource.php',
     'App\\Http\\Resources\\ModuleResource' => $baseDir . '/app/Http/Resources/ModuleResource.php',
+    'App\\Http\\Resources\\MyBookingsResource' => $baseDir . '/app/Http/Resources/MyBookingsResource.php',
     'App\\Http\\Resources\\ParentResource' => $baseDir . '/app/Http/Resources/ParentResource.php',
     'App\\Http\\Resources\\PermissionResource' => $baseDir . '/app/Http/Resources/PermissionResource.php',
     'App\\Http\\Resources\\RentalAddonsResource' => $baseDir . '/app/Http/Resources/RentalAddonsResource.php',

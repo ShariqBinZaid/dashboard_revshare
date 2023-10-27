@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Bookings extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function User()
@@ -23,14 +24,14 @@ class Bookings extends Model
         return $this->morphTo();
     }
 
-    public function Tour()
+    public function tour()
     {
-        return $this->morphOne(ToursBookings::class, 'bookable_id', 'bookable_type');
+        return $this->belongsTo(Tours::class, 'bookable_id', 'id');
     }
 
-    public function Rental()
+    public function rental()
     {
-        return $this->morphOne(RentalBookings::class, 'bookable_id', 'bookable_type');
+        return $this->belongsTo(Rentals::class, 'bookable_id', 'id');
     }
 
     public function upComming()
@@ -43,24 +44,39 @@ class Bookings extends Model
         return $this->belongsTo(RentalAvailability::class);
     }
 
-    public function addons(){
+    public function addons()
+    {
         return $this->hasMany(BookingAddons::class, 'booking_id', 'id');
     }
 
-    public function scopeBookingType(Builder $query, $type = 'default'){
-        if($type == 'rental'){
-            $query->whereBookableType(Rentals::class)->whereHasMorph('bookable', Rentals::class);
-        } elseif ($type == 'tour'){
-            $query->whereBookableType(Tours::class)->whereHasMorph('bookable', Tours::class);
+    public function scopeBookingType(Builder $query, $type = 'default')
+    {
+        if ($type == 'rental') {
+            $query->whereBookableType(Rentals::class);
+        } elseif ($type == 'tour') {
+            $query->whereBookableType(Tours::class);
         }
     }
 
-    public function scopeListType(Builder $query, $type){
+    public function scopeListType(Builder $query, $type, $bookable = 'rental')
+    {
         $now = Carbon::now()->format('Y-m-d H:i:s');
-        if($type == 'upcoming'){
-            $query->where('datetime', '>', $now);
-        } elseif ($type == 'past'){
-            $query->where('datetime', '<', $now);
+        if ($bookable == 'rental') {
+            if ($type == 'upcoming') {
+                $query->where('datetime', '>', $now);
+            } elseif ($type == 'past') {
+                $query->where('datetime', '<', $now);
+            }
+        } elseif ($bookable == 'tour') {
+            if ($type == 'upcoming') {
+                $query->whereHas('tour', function($q) use($now){
+                    $q->where('start_date', '>', $now);
+                });
+            } elseif ($type == 'past') {
+                $query->whereHas('tour', function($q) use($now){
+                    $q->where('start_date', '<', $now);
+                });
+            }
         }
     }
 }

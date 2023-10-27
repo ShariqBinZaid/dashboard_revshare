@@ -22,7 +22,6 @@ return new class extends Migration
             $table->dateTime('datetime')->nullable();
             $table->string('duration')->nullable();
             $table->string('insurance_amount')->nullable();
-            // $table->enum('status', ['past', 'upcoming'])->nullable();
             $table->enum('booking_type', ['rentals', 'tours'])->nullable();
             $table->timestamps();
         });

@@ -661,6 +661,7 @@ class ComposerStaticInita03f274ec08755f5b252f87f7381ed0c
         'App\\Http\\Requests\\UpdateSkillsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateSkillsRequest.php',
         'App\\Http\\Resources\\CategoriesResource' => __DIR__ . '/../..' . '/app/Http/Resources/CategoriesResource.php',
         'App\\Http\\Resources\\ModuleResource' => __DIR__ . '/../..' . '/app/Http/Resources/ModuleResource.php',
+        'App\\Http\\Resources\\MyBookingsResource' => __DIR__ . '/../..' . '/app/Http/Resources/MyBookingsResource.php',
         'App\\Http\\Resources\\ParentResource' => __DIR__ . '/../..' . '/app/Http/Resources/ParentResource.php',
         'App\\Http\\Resources\\PermissionResource' => __DIR__ . '/../..' . '/app/Http/Resources/PermissionResource.php',
         'App\\Http\\Resources\\RentalAddonsResource' => __DIR__ . '/../..' . '/app/Http/Resources/RentalAddonsResource.php',
