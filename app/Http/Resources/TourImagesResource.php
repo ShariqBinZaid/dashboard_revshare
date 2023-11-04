@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\TourImages;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TourImagesResource extends JsonResource
@@ -18,8 +19,7 @@ class TourImagesResource extends JsonResource
 
         if ($this->resource->count() > 0) {
             foreach ($this->resource as $toursimage) {
-                // dd($btl->getCategorys);
-                // $noofChild = Card::where($card->id)->count();
+                $noofChild = TourImages::where($toursimage->id)->count();
                 $picture = $toursimage->image != null ? asset('storage/' . $toursimage->image) : '/assets/media/avatars/blank.png';
                 $userAvatar = '<div class="d-flex align-items-center">
                             <div class="symbol symbol-35px symbol-circle">
@@ -66,7 +66,7 @@ class TourImagesResource extends JsonResource
                 $toursimages[] = [
                     // 'user_id' => $tour->User->user_name,
                     'image' => $userAvatar,
-                    'tour_id' => $toursimage->Tour->tour_id,
+                    'tour_id' => $toursimage->Tour->title,
                     'actions' => $actions
                 ];
             }

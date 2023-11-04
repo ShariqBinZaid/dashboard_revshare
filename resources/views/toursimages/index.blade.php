@@ -163,7 +163,7 @@
                     </div>
                     <div class="card-body py-5">
 
-                        <form class="ToursForm" enctype="multipart/form-data">
+                        <form class="ToursImagesForm" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id">
 
@@ -393,7 +393,7 @@
         });
 
 
-        $('body').on('submit', '.ToursForm', function(e) {
+        $('body').on('submit', '.ToursImagesForm', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             showloader('block')

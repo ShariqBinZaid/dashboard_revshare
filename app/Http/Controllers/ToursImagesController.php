@@ -28,11 +28,11 @@ class ToursImagesController extends Controller
     public function store(Request $req)
     {
         $input = $req->all();
+        dd($input);
         $validator = Validator::make($input, [
             'image' => 'required',
         ]);
 
-        // dd($input);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->errors()]);
         }
