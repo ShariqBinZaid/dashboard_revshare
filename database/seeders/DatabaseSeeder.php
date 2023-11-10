@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Categories;
 use App\Models\Modules;
 use App\Models\Packages;
 use App\Models\Permission;
@@ -57,6 +58,47 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
             'user_type' => 'admin',
             'is_active' => '1'
+        ]);
+
+        Categories::create([
+            'image' => 'profileimage/c1.png',
+            'title' => 'ATVs',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c2.png',
+            'title' => 'Jetski',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c3.png',
+            'title' => 'Dirt Bike / Motorcycles',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c4.png',
+            'title' => 'Snow Mobile',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c5.png',
+            'title' => 'UTVs',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c6.png',
+            'title' => 'Boats',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c7.png',
+            'title' => 'Surf Boards',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c8.png',
+            'title' => 'Snow Borads / Skis',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c9.png',
+            'title' => 'RV',
+        ]);
+        Categories::create([
+            'image' => 'profileimage/c10.png',
+            'title' => 'Kayaks /Canoes',
         ]);
 
         $modules = ['Users', 'Roles', 'Clients', 'Modules'];
@@ -146,20 +188,5 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'user_type' => 2,
         ]);
-
-        // $packages = [[
-        //     'name' => 'Packages 1',
-        //     'no_of_session' => '1 Session',
-        //     'total_time' => '30',
-        //     'session_time' => '30 Minute',
-        //     'price' => '10',
-        // ], [
-        //     'name' => 'Packages 2',
-        //     'no_of_session' => '2 Session',
-        //     'total_time' => '60',
-        //     'session_time' => '30 Minute',
-        //     'price' => '20',
-        // ]];
-        // Packages::insert($packages);
     }
 }
