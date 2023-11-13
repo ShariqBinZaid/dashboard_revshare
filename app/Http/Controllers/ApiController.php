@@ -296,7 +296,7 @@ class ApiController extends Controller
         $ser = $input['search'];
 
         $rentalResults = Rentals::with('Images')->with('User')->where('locations', 'LIKE', "%$ser%")->get();
-        $tourResults = Tours::with('Images')->where('loc', 'LIKE', "%$ser%")->get();
+        $tourResults = Tours::with('Images')->where('locations', 'LIKE', "%$ser%")->get();
 
         // $searchLoc['rentals'] = $rentalResults;
         // $searchLoc['tours'] = $tourResults;
