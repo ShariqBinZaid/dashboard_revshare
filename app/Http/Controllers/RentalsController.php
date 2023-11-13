@@ -35,7 +35,7 @@ class RentalsController extends Controller
 
     public function show($id)
     {
-        if ($id ==  "all") {
+        if ($id == "all") {
             $rentals = Rentals::all();
             return new RentalsResource($rentals);
         } else {
@@ -55,6 +55,7 @@ class RentalsController extends Controller
         $input = $req->all();
         $validator = Validator::make($input, [
             'title' => 'required',
+            'category_id' => 'required',
             'price' => 'required',
             'price_type' => 'required',
             'locations' => 'required',
@@ -74,6 +75,7 @@ class RentalsController extends Controller
         // Create a new rental record
         $rental = Rentals::create([
             'user_id' => $user_id,
+            'category_id' => $input['category_id'],
             'title' => $input['title'],
             'price' => $input['price'],
             'price_type' => $input['price_type'],
@@ -86,15 +88,16 @@ class RentalsController extends Controller
         ]);
 
         // Loop through the rental availability data and store it in the "rental_availability" table
-        foreach ($input['availability'] as $availability) {
-            RentalAvailability::create([
-                'rental_id' => $rental->id,
-                'day' => $availability['day'],
-                'from' => $availability['from'],
-                'to' => $availability['to'],
-            ]);
+        if (!empty($input['availability'])) {
+            foreach ($input['availability'] as $availability) {
+                RentalAvailability::create([
+                    'rental_id' => $rental->id,
+                    'day' => $availability['day'],
+                    'from' => $availability['from'],
+                    'to' => $availability['to'],
+                ]);
+            }
         }
-
         return response()->json(['success' => true, 'msg' => 'Rentals Created Successfully', 'data' => $rental]);
     }
 
