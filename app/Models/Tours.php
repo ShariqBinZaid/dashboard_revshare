@@ -14,6 +14,7 @@ class Tours extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    
     public function Images()
     {
         return $this->hasMany(ToursImages::class, 'tour_id', 'id');
