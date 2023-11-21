@@ -162,10 +162,10 @@ class ApiController extends Controller
             if ($req->hasFile('image')) {
                 foreach ($input['image'] as $image) {
                     $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                    $image->storeAs('public/profileimage', $imageName);
+                    $path = $image->storeAs('public/profileimage', $imageName);
                     $data = [
                         'user_id' => $req->user_id,
-                        'image' => $imageName,
+                        'image' => env('APP_URL').'storage/profileimage/'.$imageName,
                     ];
                     Certificates::create($data);
                 }
