@@ -8,8 +8,12 @@ use App\Models\Categories;
 use App\Models\Modules;
 use App\Models\Packages;
 use App\Models\Permission;
+use App\Models\RentalImages;
+use App\Models\Rentals;
 use App\Models\Role;
 use App\Models\RolePermission;
+use App\Models\Tours;
+use App\Models\ToursImages;
 use App\Models\User;
 use App\Models\UserInType;
 use App\Models\UserRole;
@@ -99,6 +103,80 @@ class DatabaseSeeder extends Seeder
         Categories::create([
             'image' => 'profileimage/c10.png',
             'title' => 'Kayaks /Canoes',
+        ]);
+
+        Tours::create([
+            'user_id' => '1',
+            'locations' => 'Karachi',
+            'title' => 'Kati Pahari',
+            'price' => '10',
+            'desc' => 'Pathan live in this area',
+            'start_date' => '2023-10-01',
+            'end_date' => '2023-10-10',
+            'age' => '25',
+            'capacity' => '50',
+            'reviews' => 'Paktoons',
+            'whats_include' => 'Lalas',
+            'recommended' => '1',
+        ]);
+        Tours::create([
+            'user_id' => '1',
+            'locations' => 'Lahore',
+            'title' => 'Hunza',
+            'price' => '100',
+            'desc' => 'Great place to enjoy vacations',
+            'start_date' => '2023-10-11',
+            'end_date' => '2023-10-20',
+            'age' => '28',
+            'capacity' => '100',
+            'reviews' => 'Kashmiri',
+            'whats_include' => 'Jahaz',
+            'recommended' => '1',
+        ]);
+
+        ToursImages::create([
+            'tour_id' => '1',
+            'image' => 'profileimage/dt1.jpg',
+        ]);
+        ToursImages::create([
+            'tour_id' => '1',
+            'image' => 'profileimage/dt1.jpg',
+        ]);
+
+        Rentals::create([
+            'user_id' => '1',
+            'category_id' => '1',
+            'title' => 'Yamaha Jet Ski',
+            'price' => '100',
+            'price_type' => 'cash',
+            'locations' => 'Karachi',
+            'desc' => 'Comfortable Bike',
+            'capacity' => '2',
+            'skills' => 'advanced',
+            'cancel_days' => '2',
+            'cancel_percent' => '80%',
+        ]);
+        Rentals::create([
+            'user_id' => '1',
+            'category_id' => '1',
+            'title' => 'Yamaha Dirt Bike',
+            'price' => '200',
+            'price_type' => 'cash',
+            'locations' => 'Lahore',
+            'desc' => 'Heavy Bike',
+            'capacity' => '2',
+            'skills' => 'advanced',
+            'cancel_days' => '2',
+            'cancel_percent' => '80%',
+        ]);
+
+        RentalImages::create([
+            'rental_id' => '1',
+            'image' => 'profileimage/dt1.jpg',
+        ]);
+        RentalImages::create([
+            'rental_id' => '1',
+            'image' => 'profileimage/dt1.jpg',
         ]);
 
         $modules = ['Users', 'Roles', 'Clients', 'Modules'];
