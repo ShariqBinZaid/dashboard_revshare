@@ -89,7 +89,6 @@ class RentalsController extends Controller
 
         // Loop through the rental availability data and store it in the "rental_availability" table
         if (!empty($input['availability'])) {
-            dd($input['availability']);
             foreach ($input['availability'] as $availability) {
                 RentalAvailability::create([
                     'rental_id' => $rental->id,
