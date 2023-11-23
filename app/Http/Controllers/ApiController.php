@@ -85,40 +85,27 @@ class ApiController extends Controller
 
     public function updateregister(Request $req)
     {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'display_picture' => 'required',
-            // 'user_name' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            // 'gender' => 'required',
-            // 'email' => 'required',
-            // 'dob' => 'required',
-            'phone' => 'required',
-            // 'status' => 'required',
-            // 'is_active' => 'required',
-            // 'user_type' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        $input['password'] = bcrypt($input['password']);
-        $input['confirm_password'] = bcrypt($input['confirm_password']);
-
-        if ($req->file('display_picture')) {
-            unset($input['display_picture']);
-            $input += ['display_picture' => $this->updateprofile($req, 'display_picture', 'profileimage')];
-        }
-
-        unset($input['_token']);
-        if (@$input['id']) {
-            $userupdate = User::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'User Updated Successfully.', 'data' => User::where('id', $input['id'])->first()]);
-        } else {
-            $userupdate = User::create($input);
-            return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
+        try {
+            $req->validate([
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'gender' => 'required',
+                'phone' => 'required',
+                'dob' => 'required'
+            ]);
+            $user = Auth::user();
+            $user->first_name = $req->first_name;
+            $user->last_name = $req->last_name;
+            $user->gender = $req->gender;
+            $user->phone = $req->phone;
+            $user->dob = Carbon::parse($req->dob)->format('Y-m-d');
+            if ($req->file('display_picture')) {
+                $user->display_picture = $this->updateprofile($req, 'display_picture', 'profileimage');
+            }
+            $user->save();
+            return $this->sendResponse(['success' => true, 'data' => $user], 'User Updated Successfully.');
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
         }
     }
 
@@ -165,7 +152,7 @@ class ApiController extends Controller
                     $path = $image->storeAs('public/profileimage', $imageName);
                     $data = [
                         'user_id' => $req->user_id,
-                        'image' => env('APP_URL').'storage/profileimage/'.$imageName,
+                        'image' => env('APP_URL') . 'storage/profileimage/' . $imageName,
                     ];
                     Certificates::create($data);
                 }
@@ -243,7 +230,7 @@ class ApiController extends Controller
         $booking = Bookings::count();
         $currentDateTime = Carbon::now();
         $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->count();
-        $pastBooking =  Bookings::where('datetime', '<', $currentDateTime)->get();
+        $pastBooking = Bookings::where('datetime', '<', $currentDateTime)->get();
         $pastTime = 0;
         if ($pastBooking->count() > 0) {
             foreach ($pastBooking as $key => $pb) {
@@ -252,8 +239,8 @@ class ApiController extends Controller
         }
 
         $duration = $pastTime;
-        $hours    = (int)($duration / 60);
-        $minutes  = $duration - ($hours * 60);
+        $hours = (int)($duration / 60);
+        $minutes = $duration - ($hours * 60);
 
         date_default_timezone_set('UTC');
         $date = new DateTime($hours . ":" . $minutes);
