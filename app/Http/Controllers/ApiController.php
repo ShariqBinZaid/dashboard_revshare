@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LoginUserResource;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Tours;
@@ -22,45 +23,62 @@ class ApiController extends Controller
 {
     public function register(Request $request)
     {
-        $input = $request->all();
-        // dd($input);
-        $validator = Validator::make($request->all(), [
-            'display_picture' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'dob' => 'required',
-            'phone' => 'required',
-            'user_type' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        try {
+            $request->validate([
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'gender' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'required',
+                'dob' => 'required',
+                'password' => 'required|confirmed',
+                'password_confirmation' => 'required'
+            ]);
+            $display_picture = null;
+            if ($request->file('display_picture')) {
+                $display_picture = $this->updateprofile($request, 'display_picture', 'profileimage');
+            }
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'password' => Hash::make($request->password),
+                'display_picture' => $display_picture,
+                'otp' => rand('1000', '9999'),
+                'is_active' => 0,
+                'user_type' => 'user'
+            ]);
+            return $this->sendResponse(['id' => $user->id], 'User Registered Successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
+    }
 
-        $users = User::where('email', $request['email'])->get();
-        // dd($users);
-
-        if ($users->count() > 0) {
-            return response()->json(['success' => false, 'message' => 'Email Already Exist']);
-            die;
+    public function verify(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|numeric',
+                'otp' => 'required|numeric'
+            ]);
+            $user = User::where('id', $request->id)->where('otp', $request->otp)->first();
+            if (!$user) {
+                throw new \Exception('Invalid OTP!');
+            }
+            if ($user->is_active == 1) {
+                throw new \Exception('OTP already used to verify account!');
+            }
+            $user->is_active = 1;
+            $user->save();
+            $token = $user->createToken('MyApp')->accessToken;
+            Auth::login($user);
+            return $this->sendResponse(new LoginUserResource(Auth::user()), 'User verified successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-
-        if ($request->file('display_picture')) {
-            unset($input['display_picture']);
-            $input += ['display_picture' => $this->updateprofile($request, 'display_picture', 'profileimage')];
-        }
-
-        // return $input;
-        $input += ['is_active' => '1'];
-        $input['password'] = bcrypt($input['password']);
-        $input += ['otp' => rand(100000, 999999)];
-        $user = User::create($input);
-        $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['user'] = $user;
-
-        return $this->sendResponse($success, 'User Registered Successfully.');
     }
 
     public function registerdelete(Request $req, $id)
@@ -104,7 +122,7 @@ class ApiController extends Controller
             }
             $user->save();
             return $this->sendResponse(['success' => true, 'data' => $user], 'User Updated Successfully.');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }

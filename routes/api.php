@@ -22,16 +22,11 @@ use GuzzleHttp\Promise\Create;
 |
 */
 
-Route::post('register', [ApiController::class, 'register']);
 Route::post('login', [ApiController::class, 'login']);
-// Route::post('userupdate', [ApiController::class, 'userupdate']);
-Route::post('phoneotp', [ApiController::class, 'phoneotp']);
-Route::post('generateotp', [ApiController::class, 'generateotp']);
-// Route::get('vendordashboard', [ApiController::class, 'vendordashboard']);
+Route::post('register', [ApiController::class, 'register']);
+Route::post('verify', [ApiController::class, 'verify']);
 Route::post('certificates', [ApiController::class, 'certificates']);
 Route::get('getcertificates', [ApiController::class, 'getcertificates']);
-// Route::post('categories', [UserCategoriesController::class, 'categories']);
-// Route::get('getcategories', [UserCategoriesController::class, 'getcategories']);
 
 
 Route::controller(UserCategoriesController::class)->group(function () {
