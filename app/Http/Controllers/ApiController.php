@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LoginUserResource;
+use App\Mail\VerifyOTP;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Tours;
@@ -51,6 +52,7 @@ class ApiController extends Controller
                 'is_active' => 0,
                 'user_type' => 'user'
             ]);
+            Mail::to($user->email)->send(new VerifyOTP($user));
             return $this->sendResponse(['id' => $user->id], 'User Registered Successfully.');
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
@@ -190,15 +192,22 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->accessToken;
-            // $success['email'] =  $user->email;
-            $success['user'] = $user;
-            return $this->sendResponse($success, 'User Login Successfully.');
-        } else {
-            return $this->sendResponse('Unauthorised.', ['error' => 'Email or Password Incorrect']);
-            // return $this->sendError('Unauthorised.', ['error' => 'Incorrect ID Password']);
+        try {
+            //Verify credentials
+            if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                throw new \Exception('Invalid Credentials!');
+            }
+            //Check user type
+            if (Auth::user()->user_type != 'user') {
+                throw new \Exception('Invalid user type');
+            }
+            //Check if user is verified
+            if (Auth::user()->is_active == 0) {
+                throw new \Exception('Please verify your account');
+            }
+            return $this->sendResponse(new LoginUserResource(Auth::user()), 'User logged in successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
     }
 
