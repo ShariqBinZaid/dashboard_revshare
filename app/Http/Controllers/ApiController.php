@@ -320,4 +320,19 @@ class ApiController extends Controller
         $popular = Rentals::with('Images')->get();
         return response()->json(['success' => true, 'data' => $popular]);
     }
+
+    public function fcmid(Request $request)
+    {
+        try {
+            $request->validate([
+                'fcm_id' => 'required'
+            ]);
+            $user = Auth::user();
+            $user->fcm_id = $request->fcm_id;
+            $user->save();
+            return $this->sendResponse([], 'FCM ID Updated!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
 }
