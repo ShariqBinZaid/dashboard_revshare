@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->string('title');
             $table->string('message');
             $table->string('notification_type');
+            $table->string('type_key')->nullable();
+            $table->string('type_value')->nullable();
             $table->tinyInteger('is_read')->nullable()->default(0);
             $table->timestamps();
         });
