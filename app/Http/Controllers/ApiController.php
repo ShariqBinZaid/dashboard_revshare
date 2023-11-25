@@ -198,9 +198,9 @@ class ApiController extends Controller
                 throw new \Exception('Invalid Credentials!');
             }
             //Check user type
-            if (Auth::user()->user_type != 'user' || Auth::user()->user_type != 'vendor') {
-                throw new \Exception('Invalid user type');
-            }
+//            if (Auth::user()->user_type != 'user' || Auth::user()->user_type != 'vendor') {
+//                throw new \Exception('Invalid user type');
+//            }
             //Check if user is verified
             if (Auth::user()->is_active == 0) {
                 throw new \Exception('Please verify your account');
