@@ -68,6 +68,7 @@ return array(
     'App\\Http\\Resources\\TourResource' => $baseDir . '/app/Http/Resources/TourResource.php',
     'App\\Http\\Resources\\Users\\UserAdminResource' => $baseDir . '/app/Http/Resources/Users/UserAdminResource.php',
     'App\\Http\\Resources\\Users\\UserClientResource' => $baseDir . '/app/Http/Resources/Users/UserClientResource.php',
+    'App\\Mail\\VerifyOTP' => $baseDir . '/app/Mail/VerifyOTP.php',
     'App\\Models\\BankDetails' => $baseDir . '/app/Models/BankDetails.php',
     'App\\Models\\BookingAddons' => $baseDir . '/app/Models/BookingAddons.php',
     'App\\Models\\BookingGroups' => $baseDir . '/app/Models/BookingGroups.php',

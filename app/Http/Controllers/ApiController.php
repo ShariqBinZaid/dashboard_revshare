@@ -235,23 +235,6 @@ class ApiController extends Controller
             return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
         }
     }
-
-    public function phoneotp(Request $req)
-    {
-        $otp = User::where('id', $req->user_id)->where('otp', $req->otp)->first();
-        if (!empty($otp)) {
-            return response()->json(['success' => true, 'msg' => 'Success']);
-        }
-        return response()->json(['success' => false, 'msg' => 'Please enter valid otp code']);
-    }
-
-    public function generateotp(Request $req)
-    {
-        $otp = rand(1000, 9999);
-        $user = User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
-        return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
-    }
-
     public function vendordashboard()
     {
         $booking = Bookings::count();

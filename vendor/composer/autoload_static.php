@@ -674,6 +674,7 @@ class ComposerStaticInita03f274ec08755f5b252f87f7381ed0c
         'App\\Http\\Resources\\TourResource' => __DIR__ . '/../..' . '/app/Http/Resources/TourResource.php',
         'App\\Http\\Resources\\Users\\UserAdminResource' => __DIR__ . '/../..' . '/app/Http/Resources/Users/UserAdminResource.php',
         'App\\Http\\Resources\\Users\\UserClientResource' => __DIR__ . '/../..' . '/app/Http/Resources/Users/UserClientResource.php',
+        'App\\Mail\\VerifyOTP' => __DIR__ . '/../..' . '/app/Mail/VerifyOTP.php',
         'App\\Models\\BankDetails' => __DIR__ . '/../..' . '/app/Models/BankDetails.php',
         'App\\Models\\BookingAddons' => __DIR__ . '/../..' . '/app/Models/BookingAddons.php',
         'App\\Models\\BookingGroups' => __DIR__ . '/../..' . '/app/Models/BookingGroups.php',

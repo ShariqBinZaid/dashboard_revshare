@@ -25,6 +25,7 @@ class LoginUserResource extends JsonResource
                 'gender' => $this->gender,
                 'location' => $this->location,
                 'dob' => $this->dob,
+                'user_type' => $this->user_type,
                 'display_picture' => $this->display_picture ? env('APP_URL').'/storage/'.$this->display_picture : ''
             ],
             'token' => $token
