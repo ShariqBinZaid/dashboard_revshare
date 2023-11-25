@@ -50,7 +50,7 @@ class ApiController extends Controller
                 'display_picture' => $display_picture,
                 'otp' => rand('1000', '9999'),
                 'is_active' => 0,
-                'user_type' => 'user'
+                'user_type' => $request->user_type
             ]);
             Mail::to($user->email)->send(new VerifyOTP($user));
             return $this->sendResponse(['id' => $user->id], 'User Registered Successfully.');
